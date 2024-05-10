@@ -36,16 +36,16 @@ export function Card() {
       <CardContent className="space-y-4">
         <CardSection title="Doações necessárias">
           <BadgeList>
-            <Badge className="bg-[rgba(240,240,240,1)]">Alimentos</Badge>
-            <Badge className="bg-[rgba(240,240,240,1)]">Roupas</Badge>
-            <Badge className="bg-[rgba(240,240,240,1)]">Brinquedos</Badge>
+            <Badge className="rounded-sm bg-[rgba(240,240,240,1)] font-normal text-slate-500">
+              Alimentos
+            </Badge>
           </BadgeList>
         </CardSection>
         <CardSection title="Voluntários necessários">
           <BadgeList>
-            <Badge className="bg-[rgba(240,240,240,1)]">Distribuição</Badge>
-            <Badge className="bg-[rgba(240,240,240,1)]">Organização</Badge>
-            <Badge className="bg-[rgba(240,240,240,1)]">Atendimento</Badge>
+            <Badge className="rounded-sm bg-[rgba(240,240,240,1)] font-normal text-slate-500">
+              Distribuição
+            </Badge>
           </BadgeList>
         </CardSection>
       </CardContent>
