@@ -11,7 +11,7 @@ import { Icons } from "../icons";
 
 export function Card() {
   return (
-    <CardBase key="1" className="shadow-md md:w-[654px]">
+    <CardBase key="1" className="shadow-md md:w-[672px]">
       <CardHeader>
         <div className="flex justify-between">
           <h4 className="text-lg font-medium">Acme Inc</h4>
