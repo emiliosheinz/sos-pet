@@ -31,20 +31,13 @@ model Shelter {
   twitter   String?
   website   String?
   donations String[]
-  address   Address  @relation(fields: [addressId], references: [id])
-  addressId Int      @unique
-}
-
-model Address {
-  id      Int      @id @default(autoincrement())
-  street  String
-  city    String
-  state   String
-  zip     String
-  number  String
-  neighborhood String
-  complement String?
-  Shelter Shelter?
+  addressStreet  String
+  addressCity    String
+  addressState   String
+  addressZip     String
+  addressNumber  String
+  addressNeighborhood String
+  addressComplement String?
 }
 
 // Necessary for Next auth
