@@ -1,6 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { type z } from "zod";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
@@ -18,36 +19,18 @@ import { shelterSchema } from "~/schemas/shelter";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 import { TagInput } from "~/components/tag-input";
+import { defaultValues } from "./constants";
 
 export default function Shelter() {
   const form = useForm<z.infer<typeof shelterSchema>>({
     resolver: zodResolver(shelterSchema),
-    defaultValues: {
-      name: "",
-      phone: "",
-      capacity: "",
-      occupancy: "",
-      donations: [],
-      address: {
-        cep: "",
-        street: "",
-        number: "",
-        state: "",
-        city: "",
-        complement: "",
-      },
-      social: {
-        instagram: "",
-        facebook: "",
-        twitter: "",
-        website: "",
-      },
-    },
+    defaultValues: defaultValues,
   });
   const router = useRouter();
   const createShelter = api.shelter.create.useMutation({
     onSuccess: () => {
       router.replace("/");
+      toast.success("Abrigo criado com sucesso!");
     },
   });
 
@@ -165,7 +148,27 @@ export default function Shelter() {
                     value={field.value}
                     placeholder="Insira a doação e pressione Enter"
                     onChange={(newTags) => {
-                      form.setValue("donations", newTags);
+                      form.setValue(field.name, newTags);
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="volunteers"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Voluntários</FormLabel>
+                <FormControl>
+                  <TagInput
+                    {...field}
+                    value={field.value}
+                    placeholder="Insira o tipo de voluntario e pressione Enter"
+                    onChange={(newTags) => {
+                      form.setValue(field.name, newTags);
                     }}
                   />
                 </FormControl>

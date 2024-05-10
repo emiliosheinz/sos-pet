@@ -31,6 +31,7 @@ model Shelter {
   twitter   String?
   website   String?
   donations String[]
+  volunteers String[]
   addressStreet  String
   addressCity    String
   addressState   String

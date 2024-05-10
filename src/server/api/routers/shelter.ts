@@ -1,10 +1,14 @@
 import { shelterSchema } from "~/schemas/shelter";
 
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 import { db } from "~/server/db";
 
 export const shelterRouter = createTRPCRouter({
-  findAll: protectedProcedure.query(async () => {
+  findAll: publicProcedure.query(async () => {
     return db.shelter.findMany();
   }),
   create: protectedProcedure
@@ -18,6 +22,7 @@ export const shelterRouter = createTRPCRouter({
           capacity: +input.capacity,
           occupancy: +input.occupancy,
           donations: input.donations,
+          volunteers: input.volunteers,
           twitter: input.social.twitter,
           instagram: input.social.instagram,
           facebook: input.social.facebook,

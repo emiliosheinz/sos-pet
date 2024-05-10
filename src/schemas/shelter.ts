@@ -1,4 +1,3 @@
-import { text } from "stream/consumers";
 import { z } from "zod";
 
 export const shelterSchema = z.object({
@@ -25,6 +24,7 @@ export const shelterSchema = z.object({
       "A ocupação deve ser maior ou igual a 0",
     ),
   donations: z.array(z.string()),
+  volunteers: z.array(z.string()),
   address: z.object({
     cep: z
       .string({ message: "Campo obrigatório" })
