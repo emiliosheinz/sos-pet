@@ -6,7 +6,6 @@ import {
   CardHeader,
 } from "~/components/ui/card";
 import { Badge } from "~/components/ui/badge";
-import { Icons } from "../icons";
 import { type Shelter } from "@prisma/client";
 import { FaWhatsapp, FaFacebook, FaInstagram } from "react-icons/fa";
 import { RiTwitterXLine } from "react-icons/ri";

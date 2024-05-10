@@ -35,7 +35,6 @@ export default function Home() {
   const { data: session } = useSession();
   const { data } = api.shelter.findAll.useQuery();
 
-  console.log(data);
   // return (
   //   <main className="flex w-full flex-col  items-center justify-center gap-2 bg-white pt-16">
   //     {!!session && <h2>{session.user.name}</h2>}
