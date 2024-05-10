@@ -1,6 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
+import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { type z } from "zod";
 import { Button } from "~/components/ui/button";
@@ -32,10 +33,14 @@ export default function Shelter() {
       router.replace("/");
       toast.success("Abrigo criado com sucesso!");
     },
+    onError: (error) => {
+      toast.error("Ops! Houve um erro ao criar o abrigo.");
+      console.error(error);
+    },
   });
 
   async function onSubmit(values: z.infer<typeof shelterSchema>) {
-    await createShelter.mutateAsync(values);
+    createShelter.mutate(values);
   }
 
   function populateAddressWithViaCepData(data: {
@@ -349,11 +354,15 @@ export default function Shelter() {
           />
 
           <Button
-            disabled={!!createShelter.isPending}
             type="submit"
             className="w-full"
+            disabled={!!createShelter.isPending}
           >
-            Salvar
+            {createShelter.isPending ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              "Salvar"
+            )}
           </Button>
         </form>
       </Form>
