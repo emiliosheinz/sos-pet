@@ -17,7 +17,7 @@ export const shelterRouter = createTRPCRouter({
           phone: input.phone,
           capacity: +input.capacity,
           occupancy: +input.occupancy,
-          donations: input.donations?.split(",") ?? [],
+          donations: input.donations,
           twitter: input.social.twitter,
           instagram: input.social.instagram,
           facebook: input.social.facebook,

@@ -1,3 +1,4 @@
+import { text } from "stream/consumers";
 import { z } from "zod";
 
 export const shelterSchema = z.object({
@@ -23,7 +24,7 @@ export const shelterSchema = z.object({
       (occupancy) => +occupancy >= 0,
       "A ocupação deve ser maior ou igual a 0",
     ),
-  donations: z.string().optional(),
+  donations: z.array(z.string()),
   address: z.object({
     cep: z
       .string({ message: "Campo obrigatório" })
@@ -32,7 +33,9 @@ export const shelterSchema = z.object({
     number: z
       .string({ message: "Campo obrigatório" })
       .regex(/^\d+$/, "Insira um número válido"),
-    state: z.string({ message: "Campo obrigatório" }),
+    state: z
+      .string({ message: "Campo obrigatório" })
+      .max(2, "Insira a sigla do estado"),
     city: z.string({ message: "Campo obrigatório" }),
     complement: z.string().optional(),
     neighborhood: z.string({ message: "Campo obrigatório" }),

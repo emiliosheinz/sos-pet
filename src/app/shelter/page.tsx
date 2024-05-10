@@ -15,6 +15,9 @@ import {
 } from "~/components/ui/form";
 import { cepMask, phoneMask } from "~/lib/masks";
 import { shelterSchema } from "~/schemas/shelter";
+import { api } from "~/trpc/react";
+import { useRouter } from "next/navigation";
+import { TagInput } from "~/components/tag-input";
 
 export default function Shelter() {
   const form = useForm<z.infer<typeof shelterSchema>>({
@@ -24,7 +27,7 @@ export default function Shelter() {
       phone: "",
       capacity: "",
       occupancy: "",
-      donations: "",
+      donations: [],
       address: {
         cep: "",
         street: "",
@@ -41,10 +44,15 @@ export default function Shelter() {
       },
     },
   });
+  const router = useRouter();
+  const createShelter = api.shelter.create.useMutation({
+    onSuccess: () => {
+      router.replace("/");
+    },
+  });
 
-  function onSubmit(values: z.infer<typeof shelterSchema>) {
-    console.log(values);
-    window.alert(JSON.stringify(values));
+  async function onSubmit(values: z.infer<typeof shelterSchema>) {
+    await createShelter.mutateAsync(values);
   }
 
   function populateAddressWithViaCepData(data: {
@@ -75,7 +83,7 @@ export default function Shelter() {
           className="flex w-full max-w-lg flex-col gap-5"
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          <h1 className="text-2xl ">Cadastrar abrigo</h1>
+          <h1 className="text-3xl ">Informações do abrigo</h1>
           <FormField
             control={form.control}
             name="name"
@@ -84,25 +92,6 @@ export default function Shelter() {
                 <FormLabel>Nome</FormLabel>
                 <FormControl>
                   <Input placeholder="Nome do abrigo" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Telefone</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Telefone do abrigo"
-                    {...field}
-                    onChange={(e) => {
-                      field.onChange(phoneMask(e.target.value));
-                    }}
-                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -118,7 +107,7 @@ export default function Shelter() {
                   <FormControl>
                     <Input
                       type="number"
-                      placeholder="Capacidade total"
+                      placeholder="Capacidade máxima"
                       {...field}
                     />
                   </FormControl>
@@ -146,20 +135,46 @@ export default function Shelter() {
           </div>
           <FormField
             control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Telefone (Whatsapp)</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="(XX) XXXXX-XXXX"
+                    {...field}
+                    onChange={(e) => {
+                      field.onChange(phoneMask(e.target.value));
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <h2 className="mt-3 text-xl">Doações e Voluntários</h2>
+          <FormField
+            control={form.control}
             name="donations"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Doações</FormLabel>
                 <FormControl>
-                  <Input placeholder="Doações aceitas" {...field} />
+                  <TagInput
+                    {...field}
+                    value={field.value}
+                    placeholder="Insira a doação e pressione Enter"
+                    onChange={(newTags) => {
+                      form.setValue("donations", newTags);
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
 
-          <h2 className="text-lg">Endereço</h2>
-
+          <h2 className="mt-3 text-xl">Endereço</h2>
           <FormField
             control={form.control}
             name="address.cep"
@@ -235,7 +250,15 @@ export default function Shelter() {
                 <FormItem>
                   <FormLabel>Estado</FormLabel>
                   <FormControl>
-                    <Input placeholder="UF do Estado" {...field} />
+                    <Input
+                      placeholder="UF do Estado"
+                      {...field}
+                      onChange={(e) => {
+                        field.onChange(
+                          e.target.value.toUpperCase().slice(0, 2),
+                        );
+                      }}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -260,7 +283,7 @@ export default function Shelter() {
             name="address.complement"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Complemento</FormLabel>
+                <FormLabel>Complemento (opcional)</FormLabel>
                 <FormControl>
                   <Input placeholder="Complemento" {...field} />
                 </FormControl>
@@ -268,14 +291,13 @@ export default function Shelter() {
               </FormItem>
             )}
           />
-
-          <h2 className="text-lg">Redes sociais</h2>
+          <h2 className="mt-3 text-xl">Redes sociais</h2>
           <FormField
             control={form.control}
             name="social.instagram"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Instagram</FormLabel>
+                <FormLabel>Instagram (opcional)</FormLabel>
                 <FormControl>
                   <Input placeholder="Instagram" {...field} />
                 </FormControl>
@@ -283,13 +305,12 @@ export default function Shelter() {
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="social.facebook"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Facebook</FormLabel>
+                <FormLabel>Facebook (opcional)</FormLabel>
                 <FormControl>
                   <Input placeholder="Facebook" {...field} />
                 </FormControl>
@@ -302,7 +323,7 @@ export default function Shelter() {
             name="social.twitter"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Twitter</FormLabel>
+                <FormLabel>Twitter (opcional)</FormLabel>
                 <FormControl>
                   <Input placeholder="Twitter" {...field} />
                 </FormControl>
@@ -315,7 +336,7 @@ export default function Shelter() {
             name="social.website"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Website</FormLabel>
+                <FormLabel>Website (opcional)</FormLabel>
                 <FormControl>
                   <Input placeholder="Website" {...field} />
                 </FormControl>
@@ -323,7 +344,12 @@ export default function Shelter() {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full">
+
+          <Button
+            disabled={!!createShelter.isPending}
+            type="submit"
+            className="w-full"
+          >
             Salvar
           </Button>
         </form>
