@@ -14,27 +14,7 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/ui/form";
-
-// model Shelter {
-//   id        Int      @id @default(autoincrement())
-//   name      String
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-
-//   createdBy   User   @relation(fields: [createdById], references: [id])
-//   createdById String @unique
-
-//   phone     String
-//   capacity  Int
-//   occupancy Int
-//   instagram String?
-//   facebook  String?
-//   twitter   String?
-//   website   String?
-//   donations String[]
-//   address   Address  @relation(fields: [addressId], references: [id])
-//   addressId Int      @unique
-// }
+import { cepMask, phoneMask } from "~/lib/masks";
 
 const formSchema = z.object({
   name: z
@@ -43,9 +23,11 @@ const formSchema = z.object({
     })
     .max(255, "O nome não pode ter mais que 255 caracteres")
     .min(3, "O nome não pode ter menos que 3 caracteres"),
-  phone: z.string({
-    message: "Campo obrigatório",
-  }),
+  phone: z
+    .string({
+      message: "Campo obrigatório",
+    })
+    .regex(/^\(\d{2}\) \d{4,5}-\d{4}$/, "Insira um telefone válido"),
   capacity: z
     .string({ message: "Campo obrigatório" })
     .regex(/^\d+$/, "Insira um número válido")
@@ -61,12 +43,15 @@ const formSchema = z.object({
   address: z.object({
     cep: z
       .string({ message: "Campo obrigatório" })
-      .regex(/^\d{8}$/, "Insira um CEP válido sem traços ou pontos"),
+      .regex(/^\d{5}-\d{3}$/, "Insira um CEP válido"),
     street: z.string({ message: "Campo obrigatório" }),
-    number: z.string({ message: "Campo obrigatório" }),
+    number: z
+      .string({ message: "Campo obrigatório" })
+      .regex(/^\d+$/, "Insira um número válido"),
     state: z.string({ message: "Campo obrigatório" }),
     city: z.string({ message: "Campo obrigatório" }),
     complement: z.string().optional(),
+    neighborhood: z.string({ message: "Campo obrigatório" }),
   }),
   social: z.object({
     instagram: z.string().optional(),
@@ -107,8 +92,29 @@ export default function Shelter() {
     window.alert(JSON.stringify(values));
   }
 
+  function populateAddressWithViaCepData(data: {
+    cep: string;
+    logradouro: string;
+    bairro: string;
+    localidade: string;
+    uf: string;
+  }) {
+    form.setValue("address.street", data.logradouro, {
+      shouldValidate: !!data.logradouro,
+    });
+    form.setValue("address.neighborhood", data.bairro, {
+      shouldValidate: !!data.bairro,
+    });
+    form.setValue("address.city", data.localidade, {
+      shouldValidate: !!data.localidade,
+    });
+    form.setValue("address.state", data.uf, {
+      shouldValidate: !!data.uf,
+    });
+  }
+
   return (
-    <main className="flex w-full items-center justify-center bg-white py-16">
+    <main className="flex w-full items-center justify-center bg-white py-6">
       <Form {...form}>
         <form
           className="flex w-full max-w-lg flex-col gap-5"
@@ -135,7 +141,13 @@ export default function Shelter() {
               <FormItem>
                 <FormLabel>Telefone</FormLabel>
                 <FormControl>
-                  <Input placeholder="Telefone do abrigo" {...field} />
+                  <Input
+                    placeholder="Telefone do abrigo"
+                    {...field}
+                    onChange={(e) => {
+                      field.onChange(phoneMask(e.target.value));
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -196,11 +208,26 @@ export default function Shelter() {
           <FormField
             control={form.control}
             name="address.cep"
-            render={({ field }) => (
+            render={({ field, fieldState }) => (
               <FormItem>
                 <FormLabel>CEP</FormLabel>
                 <FormControl>
-                  <Input placeholder="90450001" {...field} />
+                  <Input
+                    placeholder="90450-001"
+                    {...field}
+                    onChange={(e) => {
+                      field.onChange(cepMask(e.target.value));
+                    }}
+                    onBlur={() => {
+                      if (fieldState.invalid) return;
+                      fetch(`https://viacep.com.br/ws/${field.value}/json/`)
+                        .then((response) => response.json())
+                        .then(populateAddressWithViaCepData)
+                        .catch((error) => {
+                          console.log(error);
+                        });
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -219,6 +246,19 @@ export default function Shelter() {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="address.neighborhood"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Bairro</FormLabel>
+                <FormControl>
+                  <Input placeholder="Bairro" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <div className="grid grid-cols-2 gap-5">
             <FormField
               control={form.control}
@@ -227,7 +267,7 @@ export default function Shelter() {
                 <FormItem>
                   <FormLabel>Número</FormLabel>
                   <FormControl>
-                    <Input placeholder="Número" {...field} />
+                    <Input type="number" placeholder="Número" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
