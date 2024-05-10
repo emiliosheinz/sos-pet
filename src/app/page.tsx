@@ -4,6 +4,7 @@ import { Card } from "~/components/card/";
 import { SearchInput } from "~/components/search-input";
 import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/react";
+import { Filters } from "~/components/filters";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -43,7 +44,11 @@ export default function Home() {
       ) : (
         <Button onClick={() => signIn("google")}>Sign in</Button>
       )}
-      <SearchInput />
+
+      <div className="mb-6 flex w-full items-center justify-between space-x-4 md:w-[672px]">
+        <SearchInput />
+        <Filters />
+      </div>
       <Card />
     </main>
   );
