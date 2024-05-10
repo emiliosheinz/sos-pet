@@ -13,23 +13,15 @@ CREATE TABLE "Shelter" (
     "twitter" TEXT,
     "website" TEXT,
     "donations" TEXT[],
-    "addressId" INTEGER NOT NULL,
+    "addressStreet" TEXT NOT NULL,
+    "addressCity" TEXT NOT NULL,
+    "addressState" TEXT NOT NULL,
+    "addressZip" TEXT NOT NULL,
+    "addressNumber" TEXT NOT NULL,
+    "addressNeighborhood" TEXT NOT NULL,
+    "addressComplement" TEXT,
 
     CONSTRAINT "Shelter_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Address" (
-    "id" SERIAL NOT NULL,
-    "street" TEXT NOT NULL,
-    "city" TEXT NOT NULL,
-    "state" TEXT NOT NULL,
-    "zip" TEXT NOT NULL,
-    "number" TEXT NOT NULL,
-    "neighborhood" TEXT NOT NULL,
-    "complement" TEXT,
-
-    CONSTRAINT "Address_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -82,9 +74,6 @@ CREATE TABLE "VerificationToken" (
 CREATE UNIQUE INDEX "Shelter_createdById_key" ON "Shelter"("createdById");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Shelter_addressId_key" ON "Shelter"("addressId");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Account_provider_providerAccountId_key" ON "Account"("provider", "providerAccountId");
 
 -- CreateIndex
@@ -101,9 +90,6 @@ CREATE UNIQUE INDEX "VerificationToken_identifier_token_key" ON "VerificationTok
 
 -- AddForeignKey
 ALTER TABLE "Shelter" ADD CONSTRAINT "Shelter_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Shelter" ADD CONSTRAINT "Shelter_addressId_fkey" FOREIGN KEY ("addressId") REFERENCES "Address"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
