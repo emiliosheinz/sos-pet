@@ -104,6 +104,7 @@ export default function Shelter() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    window.alert(JSON.stringify(values));
   }
 
   return (
