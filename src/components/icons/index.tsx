@@ -77,9 +77,51 @@ function SearchIcon(props: { className: string }) {
   );
 }
 
+function FilterIcon() {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M22 3H2L10 12.46V19L14 21V12.46L22 3Z"
+        stroke="black"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+function ChevronDownIcon() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M4 6L8 10L12 6"
+        stroke="#94A3B8"
+        stroke-width="1.33333"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
 export const Icons = {
   XIcon,
   FacebookIcon,
   InstagramIcon,
   SearchIcon,
+  FilterIcon,
+  ChevronDownIcon,
 };
