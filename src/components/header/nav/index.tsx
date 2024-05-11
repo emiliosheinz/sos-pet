@@ -28,8 +28,8 @@ export function Nav() {
             Criar abrigo
           </Button>
         </li>
-        <li>
-          {session && (
+        {session && (
+          <li>
             <div className="flex items-center justify-center gap-2">
               <User />
 
@@ -55,8 +55,8 @@ export function Nav() {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-          )}
-        </li>
+          </li>
+        )}
       </ul>
     </nav>
   );
