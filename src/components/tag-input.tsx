@@ -3,6 +3,8 @@ import { Input, type InputProps } from "./ui/input";
 import { Button } from "./ui/button";
 import { RxCross2 } from "react-icons/rx";
 
+import { CiCirclePlus } from "react-icons/ci";
+
 export type TagInputProps = Omit<InputProps, "value" | "onChange"> & {
   value: string[];
   onChange: (tags: string[]) => void;
@@ -28,20 +30,32 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
             </Button>
           ))}
         </div>
-        <Input
-          {...props}
-          ref={ref}
-          value={newTag}
-          onChange={(e) => setNewTag(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
+        <div className="flex gap-2">
+          <Input
+            {...props}
+            ref={ref}
+            value={newTag}
+            onChange={(e) => setNewTag(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                if (!newTag) return;
+                onChange([...new Set([...value, newTag])]);
+                setNewTag("");
+              }
+            }}
+          />
+          <Button
+            type="button"
+            onClick={() => {
               if (!newTag) return;
               onChange([...new Set([...value, newTag])]);
               setNewTag("");
-            }
-          }}
-        />
+            }}
+          >
+            <CiCirclePlus size={24} />
+          </Button>
+        </div>
       </div>
     );
   },
