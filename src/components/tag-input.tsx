@@ -1,8 +1,7 @@
 import { forwardRef, useState } from "react";
-import { Badge } from "./ui/badge";
 import { Input, type InputProps } from "./ui/input";
-import { Cross2Icon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
+import { RxCross2 } from "react-icons/rx";
 
 export type TagInputProps = Omit<InputProps, "value" | "onChange"> & {
   value: string[];
@@ -25,7 +24,7 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
               onClick={() => onChange(value.filter((t) => t !== tag))}
             >
               <span>{tag}</span>
-              <Cross2Icon />
+              <RxCross2 />
             </Button>
           ))}
         </div>
