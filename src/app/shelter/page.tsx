@@ -177,7 +177,7 @@ function Shelter() {
                 <FormLabel>Doações</FormLabel>
 
                 <FormControl>
-                  <TagInput {...field} placeholder="Ração" />
+                  <TagInput {...field} placeholder="Ex: Ração" />
                 </FormControl>
                 <FormDescription>Insira um item de cada vez</FormDescription>
                 <FormMessage />
@@ -192,7 +192,7 @@ function Shelter() {
                 <FormLabel>Voluntários</FormLabel>
 
                 <FormControl>
-                  <TagInput {...field} placeholder="Veterinários" />
+                  <TagInput {...field} placeholder="Ex: Veterinários" />
                 </FormControl>
                 <FormDescription>Insira um item de cada vez</FormDescription>
                 <FormMessage />
