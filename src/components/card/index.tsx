@@ -6,52 +6,87 @@ import {
   CardHeader,
 } from "~/components/ui/card";
 import { Badge } from "~/components/ui/badge";
-import { Button } from "~/components/ui/button";
-import { Icons } from "../icons";
+import { type Shelter } from "@prisma/client";
+import { FaWhatsapp, FaFacebook, FaInstagram } from "react-icons/fa";
+import { RiTwitterXLine } from "react-icons/ri";
 
-export function Card() {
+function clearPhoneNumberMask(phone: string) {
+  return phone.replace(/\D/g, "");
+}
+
+type Props = {
+  shelter: Shelter;
+};
+
+export function Card({ shelter }: Props) {
   return (
-    <CardBase key="1" className="shadow-md md:w-[672px]">
+    <CardBase key={shelter.id} className="w-full shadow-md md:max-w-[672px]">
       <CardHeader>
         <div className="flex justify-between">
-          <h4 className="text-lg font-medium">Acme Inc</h4>
+          <h4 className="text-lg font-medium">{shelter.name}</h4>
           <div className="flex items-center space-x-3">
             <SocialLink
-              href="#"
-              icon={<Icons.FacebookIcon />}
+              href={`https://facebook.com/${shelter.facebook}`}
+              icon={<FaFacebook size={18} />}
               label="Facebook"
             />
             <SocialLink
-              href="#"
-              icon={<Icons.InstagramIcon />}
+              href={`https://instagram.com/${shelter.instagram}`}
+              icon={<FaInstagram size={18} />}
               label="Instagram"
             />
-            <SocialLink href="#" icon={<Icons.XIcon />} label="Twitter" />
+            <SocialLink
+              href={`https://x.com/${shelter.twitter}`}
+              icon={<RiTwitterXLine size={18} />}
+              label="Twitter"
+            />
           </div>
         </div>
         <Link href="#" className="text-sm text-gray-500 underline">
-          Endereço
+          {shelter.addressStreet} {shelter.addressNumber}{" "}
+          {shelter.addressNeighborhood}, {shelter.addressCity},{" "}
+          {shelter.addressState}
         </Link>
       </CardHeader>
       <CardContent className="space-y-4">
         <CardSection title="Doações necessárias">
           <BadgeList>
-            <Badge className="rounded-sm bg-[rgba(240,240,240,1)] font-normal text-slate-500">
-              Alimentos
-            </Badge>
+            {shelter.donations.map((need) => (
+              <Badge
+                key={need}
+                className="rounded-sm bg-[rgba(240,240,240,1)] font-normal text-slate-500"
+              >
+                Alimentos
+              </Badge>
+            ))}
           </BadgeList>
         </CardSection>
         <CardSection title="Voluntários necessários">
           <BadgeList>
-            <Badge className="rounded-sm bg-[rgba(240,240,240,1)] font-normal text-slate-500">
-              Distribuição
-            </Badge>
+            {shelter.volunteers.map((volunteer) => (
+              <Badge
+                key={volunteer}
+                className="rounded-sm bg-[rgba(240,240,240,1)] font-normal text-slate-500"
+              >
+                {volunteer}
+              </Badge>
+            ))}
           </BadgeList>
         </CardSection>
       </CardContent>
       <CardFooter className="flex items-center justify-between">
-        <Button>Entre em contato</Button>
-        <p className="text-xl font-semibold text-green-600">Vagas: 10</p>
+        <a
+          className="inline-flex h-10 items-center justify-between gap-2 whitespace-nowrap rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-neutral-50 ring-offset-white transition-colors hover:bg-neutral-900/90 focus-visible:outline-none focus-visible:ring-2
+          focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-neutral-50 dark:text-neutral-900
+dark:ring-offset-neutral-950 dark:hover:bg-neutral-50/90 dark:focus-visible:ring-neutral-300
+          "
+          href={`https://wa.me/+55${clearPhoneNumberMask(shelter.phone)}`}
+        >
+          Entre em contato <FaWhatsapp />
+        </a>
+        <p className="text-xl font-semibold text-green-600">
+          Vagas: {Math.abs(shelter.capacity - shelter.occupancy)}
+        </p>
       </CardFooter>
     </CardBase>
   );

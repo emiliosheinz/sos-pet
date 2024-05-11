@@ -8,6 +8,7 @@ import Providers from "./providers";
 import { getServerAuthSession } from "~/server/auth";
 import { Toaster } from "~/components/ui/sonner";
 import { Footer } from "~/components/footer";
+import { Header } from "~/components/header";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,10 +31,11 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable} h-dvh p-3`}>
+      <body className={`font-sans ${inter.variable} h-dvh`}>
         <Providers session={session}>
           <TRPCReactProvider>
-            <div>{children}</div>
+            <Header />
+            <div className="p-3">{children}</div>
             <Footer />
             <Toaster />
           </TRPCReactProvider>
