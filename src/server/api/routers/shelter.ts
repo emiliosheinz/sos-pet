@@ -73,4 +73,32 @@ export const shelterRouter = createTRPCRouter({
         },
       });
     }),
+  updateCurrentUserShelter: protectedProcedure
+    .input(shelterSchema)
+    .mutation(async ({ input, ctx }) => {
+      await db.shelter.update({
+        where: {
+          createdById: ctx.session.user.id,
+        },
+        data: {
+          name: input.name,
+          phone: input.phone,
+          capacity: +input.capacity,
+          occupancy: +input.occupancy,
+          donations: input.donations,
+          volunteers: input.volunteers,
+          twitter: input.social.twitter,
+          instagram: input.social.instagram,
+          facebook: input.social.facebook,
+          website: input.social.website,
+          addressZip: input.address.cep,
+          addressStreet: input.address.street,
+          addressNumber: input.address.number,
+          addressState: input.address.state,
+          addressCity: input.address.city,
+          addressComplement: input.address.complement,
+          addressNeighborhood: input.address.neighborhood,
+        },
+      });
+    }),
 });

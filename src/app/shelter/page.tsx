@@ -46,9 +46,29 @@ function Shelter() {
       console.error(error);
     },
   });
+  const updateCurrentUserShelter =
+    api.shelter.updateCurrentUserShelter.useMutation({
+      onSuccess: () => {
+        toast.success("Abrigo atualizado com sucesso!");
+        window.scrollTo(0, 0);
+      },
+      onError: (error) => {
+        toast.error("Ops! Houve um erro ao atualizar o abrigo.");
+        console.error(error);
+      },
+    });
+  const isLoading =
+    createShelter.isPending || updateCurrentUserShelter.isPending;
+  const isEditing = !!shelter;
+  console.log(form.formState.dirtyFields);
+  const hasModifiedInputs = Object.keys(form.formState.dirtyFields).length > 0;
 
   async function onSubmit(values: z.infer<typeof shelterSchema>) {
-    createShelter.mutate(values);
+    if (isEditing) {
+      updateCurrentUserShelter.mutate(values);
+    } else {
+      createShelter.mutate(values);
+    }
   }
 
   function populateAddressWithViaCepData(data: {
@@ -158,11 +178,7 @@ function Shelter() {
                 <FormControl>
                   <TagInput
                     {...field}
-                    value={field.value}
                     placeholder="Insira a doação e pressione Enter"
-                    onChange={(newTags) => {
-                      form.setValue(field.name, newTags);
-                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -178,11 +194,7 @@ function Shelter() {
                 <FormControl>
                   <TagInput
                     {...field}
-                    value={field.value}
                     placeholder="Insira o tipo de voluntario e pressione Enter"
-                    onChange={(newTags) => {
-                      form.setValue(field.name, newTags);
-                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -364,13 +376,13 @@ function Shelter() {
           <Button
             type="submit"
             className="w-full"
-            disabled={!!createShelter.isPending}
+            disabled={
+              isLoading ||
+              !form.formState.isValid ||
+              (isEditing && !hasModifiedInputs)
+            }
           >
-            {createShelter.isPending ? (
-              <Loader2 className="animate-spin" />
-            ) : (
-              "Salvar"
-            )}
+            {isLoading ? <Loader2 className="animate-spin" /> : "Salvar"}
           </Button>
         </form>
       </Form>
