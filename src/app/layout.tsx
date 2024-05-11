@@ -36,7 +36,7 @@ export default async function RootLayout({
         <Providers session={session}>
           <TRPCReactProvider>
             <Header />
-            {children}
+            <div className="min-h-[60vh]">{children}</div>
             <Lead />
             <Footer />
           </TRPCReactProvider>
