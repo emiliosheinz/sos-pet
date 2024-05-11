@@ -392,11 +392,7 @@ function Shelter() {
           <Button
             type="submit"
             className="w-full"
-            disabled={
-              isLoading ||
-              !form.formState.isValid ||
-              (isEditing && !hasModifiedInputs)
-            }
+            disabled={isLoading || (isEditing && !hasModifiedInputs)}
           >
             {isLoading ? <Loader2 className="animate-spin" /> : "Salvar"}
           </Button>

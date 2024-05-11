@@ -16,16 +16,17 @@ export function Footer() {
         </div>
         <div className="flex flex-col items-center gap-1 text-center align-middle md:flex-row md:gap-8">
           <Link
-            href="https://www.instagram.com/sospetbr/"
+            target="_blank"
+            href="https://www.instagram.com/oficial_sospet/"
             className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700"
           >
-            Siga-nos no Instagram <FaInstagram size={20} />
+            <FaInstagram size={16} /> @oficial_sospet
           </Link>
           <Link
             href="mailto:sospet.suporte@gmail.com"
             className="text-sm text-gray-500 hover:text-gray-700"
           >
-            Entre em contato: sospet.suporte@gmail.com
+            sospet.suporte@gmail.com
           </Link>
           <Link
             href="/terms-of-use"
