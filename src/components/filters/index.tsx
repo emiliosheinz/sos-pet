@@ -4,7 +4,8 @@ import {
   DrawerFooter,
   DrawerTrigger,
 } from "~/components/ui/drawer";
-import { Icons } from "../icons";
+import { CiFilter } from "react-icons/ci";
+import { FaChevronDown } from "react-icons/fa";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -46,14 +47,14 @@ export function Filters({ menus }: FiltersProps) {
   return (
     <Drawer>
       <DrawerTrigger>
-        <Icons.FilterIcon />
+        <CiFilter size={30} />
       </DrawerTrigger>
       <DrawerContent className="space-y-5 px-6 lg:px-80">
         {menus.map((menu, index) => (
           <DropdownMenu key={index}>
             <DropdownMenuTrigger asChild>
               <Button className="flex justify-between" variant="outline">
-                {menu.label} <Icons.ChevronDownIcon />
+                {menu.label} <FaChevronDown />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
