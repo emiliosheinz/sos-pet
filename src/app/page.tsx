@@ -63,9 +63,9 @@ export default function Home() {
             <Skeleton className="h-[306px] w-full rounded-xl" />
           </>
         ) : (
-          [...filteredShelters, ...filteredShelters, ...filteredShelters]?.map(
-            (shelter) => <Card key={shelter.id} shelter={shelter} />,
-          )
+          filteredShelters?.map((shelter) => (
+            <Card key={shelter.id} shelter={shelter} />
+          ))
         )}
       </div>
     </main>
