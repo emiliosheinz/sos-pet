@@ -5,7 +5,7 @@ import { FaInstagram } from "react-icons/fa";
 export function Footer() {
   return (
     <div className="mt-8 flex w-full justify-center border-t-2 border-slate-300/25 bg-inherit px-4 py-8 align-middle xl:px-0">
-      <div className="flex w-full max-w-7xl flex-col justify-center gap-4 md:flex-row md:justify-between">
+      <div className="flex w-full max-w-7xl flex-col justify-center gap-4 px-4 md:flex-row md:justify-between">
         <div className="flex justify-center">
           <Image
             src="/logo-horizontal.svg"

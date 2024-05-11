@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import { Nav } from "./nav";
 import { Sidebar } from "./sidebar";
@@ -8,7 +6,7 @@ import Link from "next/link";
 export function Header() {
   return (
     <header className="bg-white py-4 text-black">
-      <div className="mx-auto flex items-center gap-3 px-4 lg:justify-between">
+      <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 lg:justify-between">
         <Sidebar />
 
         <div className="flex items-center gap-14">
