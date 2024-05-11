@@ -31,7 +31,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable} h-dvh`}>
+      <body className={`font-sans ${inter.variable}`}>
         <Providers session={session}>
           <TRPCReactProvider>
             <Header />
