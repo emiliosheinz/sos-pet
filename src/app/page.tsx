@@ -6,7 +6,7 @@ import { Filters } from "~/components/filters";
 import Fuse from "fuse.js";
 import { useMemo } from "react";
 import { Skeleton } from "~/components/ui/skeleton";
-import { useDebouncedState } from "~/hooks/use-debouce";
+import { useDebouncedState } from "~/hooks/use-debouce-state";
 
 const menus = [
   {
@@ -39,15 +39,24 @@ export default function Home() {
 
   const filteredShelters = useMemo(() => {
     const trimmedSearchTerm = searchTerm.trim();
-    if (trimmedSearchTerm.length === 0) {
+    if (trimmedSearchTerm.length === 0 || !data) {
       return data ?? [];
     }
 
+    console.log(data);
     const fuse = new Fuse(data, {
-      keys: ["name", "street", "addressCity", "addressState"],
+      keys: [
+        "name",
+        "addressStreet",
+        "addressNeighborhood",
+        "addressZip",
+        "addressCity",
+        "addressState",
+      ],
       includeScore: true,
       threshold: 0.4,
     });
+
     return fuse.search(trimmedSearchTerm).map((result) => result.item);
   }, [data, searchTerm]);
 
