@@ -99,15 +99,14 @@ dark:ring-offset-neutral-950 dark:hover:bg-neutral-50/90 dark:focus-visible:ring
         >
           Entre em contato <FaWhatsapp />
         </a>
-        {availableVacancies === 0 && (
-          <p className="text-right text-xl font-semibold text-red-600	">
-            Vagas esgotadas
-          </p>
-        )}
 
-        {availableVacancies > 0 && (
+        {availableVacancies > 0 ? (
           <p className="text-right text-xl font-semibold text-green-600	">
             Vagas: {availableVacancies}
+          </p>
+        ) : (
+          <p className="text-right text-xl font-semibold text-red-600	">
+            Vagas esgotadas
           </p>
         )}
       </CardFooter>
