@@ -54,6 +54,17 @@ export default function Home() {
         <SearchInput handleSearch={handleSearch} />
         {/* <Filters menus={menus} /> */}
       </div>
+      {!isLoading && !filteredShelters?.length && (
+        <div className="text-center text-gray-600">
+          <span className="mb-2 font-bold">
+            Desculpe, nenhum resultado encontrado.
+          </span>
+          <p>
+            Não encontramos nenhum resultado correspondente à sua busca. Por
+            favor, revise os critérios de pesquisa e tente novamente.
+          </p>
+        </div>
+      )}
       <div className="grid w-full max-w-7xl grid-cols-1 gap-5 md:grid-cols-2">
         {isLoading ? (
           <>
