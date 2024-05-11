@@ -21,7 +21,7 @@ type Props = {
 export function Card({ shelter }: Props) {
   const fullAddress = `${shelter.addressStreet} ${shelter.addressNumber} ${shelter.addressNeighborhood}, ${shelter.addressCity}, ${shelter.addressState}`;
 
-  const availableVacancies = 0;
+  const availableVacancies = shelter.capacity - shelter.occupancy;
 
   return (
     <CardBase key={shelter.id} className="w-full shadow-md md:max-w-[672px]">
