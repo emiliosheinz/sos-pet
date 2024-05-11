@@ -1,7 +1,11 @@
 import { Input } from "~/components/ui/input";
 import { CiSearch } from "react-icons/ci";
 
-export function SearchInput() {
+type SearchInputProps = {
+  handleSearch: (event: { target: { value: string } }) => void;
+};
+
+export function SearchInput({ handleSearch }: SearchInputProps) {
   return (
     <div className="relative w-full">
       <CiSearch
@@ -12,6 +16,7 @@ export function SearchInput() {
         className="shadow-s w-full rounded-md border border-gray-200 bg-white px-10 py-2 text-sm"
         placeholder="Buscar abrigo..."
         type="search"
+        onChange={handleSearch}
       />
     </div>
   );

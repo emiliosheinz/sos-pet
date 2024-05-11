@@ -1,10 +1,12 @@
 "use client";
-import { useSession, signIn, signOut } from "next-auth/react";
 import { Card } from "~/components/card/";
 import { SearchInput } from "~/components/search-input";
-import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/react";
 import { Filters } from "~/components/filters";
+import { type Shelter } from "@prisma/client";
+import Fuse from "fuse.js";
+import { useEffect, useState } from "react";
+import { Skeleton } from "~/components/skeleton";
 
 const menus = [
   {
@@ -32,36 +34,45 @@ const menus = [
 ];
 
 export default function Home() {
-  const { data: session } = useSession();
-  const { data } = api.shelter.findAll.useQuery();
+  const { data, isLoading } = api.shelter.findAll.useQuery();
+  const [filteredShelters, setFilteredShelters] = useState<Shelter[]>([]);
 
-  // return (
-  //   <main className="flex w-full flex-col  items-center justify-center gap-2 bg-white pt-16">
-  //     {!!session && <h2>{session.user.name}</h2>}
-  //     {!!session ? (
-  //       <Button onClick={() => signOut()}>Sign out</Button>
-  //     ) : (
-  //       <Button onClick={() => signIn("google")}>Sign in</Button>
-  //     )}
-  //   </main>
-  // );
-  //
+  useEffect(() => {
+    if (!isLoading && data) setFilteredShelters(data);
+  }, [data, isLoading]);
+
+  const fuse = new Fuse(filteredShelters, {
+    keys: ["name", "addressCity", "addressState"],
+    includeScore: true,
+    threshold: 0.4,
+  });
+
+  const handleSearch = (event: { target: { value: string } }) => {
+    const searchTerm = event.target.value.trim();
+
+    if (searchTerm === "") {
+      setFilteredShelters(data ?? []);
+    } else {
+      const results = fuse.search(searchTerm).map((result) => result.item);
+
+      setFilteredShelters(results);
+    }
+  };
 
   return (
     <main className="flex w-full flex-col  items-center justify-center gap-2 bg-white pt-16">
-      {!!session && <h2>{session.user.name}</h2>}
-      {!!session ? (
-        <Button onClick={() => signOut()}>Sign out</Button>
-      ) : (
-        <Button onClick={() => signIn("google")}>Sign in</Button>
-      )}
-
       <div className="mb-6 flex w-full items-center justify-between space-x-4 md:w-[672px]">
-        <SearchInput />
+        <SearchInput handleSearch={handleSearch} />
         <Filters menus={menus} />
       </div>
 
-      {data?.map((shelter) => <Card key={shelter.id} shelter={shelter} />)}
+      {isLoading ? (
+        <Skeleton />
+      ) : (
+        filteredShelters?.map((shelter) => (
+          <Card key={shelter.id} shelter={shelter} />
+        ))
+      )}
     </main>
   );
 }
