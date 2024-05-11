@@ -21,11 +21,19 @@ import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 import { TagInput } from "~/components/tag-input";
 import { defaultValues } from "./constants";
+import {
+  ShelterContextProvider,
+  useShelterContext,
+} from "~/contexts/ShelterContext";
 
-export default function Shelter() {
+function Shelter() {
+  const { shelter } = useShelterContext();
   const form = useForm<z.infer<typeof shelterSchema>>({
     resolver: zodResolver(shelterSchema),
-    defaultValues: defaultValues,
+    defaultValues: {
+      ...defaultValues,
+      ...shelter,
+    },
   });
   const router = useRouter();
   const createShelter = api.shelter.create.useMutation({
@@ -38,9 +46,28 @@ export default function Shelter() {
       console.error(error);
     },
   });
+  const updateCurrentUserShelter =
+    api.shelter.updateCurrentUserShelter.useMutation({
+      onSuccess: () => {
+        toast.success("Abrigo atualizado com sucesso!");
+        window.scrollTo(0, 0);
+      },
+      onError: (error) => {
+        toast.error("Ops! Houve um erro ao atualizar o abrigo.");
+        console.error(error);
+      },
+    });
+  const isLoading =
+    createShelter.isPending || updateCurrentUserShelter.isPending;
+  const isEditing = !!shelter;
+  const hasModifiedInputs = Object.keys(form.formState.dirtyFields).length > 0;
 
   async function onSubmit(values: z.infer<typeof shelterSchema>) {
-    createShelter.mutate(values);
+    if (isEditing) {
+      updateCurrentUserShelter.mutate(values);
+    } else {
+      createShelter.mutate(values);
+    }
   }
 
   function populateAddressWithViaCepData(data: {
@@ -65,7 +92,7 @@ export default function Shelter() {
   }
 
   return (
-    <main className="flex w-full items-center justify-center bg-white py-6">
+    <main className="flex w-full items-center justify-center bg-white px-3 py-6">
       <Form {...form}>
         <form
           className="flex w-full max-w-lg flex-col gap-5"
@@ -150,11 +177,7 @@ export default function Shelter() {
                 <FormControl>
                   <TagInput
                     {...field}
-                    value={field.value}
                     placeholder="Insira a doação e pressione Enter"
-                    onChange={(newTags) => {
-                      form.setValue(field.name, newTags);
-                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -170,11 +193,7 @@ export default function Shelter() {
                 <FormControl>
                   <TagInput
                     {...field}
-                    value={field.value}
                     placeholder="Insira o tipo de voluntario e pressione Enter"
-                    onChange={(newTags) => {
-                      form.setValue(field.name, newTags);
-                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -356,16 +375,34 @@ export default function Shelter() {
           <Button
             type="submit"
             className="w-full"
-            disabled={!!createShelter.isPending}
+            disabled={
+              isLoading ||
+              !form.formState.isValid ||
+              (isEditing && !hasModifiedInputs)
+            }
           >
-            {createShelter.isPending ? (
-              <Loader2 className="animate-spin" />
-            ) : (
-              "Salvar"
-            )}
+            {isLoading ? <Loader2 className="animate-spin" /> : "Salvar"}
           </Button>
         </form>
       </Form>
     </main>
+  );
+}
+
+export default function ShelterPage() {
+  const { data, isLoading } = api.shelter.findCurrentUserShelter.useQuery();
+
+  if (isLoading) {
+    return (
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
+
+  return (
+    <ShelterContextProvider shelter={data ?? null}>
+      <Shelter />
+    </ShelterContextProvider>
   );
 }
