@@ -3,10 +3,10 @@ import { Card } from "~/components/card/";
 import { SearchInput } from "~/components/search-input";
 import { api } from "~/trpc/react";
 import { Filters } from "~/components/filters";
-import { type Shelter } from "@prisma/client";
 import Fuse from "fuse.js";
-import { useEffect, useState } from "react";
-import { Skeleton } from "~/components/skeleton";
+import { useMemo } from "react";
+import { Skeleton } from "~/components/ui/skeleton";
+import { useDebouncedState } from "~/hooks/use-debouce";
 
 const menus = [
   {
@@ -35,28 +35,26 @@ const menus = [
 
 export default function Home() {
   const { data, isLoading } = api.shelter.findAll.useQuery();
-  const [filteredShelters, setFilteredShelters] = useState<Shelter[]>([]);
+  const [searchTerm, setSearchTerm] = useDebouncedState("", 300);
+  console.log(searchTerm);
 
-  useEffect(() => {
-    if (!isLoading && data) setFilteredShelters(data);
-  }, [data, isLoading]);
+  const filteredShelters = useMemo(() => {
+    let result = data ?? [];
+    if (searchTerm.trim() !== "") {
+      const fuse = new Fuse(result, {
+        keys: ["name", "street", "addressCity", "addressState"],
+        includeScore: true,
+        threshold: 0.4,
+      });
 
-  const fuse = new Fuse(filteredShelters, {
-    keys: ["name", "addressCity", "addressState"],
-    includeScore: true,
-    threshold: 0.4,
-  });
+      result = fuse.search(searchTerm).map((result) => result.item);
+    }
+
+    return result;
+  }, [data, searchTerm]);
 
   const handleSearch = (event: { target: { value: string } }) => {
-    const searchTerm = event.target.value.trim();
-
-    if (searchTerm === "") {
-      setFilteredShelters(data ?? []);
-    } else {
-      const results = fuse.search(searchTerm).map((result) => result.item);
-
-      setFilteredShelters(results);
-    }
+    setSearchTerm(event.target.value);
   };
 
   return (
@@ -67,7 +65,11 @@ export default function Home() {
       </div>
 
       {isLoading ? (
-        <Skeleton />
+        <div className="flex flex-col space-y-3">
+          <Skeleton className="h-[306px] w-[390px] rounded-xl md:w-[672px]" />
+          <Skeleton className="h-[306px] w-[390px] rounded-xl md:w-[672px]" />
+          <Skeleton className="h-[306px] w-[390px] rounded-xl md:w-[672px]" />
+        </div>
       ) : (
         filteredShelters?.map((shelter) => (
           <Card key={shelter.id} shelter={shelter} />
