@@ -48,14 +48,7 @@ export default function Home() {
   //
 
   return (
-    <main className="flex w-full flex-col  items-center justify-center gap-2 bg-white px-3 pt-16">
-      {!!session && <h2>{session.user.name}</h2>}
-      {!!session ? (
-        <Button onClick={() => signOut()}>Sign out</Button>
-      ) : (
-        <Button onClick={() => signIn("google")}>Sign in</Button>
-      )}
-
+    <main className="flex w-full flex-col  items-center justify-center gap-2 bg-white pt-8">
       <div className="mb-6 flex w-full items-center justify-between space-x-4 md:w-[672px]">
         <SearchInput />
         <Filters menus={menus} />
