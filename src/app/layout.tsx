@@ -5,9 +5,9 @@ import { Inter } from "next/font/google";
 import { TRPCReactProvider } from "~/trpc/react";
 
 import Providers from "./providers";
-import { getServerSession } from "next-auth";
 import { getServerAuthSession } from "~/server/auth";
 import { Toaster } from "~/components/ui/sonner";
+import { Footer } from "~/components/footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,10 +30,11 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable} p-3`}>
+      <body className={`font-sans ${inter.variable} h-dvh p-3`}>
         <Providers session={session}>
           <TRPCReactProvider>
-            {children}
+            <div>{children}</div>
+            <Footer />
             <Toaster />
           </TRPCReactProvider>
         </Providers>
