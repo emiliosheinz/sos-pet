@@ -18,3 +18,21 @@ export const cepMask = (value?: string) => {
   value = value.replace(/(\d{5})(\d{3})/, "$1-$2");
   return value;
 };
+
+export function socialMediaMask(value: string) {
+  if (!value) return "";
+
+  if (value.startsWith("@")) {
+    return value;
+  }
+
+  return `@${value}`;
+}
+
+export function unmaskPhone(value: string) {
+  return value.replace(/\D/g, "");
+}
+
+export function unmaskSocialMedia(value: string) {
+  return value.replace(/@/g, "");
+}
