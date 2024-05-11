@@ -49,7 +49,7 @@ export function User() {
       return `Olá, ${session.user.name}`;
     }
 
-    return <div className="text-sm text-black">Olá, faça seu login</div>;
+    return "Olá, faça seu login";
   };
 
   return (

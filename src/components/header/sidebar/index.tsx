@@ -1,8 +1,9 @@
 "use client";
-import { signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
+import { Separator } from "~/components/ui/separator";
 
 import { Button } from "~/components/ui/button";
 
@@ -11,6 +12,7 @@ import { User } from "../user";
 import Link from "next/link";
 
 export function Sidebar() {
+  const { data: session } = useSession();
   const router = useRouter();
 
   return (
@@ -36,14 +38,19 @@ export function Sidebar() {
               <li>
                 <Link href="/about">Sobre</Link>
               </li>
-              <li>
-                <Link href="/shelters">Meus abrigos</Link>
-              </li>
-              <li>
-                <Link href="/" onClick={() => signOut()}>
-                  Sair
-                </Link>
-              </li>
+              {session && (
+                <>
+                  <li>
+                    <Separator className="mb-3" />
+                    <Link href="/shelters">Meus abrigos</Link>
+                  </li>
+                  <li>
+                    <Link href="/" onClick={() => signOut()}>
+                      Sair
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </SheetContent>
