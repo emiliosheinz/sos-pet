@@ -21,27 +21,37 @@ type Props = {
 export function Card({ shelter }: Props) {
   const fullAddress = `${shelter.addressStreet} ${shelter.addressNumber} ${shelter.addressNeighborhood}, ${shelter.addressCity}, ${shelter.addressState}`;
 
+  const availableVacancies = shelter.capacity - shelter.occupancy;
+
   return (
     <CardBase key={shelter.id} className="w-full shadow-md md:max-w-[672px]">
       <CardHeader>
         <div className="flex justify-between">
           <h4 className="text-lg font-medium">{shelter.name}</h4>
           <div className="flex items-center space-x-3">
-            <SocialLink
-              href={`https://facebook.com/${shelter.facebook}`}
-              icon={<FaFacebook size={18} />}
-              label="Facebook"
-            />
-            <SocialLink
-              href={`https://instagram.com/${shelter.instagram}`}
-              icon={<FaInstagram size={18} />}
-              label="Instagram"
-            />
-            <SocialLink
-              href={`https://x.com/${shelter.twitter}`}
-              icon={<RiTwitterXLine size={18} />}
-              label="Twitter"
-            />
+            {shelter.facebook && (
+              <SocialLink
+                href={`https://facebook.com/${shelter.facebook}`}
+                icon={<FaFacebook size={18} />}
+                label="Facebook"
+              />
+            )}
+
+            {shelter.instagram && (
+              <SocialLink
+                href={`https://instagram.com/${shelter.instagram}`}
+                icon={<FaInstagram size={18} />}
+                label="Instagram"
+              />
+            )}
+
+            {shelter.twitter && (
+              <SocialLink
+                href={`https://twitter.com/${shelter.twitter}`}
+                icon={<RiTwitterXLine size={18} />}
+                label="Twitter"
+              />
+            )}
           </div>
         </div>
         <Link
@@ -78,7 +88,7 @@ export function Card({ shelter }: Props) {
           </BadgeList>
         </CardSection>
       </CardContent>
-      <CardFooter className="flex items-center justify-between">
+      <CardFooter className="flex items-center justify-between gap-4">
         <a
           className="inline-flex h-10 items-center justify-between gap-2 whitespace-nowrap rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-neutral-50 ring-offset-white transition-colors hover:bg-neutral-900/90 focus-visible:outline-none focus-visible:ring-2
           focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-neutral-50 dark:text-neutral-900
@@ -89,9 +99,16 @@ dark:ring-offset-neutral-950 dark:hover:bg-neutral-50/90 dark:focus-visible:ring
         >
           Entre em contato <FaWhatsapp />
         </a>
-        <p className="text-xl font-semibold text-green-600">
-          Vagas: {Math.abs(shelter.capacity - shelter.occupancy)}
-        </p>
+
+        {availableVacancies > 0 ? (
+          <p className="text-right text-xl font-semibold text-green-600	">
+            Vagas: {availableVacancies}
+          </p>
+        ) : (
+          <p className="text-right text-xl font-semibold text-red-600	">
+            Vagas esgotadas
+          </p>
+        )}
       </CardFooter>
     </CardBase>
   );

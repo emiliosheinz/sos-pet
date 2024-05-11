@@ -1,13 +1,12 @@
 import "~/styles/globals.css";
 
 import { Inter } from "next/font/google";
-
 import { TRPCReactProvider } from "~/trpc/react";
 
 import Providers from "./providers";
-import { getServerSession } from "next-auth";
 import { getServerAuthSession } from "~/server/auth";
 import { Toaster } from "~/components/ui/sonner";
+import { Footer } from "~/components/footer";
 import { Header } from "~/components/header";
 
 const inter = Inter({
@@ -36,6 +35,7 @@ export default async function RootLayout({
           <TRPCReactProvider>
             <Header />
             {children}
+            <Footer />
             <Toaster />
           </TRPCReactProvider>
         </Providers>

@@ -37,8 +37,8 @@ export function Nav() {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem>
-                  <Link className="w-full" href="/profile">
-                    Meus abrigos
+                  <Link className="w-full" href="/shelter">
+                    Meu abrigo
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />

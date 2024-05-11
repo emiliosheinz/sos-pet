@@ -49,7 +49,7 @@ export function Sidebar() {
                 <>
                   <li>
                     <Separator className="mb-3" />
-                    <Link href="/shelters">Meus abrigos</Link>
+                    <Link href="/shelter">Meu abrigo</Link>
                   </li>
                   <li>
                     <Link href="/" onClick={() => signOut()}>
