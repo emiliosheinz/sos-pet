@@ -2,6 +2,7 @@ import "~/styles/globals.css";
 
 import { Inter } from "next/font/google";
 import { TRPCReactProvider } from "~/trpc/react";
+import { Analytics } from "@vercel/analytics/react";
 
 import Providers from "./providers";
 import { getServerAuthSession } from "~/server/auth";
@@ -36,9 +37,10 @@ export default async function RootLayout({
             <Header />
             {children}
             <Footer />
-            <Toaster />
           </TRPCReactProvider>
         </Providers>
+        <Toaster />
+        <Analytics />
       </body>
     </html>
   );
