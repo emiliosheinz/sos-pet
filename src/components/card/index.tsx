@@ -19,6 +19,8 @@ type Props = {
 };
 
 export function Card({ shelter }: Props) {
+  const fullAddress = `${shelter.addressStreet} ${shelter.addressNumber} ${shelter.addressNeighborhood}, ${shelter.addressCity}, ${shelter.addressState}`;
+
   return (
     <CardBase key={shelter.id} className="w-full shadow-md md:max-w-[672px]">
       <CardHeader>
@@ -42,10 +44,12 @@ export function Card({ shelter }: Props) {
             />
           </div>
         </div>
-        <Link href="#" className="text-sm text-gray-500 underline">
-          {shelter.addressStreet} {shelter.addressNumber}{" "}
-          {shelter.addressNeighborhood}, {shelter.addressCity},{" "}
-          {shelter.addressState}
+        <Link
+          href={`https://www.google.com/maps/search/${fullAddress}`}
+          target="_blank"
+          className="text-sm text-gray-500 underline"
+        >
+          {fullAddress}
         </Link>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -56,7 +60,7 @@ export function Card({ shelter }: Props) {
                 key={need}
                 className="rounded-sm bg-[rgba(240,240,240,1)] font-normal text-slate-500"
               >
-                Alimentos
+                {need}
               </Badge>
             ))}
           </BadgeList>
@@ -80,6 +84,7 @@ export function Card({ shelter }: Props) {
           focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-neutral-50 dark:text-neutral-900
 dark:ring-offset-neutral-950 dark:hover:bg-neutral-50/90 dark:focus-visible:ring-neutral-300
           "
+          target="_blank"
           href={`https://wa.me/+55${clearPhoneNumberMask(shelter.phone)}`}
         >
           Entre em contato <FaWhatsapp />
