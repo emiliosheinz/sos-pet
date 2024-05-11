@@ -9,10 +9,7 @@ import { Badge } from "~/components/ui/badge";
 import { type Shelter } from "@prisma/client";
 import { FaWhatsapp, FaFacebook, FaInstagram } from "react-icons/fa";
 import { RiTwitterXLine } from "react-icons/ri";
-
-function clearPhoneNumberMask(phone: string) {
-  return phone.replace(/\D/g, "");
-}
+import { unmaskPhone, unmaskSocialMedia } from "~/lib/masks";
 
 type Props = {
   shelter: Shelter;
@@ -31,7 +28,7 @@ export function Card({ shelter }: Props) {
           <div className="flex items-center space-x-3">
             {shelter.facebook && (
               <SocialLink
-                href={`https://facebook.com/${shelter.facebook}`}
+                href={`https://facebook.com/${unmaskSocialMedia(shelter.facebook)}`}
                 icon={<FaFacebook size={18} />}
                 label="Facebook"
               />
@@ -39,7 +36,7 @@ export function Card({ shelter }: Props) {
 
             {shelter.instagram && (
               <SocialLink
-                href={`https://instagram.com/${shelter.instagram}`}
+                href={`https://instagram.com/${unmaskSocialMedia(shelter.instagram)}`}
                 icon={<FaInstagram size={18} />}
                 label="Instagram"
               />
@@ -47,7 +44,7 @@ export function Card({ shelter }: Props) {
 
             {shelter.twitter && (
               <SocialLink
-                href={`https://twitter.com/${shelter.twitter}`}
+                href={`https://twitter.com/${unmaskSocialMedia(shelter.twitter)}`}
                 icon={<RiTwitterXLine size={18} />}
                 label="Twitter"
               />
@@ -95,7 +92,7 @@ export function Card({ shelter }: Props) {
 dark:ring-offset-neutral-950 dark:hover:bg-neutral-50/90 dark:focus-visible:ring-neutral-300
           "
           target="_blank"
-          href={`https://wa.me/+55${clearPhoneNumberMask(shelter.phone)}`}
+          href={`https://wa.me/+55${unmaskPhone(shelter.phone)}`}
         >
           Entre em contato <FaWhatsapp />
         </a>

@@ -22,6 +22,10 @@ export function Sidebar() {
     setOpen(false);
   }, [pathname]);
 
+  const handleCloseSidebar = () => {
+    setOpen(false);
+  };
+
   return (
     <div className="flex items-center lg:hidden">
       <Sheet open={open} onOpenChange={setOpen}>
@@ -40,10 +44,14 @@ export function Sidebar() {
                 </Link>
               </li>
               <li>
-                <Link href="/">Home</Link>
+                <Link onClick={handleCloseSidebar} href="/">
+                  Home
+                </Link>
               </li>
               <li>
-                <Link href="/about">Sobre</Link>
+                <Link onClick={handleCloseSidebar} href="/about">
+                  Sobre
+                </Link>
               </li>
               {session && (
                 <>

@@ -16,7 +16,7 @@ import {
   FormMessage,
   FormDescription,
 } from "~/components/ui/form";
-import { cepMask, phoneMask } from "~/lib/masks";
+import { cepMask, phoneMask, socialMediaMask } from "~/lib/masks";
 import { shelterSchema } from "~/schemas/shelter";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
@@ -325,7 +325,13 @@ function Shelter() {
               <FormItem>
                 <FormLabel>Instagram (opcional)</FormLabel>
                 <FormControl>
-                  <Input placeholder="@seu_usuario" {...field} />
+                  <Input
+                    placeholder="@seu_usuario"
+                    {...field}
+                    onChange={(e) => {
+                      field.onChange(socialMediaMask(e.target.value));
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -338,7 +344,13 @@ function Shelter() {
               <FormItem>
                 <FormLabel>Facebook (opcional)</FormLabel>
                 <FormControl>
-                  <Input placeholder="seu_usuario" {...field} />
+                  <Input
+                    placeholder="@seu_usuario"
+                    {...field}
+                    onChange={(e) => {
+                      field.onChange(socialMediaMask(e.target.value));
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -351,7 +363,13 @@ function Shelter() {
               <FormItem>
                 <FormLabel>Twitter (opcional)</FormLabel>
                 <FormControl>
-                  <Input placeholder="@seu_usuario" {...field} />
+                  <Input
+                    placeholder="@seu_usuario"
+                    {...field}
+                    onChange={(e) => {
+                      field.onChange(socialMediaMask(e.target.value));
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
