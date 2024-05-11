@@ -52,7 +52,7 @@ export default function Home() {
     <main className="flex w-full flex-col  items-center justify-center gap-2 bg-white px-3 pt-8">
       <div className="mb-6 flex w-full items-center justify-between space-x-4 md:w-[672px]">
         <SearchInput handleSearch={handleSearch} />
-        <Filters menus={menus} />
+        {/* <Filters menus={menus} /> */}
       </div>
       {isLoading ? (
         <div className="flex flex-col space-y-3">
