@@ -49,22 +49,25 @@ export default function Home() {
   };
 
   return (
-    <main className="flex w-full flex-col  items-center justify-center gap-2 bg-white px-3 pt-8">
-      <div className="mb-6 flex w-full items-center justify-between space-x-4 md:w-[672px]">
+    <main className="flex w-full flex-col items-center justify-center gap-2 bg-white px-3 pt-8">
+      <div className="mb-6 flex w-full max-w-7xl items-center justify-between space-x-4">
         <SearchInput handleSearch={handleSearch} />
         {/* <Filters menus={menus} /> */}
       </div>
-      {isLoading ? (
-        <div className="flex flex-col space-y-3">
-          <Skeleton className="h-[306px] w-[390px] rounded-xl md:w-[672px]" />
-          <Skeleton className="h-[306px] w-[390px] rounded-xl md:w-[672px]" />
-          <Skeleton className="h-[306px] w-[390px] rounded-xl md:w-[672px]" />
-        </div>
-      ) : (
-        filteredShelters?.map((shelter) => (
-          <Card key={shelter.id} shelter={shelter} />
-        ))
-      )}
+      <div className="grid w-full max-w-7xl grid-cols-1 gap-5 md:grid-cols-2">
+        {isLoading ? (
+          <>
+            <Skeleton className="h-[306px] w-full rounded-xl" />
+            <Skeleton className="h-[306px] w-full rounded-xl" />
+            <Skeleton className="h-[306px] w-full rounded-xl" />
+            <Skeleton className="h-[306px] w-full rounded-xl" />
+          </>
+        ) : (
+          filteredShelters?.map((shelter) => (
+            <Card key={shelter.id} shelter={shelter} />
+          ))
+        )}
+      </div>
     </main>
   );
 }
