@@ -14,6 +14,13 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
   ({ value, onChange, ...props }: TagInputProps, ref) => {
     const [newTag, setNewTag] = useState("");
 
+    const addNewTagIfPresent = () => {
+      if (!newTag) return;
+
+      onChange([...new Set([...value, newTag])]);
+      setNewTag("");
+    };
+
     return (
       <div className="space-y-2">
         <div className="flex flex-wrap gap-2">
@@ -39,18 +46,14 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
-                if (!newTag) return;
-                onChange([...new Set([...value, newTag])]);
-                setNewTag("");
+                addNewTagIfPresent();
               }
             }}
           />
           <Button
             type="button"
             onClick={() => {
-              if (!newTag) return;
-              onChange([...new Set([...value, newTag])]);
-              setNewTag("");
+              addNewTagIfPresent();
             }}
           >
             <CiCirclePlus size={24} />
