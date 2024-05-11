@@ -1,17 +1,15 @@
-"use client";
-
 import Link from "next/link";
 
 export default function TermsOfUse() {
   return (
-    <main className="container mb-8 pt-16">
-      <h1 className="mb-4 text-2xl font-bold">Termos de uso</h1>
+    <main className="container mb-8 max-w-5xl pt-16">
+      <h1 className="mb-10 text-3xl font-bold">Termos de uso</h1>
 
       <span className="mb-6 block font-light text-zinc-700">
         Data de Atualização: 11 de maio de 2024
       </span>
 
-      <div className="space-y-4">
+      <div className="space-y-3 text-base font-light leading-7">
         <p>
           Bem-vindo ao SOS Pet. Estes Termos de Uso descrevem as regras e
           diretrizes para a utilização do nosso sistema. Ao acessar ou usar
