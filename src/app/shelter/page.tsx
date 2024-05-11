@@ -14,6 +14,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription,
 } from "~/components/ui/form";
 import { cepMask, phoneMask } from "~/lib/masks";
 import { shelterSchema } from "~/schemas/shelter";
@@ -174,12 +175,11 @@ function Shelter() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Doações</FormLabel>
+
                 <FormControl>
-                  <TagInput
-                    {...field}
-                    placeholder="Insira a doação e pressione Enter"
-                  />
+                  <TagInput {...field} placeholder="Ração" />
                 </FormControl>
+                <FormDescription>Insira um item de cada vez</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -190,12 +190,11 @@ function Shelter() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Voluntários</FormLabel>
+
                 <FormControl>
-                  <TagInput
-                    {...field}
-                    placeholder="Insira o tipo de voluntario e pressione Enter"
-                  />
+                  <TagInput {...field} placeholder="Veterinários" />
                 </FormControl>
+                <FormDescription>Insira um item de cada vez</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -210,7 +209,7 @@ function Shelter() {
                 <FormLabel>CEP</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="90450-001"
+                    placeholder="XXXXX-XXX"
                     {...field}
                     onChange={(e) => {
                       field.onChange(cepMask(e.target.value));
@@ -326,7 +325,7 @@ function Shelter() {
               <FormItem>
                 <FormLabel>Instagram (opcional)</FormLabel>
                 <FormControl>
-                  <Input placeholder="Instagram" {...field} />
+                  <Input placeholder="@seu_usuario" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -339,7 +338,7 @@ function Shelter() {
               <FormItem>
                 <FormLabel>Facebook (opcional)</FormLabel>
                 <FormControl>
-                  <Input placeholder="Facebook" {...field} />
+                  <Input placeholder="seu_usuario" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -352,7 +351,7 @@ function Shelter() {
               <FormItem>
                 <FormLabel>Twitter (opcional)</FormLabel>
                 <FormControl>
-                  <Input placeholder="Twitter" {...field} />
+                  <Input placeholder="@seu_usuario" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -365,7 +364,7 @@ function Shelter() {
               <FormItem>
                 <FormLabel>Website (opcional)</FormLabel>
                 <FormControl>
-                  <Input placeholder="Website" {...field} />
+                  <Input placeholder="https://exemplo.com.br" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
