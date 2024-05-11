@@ -38,18 +38,17 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useDebouncedState("", 300);
 
   const filteredShelters = useMemo(() => {
-    let result = data ?? [];
-    if (searchTerm.trim() !== "") {
-      const fuse = new Fuse(result, {
-        keys: ["name", "street", "addressCity", "addressState"],
-        includeScore: true,
-        threshold: 0.4,
-      });
-
-      result = fuse.search(searchTerm).map((result) => result.item);
+    const trimmedSearchTerm = searchTerm.trim();
+    if (trimmedSearchTerm.length === 0) {
+      return data ?? [];
     }
 
-    return result;
+    const fuse = new Fuse(data, {
+      keys: ["name", "street", "addressCity", "addressState"],
+      includeScore: true,
+      threshold: 0.4,
+    });
+    return fuse.search(trimmedSearchTerm).map((result) => result.item);
   }, [data, searchTerm]);
 
   const handleSearch = (event: { target: { value: string } }) => {
