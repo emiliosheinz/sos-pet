@@ -88,7 +88,7 @@ export function Card({ shelter }: Props) {
           </BadgeList>
         </CardSection>
       </CardContent>
-      <CardFooter className="flex items-center justify-between">
+      <CardFooter className="flex items-center justify-between gap-4">
         <a
           className="inline-flex h-10 items-center justify-between gap-2 whitespace-nowrap rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-neutral-50 ring-offset-white transition-colors hover:bg-neutral-900/90 focus-visible:outline-none focus-visible:ring-2
           focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-neutral-50 dark:text-neutral-900
@@ -100,11 +100,13 @@ dark:ring-offset-neutral-950 dark:hover:bg-neutral-50/90 dark:focus-visible:ring
           Entre em contato <FaWhatsapp />
         </a>
         {availableVacancies === 0 && (
-          <p className="text-xl font-semibold text-red-600">Vagas esgotadas</p>
+          <p className="text-right text-xl font-semibold text-red-600	">
+            Vagas esgotadas
+          </p>
         )}
 
         {availableVacancies > 0 && (
-          <p className="text-xl font-semibold text-green-600">
+          <p className="text-right text-xl font-semibold text-green-600	">
             Vagas: {availableVacancies}
           </p>
         )}
