@@ -14,6 +14,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription,
 } from "~/components/ui/form";
 import { cepMask, phoneMask } from "~/lib/masks";
 import { shelterSchema } from "~/schemas/shelter";
@@ -174,12 +175,18 @@ function Shelter() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Doações</FormLabel>
+
                 <FormControl>
                   <TagInput
                     {...field}
-                    placeholder="Insira a doação e pressione Enter"
+                    value={field.value}
+                    placeholder="Ração"
+                    onChange={(newTags) => {
+                      form.setValue(field.name, newTags);
+                    }}
                   />
                 </FormControl>
+                <FormDescription>Insira um item de cada vez</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -190,12 +197,18 @@ function Shelter() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Voluntários</FormLabel>
+
                 <FormControl>
                   <TagInput
                     {...field}
-                    placeholder="Insira o tipo de voluntario e pressione Enter"
+                    value={field.value}
+                    placeholder="Veterinários"
+                    onChange={(newTags) => {
+                      form.setValue(field.name, newTags);
+                    }}
                   />
                 </FormControl>
+                <FormDescription>Insira um item de cada vez</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -210,7 +223,7 @@ function Shelter() {
                 <FormLabel>CEP</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="90450-001"
+                    placeholder="XXXXX-XXX"
                     {...field}
                     onChange={(e) => {
                       field.onChange(cepMask(e.target.value));
