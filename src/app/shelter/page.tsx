@@ -177,14 +177,7 @@ function Shelter() {
                 <FormLabel>Doações</FormLabel>
 
                 <FormControl>
-                  <TagInput
-                    {...field}
-                    value={field.value}
-                    placeholder="Ração"
-                    onChange={(newTags) => {
-                      form.setValue(field.name, newTags);
-                    }}
-                  />
+                  <TagInput {...field} placeholder="Ração" />
                 </FormControl>
                 <FormDescription>Insira um item de cada vez</FormDescription>
                 <FormMessage />
@@ -199,14 +192,7 @@ function Shelter() {
                 <FormLabel>Voluntários</FormLabel>
 
                 <FormControl>
-                  <TagInput
-                    {...field}
-                    value={field.value}
-                    placeholder="Veterinários"
-                    onChange={(newTags) => {
-                      form.setValue(field.name, newTags);
-                    }}
-                  />
+                  <TagInput {...field} placeholder="Veterinários" />
                 </FormControl>
                 <FormDescription>Insira um item de cada vez</FormDescription>
                 <FormMessage />
