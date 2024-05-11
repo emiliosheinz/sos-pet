@@ -49,12 +49,16 @@ export function User() {
       return `Olá, ${session.user.name}`;
     }
 
-    return "Olá, faça seu login";
+    return (
+      <p>
+        Olá, <span className="underline">faça seu login</span>
+      </p>
+    );
   };
 
   return (
     <RenderLoginButton isLogged={!!session}>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 text-black">
         <Avatar>{renderAvatarImage()}</Avatar>
         <div className="flex items-center">{renderUserInfo()} </div>
       </div>

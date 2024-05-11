@@ -7,13 +7,13 @@ import Link from "next/link";
 
 export function Header() {
   return (
-    <header className="bg-white py-4">
+    <header className="bg-white py-4 text-black">
       <div className="mx-auto flex items-center gap-3 px-4 lg:justify-between">
         <Sidebar />
 
         <div className="flex items-center gap-14">
           <div className="text-xl font-bold">
-            <a href="/" className="text-black">
+            <a href="/">
               <Image
                 src="/logo-horizontal.svg"
                 alt="Logo"
