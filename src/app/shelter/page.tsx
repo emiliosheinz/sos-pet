@@ -21,11 +21,19 @@ import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 import { TagInput } from "~/components/tag-input";
 import { defaultValues } from "./constants";
+import {
+  ShelterContextProvider,
+  useShelterContext,
+} from "~/contexts/ShelterContext";
 
-export default function Shelter() {
+function Shelter() {
+  const { shelter } = useShelterContext();
   const form = useForm<z.infer<typeof shelterSchema>>({
     resolver: zodResolver(shelterSchema),
-    defaultValues: defaultValues,
+    defaultValues: {
+      ...defaultValues,
+      ...shelter,
+    },
   });
   const router = useRouter();
   const createShelter = api.shelter.create.useMutation({
@@ -367,5 +375,23 @@ export default function Shelter() {
         </form>
       </Form>
     </main>
+  );
+}
+
+export default function ShelterPage() {
+  const { data, isLoading } = api.shelter.findCurrentUserShelter.useQuery();
+
+  if (isLoading) {
+    return (
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
+
+  return (
+    <ShelterContextProvider shelter={data ?? null}>
+      <Shelter />
+    </ShelterContextProvider>
   );
 }

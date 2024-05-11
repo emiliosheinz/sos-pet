@@ -6,11 +6,47 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 import { db } from "~/server/db";
+import { type z } from "zod";
 
 export const shelterRouter = createTRPCRouter({
   findAll: publicProcedure.query(async () => {
     return db.shelter.findMany();
   }),
+  findCurrentUserShelter: protectedProcedure.query(
+    async ({ ctx }): Promise<z.infer<typeof shelterSchema> | null> => {
+      const result = await db.shelter.findFirst({
+        where: {
+          createdById: ctx.session.user.id,
+        },
+      });
+      if (!result) {
+        return null;
+      }
+      return {
+        name: result.name,
+        phone: result.phone,
+        capacity: result.capacity.toString(),
+        occupancy: result.occupancy.toString(),
+        donations: result.donations,
+        volunteers: result.volunteers,
+        social: {
+          twitter: result.twitter ?? undefined,
+          instagram: result.instagram ?? undefined,
+          facebook: result.facebook ?? undefined,
+          website: result.website ?? undefined,
+        },
+        address: {
+          cep: result.addressZip,
+          street: result.addressStreet,
+          number: result.addressNumber,
+          state: result.addressState,
+          city: result.addressCity,
+          complement: result.addressComplement ?? undefined,
+          neighborhood: result.addressNeighborhood,
+        },
+      };
+    },
+  ),
   create: protectedProcedure
     .input(shelterSchema)
     .mutation(async ({ ctx, input }) => {
