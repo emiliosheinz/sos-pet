@@ -21,27 +21,37 @@ type Props = {
 export function Card({ shelter }: Props) {
   const fullAddress = `${shelter.addressStreet} ${shelter.addressNumber} ${shelter.addressNeighborhood}, ${shelter.addressCity}, ${shelter.addressState}`;
 
+  const availableVacancies = 0;
+
   return (
     <CardBase key={shelter.id} className="w-full shadow-md md:max-w-[672px]">
       <CardHeader>
         <div className="flex justify-between">
           <h4 className="text-lg font-medium">{shelter.name}</h4>
           <div className="flex items-center space-x-3">
-            <SocialLink
-              href={`https://facebook.com/${shelter.facebook}`}
-              icon={<FaFacebook size={18} />}
-              label="Facebook"
-            />
-            <SocialLink
-              href={`https://instagram.com/${shelter.instagram}`}
-              icon={<FaInstagram size={18} />}
-              label="Instagram"
-            />
-            <SocialLink
-              href={`https://x.com/${shelter.twitter}`}
-              icon={<RiTwitterXLine size={18} />}
-              label="Twitter"
-            />
+            {shelter.facebook && (
+              <SocialLink
+                href={`https://facebook.com/${shelter.facebook}`}
+                icon={<FaFacebook size={18} />}
+                label="Facebook"
+              />
+            )}
+
+            {shelter.instagram && (
+              <SocialLink
+                href={`https://instagram.com/${shelter.instagram}`}
+                icon={<FaInstagram size={18} />}
+                label="Instagram"
+              />
+            )}
+
+            {shelter.twitter && (
+              <SocialLink
+                href={`https://twitter.com/${shelter.twitter}`}
+                icon={<RiTwitterXLine size={18} />}
+                label="Twitter"
+              />
+            )}
           </div>
         </div>
         <Link
@@ -89,9 +99,15 @@ dark:ring-offset-neutral-950 dark:hover:bg-neutral-50/90 dark:focus-visible:ring
         >
           Entre em contato <FaWhatsapp />
         </a>
-        <p className="text-xl font-semibold text-green-600">
-          Vagas: {Math.abs(shelter.capacity - shelter.occupancy)}
-        </p>
+        {availableVacancies === 0 && (
+          <p className="text-xl font-semibold text-red-600">Vagas esgotadas</p>
+        )}
+
+        {availableVacancies > 0 && (
+          <p className="text-xl font-semibold text-green-600">
+            Vagas: {availableVacancies}
+          </p>
+        )}
       </CardFooter>
     </CardBase>
   );
