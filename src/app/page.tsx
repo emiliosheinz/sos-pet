@@ -6,7 +6,7 @@ import { Filters } from "~/components/filters";
 import Fuse from "fuse.js";
 import { useMemo } from "react";
 import { Skeleton } from "~/components/ui/skeleton";
-import { useDebouncedState } from "~/hooks/use-debouce-state";
+import { useDebouncedState } from "~/hooks/use-debouced-state";
 
 const menus = [
   {
@@ -43,7 +43,6 @@ export default function Home() {
       return data ?? [];
     }
 
-    console.log(data);
     const fuse = new Fuse(data, {
       keys: [
         "name",
