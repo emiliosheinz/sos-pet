@@ -21,7 +21,7 @@ export function Card({ shelter }: Props) {
   const availableVacancies = shelter.capacity - shelter.occupancy;
 
   return (
-    <CardBase key={shelter.id} className="w-full shadow-md md:max-w-[672px]">
+    <CardBase key={shelter.id} className="w-full shadow-md">
       <CardHeader>
         <div className="flex justify-between">
           <h4 className="text-lg font-medium">{shelter.name}</h4>
