@@ -29,7 +29,7 @@ export function Sidebar() {
   return (
     <div className="flex items-center lg:hidden">
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger className="p-1">
+        <SheetTrigger className="p-1" aria-label="Menu">
           <CiMenuBurger size={24} />
         </SheetTrigger>
         <SheetContent side={"left"}>

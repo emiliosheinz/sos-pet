@@ -9,6 +9,7 @@ import { getServerAuthSession } from "~/server/auth";
 import { Toaster } from "~/components/ui/sonner";
 import { Footer } from "~/components/footer";
 import { Header } from "~/components/header";
+import { Lead } from "~/components/lead";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -36,6 +37,7 @@ export default async function RootLayout({
           <TRPCReactProvider>
             <Header />
             {children}
+            <Lead />
             <Footer />
           </TRPCReactProvider>
         </Providers>
