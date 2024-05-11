@@ -10,7 +10,7 @@ export function Footer() {
             Suporte: sospet.suporte@gmail.com
           </a>
         </div>
-        <div className="flex flex-col justify-center gap-1 align-middle md:flex-row md:gap-8">
+        <div className="flex flex-col gap-1 text-center align-middle sm:text-left md:flex-row md:gap-8">
           <a className="text-sm text-gray-500">Termos de uso</a>
           <a className="text-sm text-gray-500">Políticas de privacidade</a>
         </div>
