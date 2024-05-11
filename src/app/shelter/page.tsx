@@ -73,7 +73,7 @@ function Shelter() {
   }
 
   return (
-    <main className="flex w-full items-center justify-center bg-white py-6">
+    <main className="flex w-full items-center justify-center bg-white px-3 py-6">
       <Form {...form}>
         <form
           className="flex w-full max-w-lg flex-col gap-5"
