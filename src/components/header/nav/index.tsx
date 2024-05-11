@@ -4,8 +4,6 @@ import { useRouter } from "next/navigation";
 import { Button } from "~/components/ui/button";
 import { useSession, signOut } from "next-auth/react";
 
-import { CiCircleChevDown } from "react-icons/ci";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +13,8 @@ import {
 } from "~/components/ui/dropdown-menu";
 import Link from "next/link";
 import { User } from "../user";
+
+import { CiCircleChevDown } from "react-icons/ci";
 
 export function Nav() {
   const { data: session } = useSession();
@@ -30,31 +30,30 @@ export function Nav() {
         </li>
         {session && (
           <li>
-            <div className="flex items-center justify-center gap-2">
-              <User />
-
-              <DropdownMenu>
-                <DropdownMenuTrigger>
-                  <div className="flex items-center">
-                    {`Olá, ${session.user.name}`}{" "}
-                    <CiCircleChevDown size={30} className="pl-3" />
-                  </div>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem>
-                    <Link className="w-full" href="/profile">
-                      Meus abrigos
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <Link className="w-full" href="/" onClick={() => signOut()}>
-                      Sair
-                    </Link>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center justify-center gap-2">
+                <User />
+                <CiCircleChevDown size={20} />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem>
+                  <Link className="w-full" href="/profile">
+                    Meus abrigos
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Link className="w-full" href="/" onClick={() => signOut()}>
+                    Sair
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </li>
+        )}
+        {!session && (
+          <li>
+            <User />
           </li>
         )}
       </ul>

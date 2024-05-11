@@ -1,9 +1,28 @@
 "use client";
 import Image from "next/image";
 
-import { useSession } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 
 import { Avatar, AvatarImage, AvatarFallback } from "~/components/ui/avatar";
+import Link from "next/link";
+
+const RenderLoginButton = ({
+  isLogged,
+  children,
+}: {
+  isLogged: boolean;
+  children: React.ReactNode;
+}) => {
+  if (!isLogged) {
+    return (
+      <Link href="/" onClick={() => signIn("google")}>
+        {children}
+      </Link>
+    );
+  }
+
+  return children;
+};
 
 export function User() {
   const { data: session } = useSession();
@@ -25,5 +44,20 @@ export function User() {
     );
   };
 
-  return <Avatar>{renderAvatarImage()}</Avatar>;
+  const renderUserInfo = () => {
+    if (session?.user.name) {
+      return `Olá, ${session.user.name}`;
+    }
+
+    return <div className="text-sm text-black">Olá, faça seu login</div>;
+  };
+
+  return (
+    <RenderLoginButton isLogged={!!session}>
+      <div className="flex items-center gap-2">
+        <Avatar>{renderAvatarImage()}</Avatar>
+        <div className="flex items-center">{renderUserInfo()} </div>
+      </div>
+    </RenderLoginButton>
+  );
 }

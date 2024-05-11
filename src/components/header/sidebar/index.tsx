@@ -1,17 +1,18 @@
 "use client";
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "~/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
+
+import { Button } from "~/components/ui/button";
 
 import { CiMenuBurger } from "react-icons/ci";
+import { User } from "../user";
+import Link from "next/link";
 
 export function Sidebar() {
+  const router = useRouter();
+
   return (
     <div className="flex items-center lg:hidden">
       <Sheet>
@@ -19,13 +20,32 @@ export function Sidebar() {
           <CiMenuBurger size={24} />
         </SheetTrigger>
         <SheetContent side={"left"}>
-          <SheetHeader>
-            <SheetTitle>Are you absolutely sure?</SheetTitle>
-            <SheetDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
-            </SheetDescription>
-          </SheetHeader>
+          <div className="flex flex-col items-center justify-center pt-4">
+            <div className="mb-4">
+              <User />
+            </div>
+            <ul className="flex w-full flex-col items-center justify-center space-y-4">
+              <li>
+                <Button onClick={() => router.push("/shelter")}>
+                  Criar abrigo
+                </Button>
+              </li>
+              <li>
+                <Link href="/">Home</Link>
+              </li>
+              <li>
+                <Link href="/about">Sobre</Link>
+              </li>
+              <li>
+                <Link href="/shelters">Meus abrigos</Link>
+              </li>
+              <li>
+                <Link href="/" onClick={() => signOut()}>
+                  Sair
+                </Link>
+              </li>
+            </ul>
+          </div>
         </SheetContent>
       </Sheet>
     </div>
