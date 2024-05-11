@@ -17,7 +17,7 @@ export function Header() {
   return (
     <header className="bg-white py-4">
       <div className="container mx-auto flex items-center gap-3 lg:justify-between">
-        <div className="lg:hidden">
+        <div className="flex items-center lg:hidden">
           <Sheet>
             <SheetTrigger>
               <CiMenuBurger size={24} />
@@ -34,7 +34,7 @@ export function Header() {
           </Sheet>
         </div>
         <div className="text-xl font-bold">
-          <a href="#" className="text-black">
+          <a href="/" className="text-black">
             <Image
               src="/logo-horizontal.svg"
               alt="Logo"
@@ -43,9 +43,7 @@ export function Header() {
             />
           </a>
         </div>
-        <nav className="hidden lg:block">
-          <Nav />
-        </nav>
+        <Nav />
       </div>
     </header>
   );
