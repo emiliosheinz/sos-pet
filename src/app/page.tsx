@@ -36,7 +36,6 @@ const menus = [
 export default function Home() {
   const { data, isLoading } = api.shelter.findAll.useQuery();
   const [searchTerm, setSearchTerm] = useDebouncedState("", 300);
-  console.log(searchTerm);
 
   const filteredShelters = useMemo(() => {
     let result = data ?? [];
