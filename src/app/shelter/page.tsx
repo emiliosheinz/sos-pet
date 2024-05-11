@@ -60,7 +60,6 @@ function Shelter() {
   const isLoading =
     createShelter.isPending || updateCurrentUserShelter.isPending;
   const isEditing = !!shelter;
-  console.log(form.formState.dirtyFields);
   const hasModifiedInputs = Object.keys(form.formState.dirtyFields).length > 0;
 
   async function onSubmit(values: z.infer<typeof shelterSchema>) {
