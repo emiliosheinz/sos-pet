@@ -62,6 +62,6 @@ export const shelterSchema = z.object({
         if (!value) return true;
         return value.startsWith("@");
       }, "O nome de o usuário do Twitter deve começar com @"),
-    website: z.string().url().optional(),
+    website: z.string().optional(),
   }),
 });
