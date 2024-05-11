@@ -19,7 +19,7 @@ export function Header() {
       <div className="container mx-auto flex items-center gap-3 lg:justify-between">
         <div className="flex items-center lg:hidden">
           <Sheet>
-            <SheetTrigger>
+            <SheetTrigger className="p-1">
               <CiMenuBurger size={24} />
             </SheetTrigger>
             <SheetContent side={"left"}>

@@ -4,8 +4,6 @@ import { useRouter } from "next/navigation";
 import { Button } from "~/components/ui/button";
 import { useSession, signOut } from "next-auth/react";
 
-import { Avatar, AvatarImage, AvatarFallback } from "~/components/ui/avatar";
-
 import { CiCircleChevDown } from "react-icons/ci";
 
 import {
@@ -16,28 +14,11 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import Link from "next/link";
-import Image from "next/image";
+import { User } from "../user";
 
 export function Nav() {
   const { data: session } = useSession();
   const router = useRouter();
-
-  const renderAvatarImage = () => {
-    if (session?.user.image) {
-      return <AvatarImage src={session.user.image} />;
-    }
-
-    return (
-      <AvatarFallback>
-        <Image
-          src={"/dog.svg"}
-          alt="Ícone de um cachorro"
-          width={25}
-          height={25}
-        />
-      </AvatarFallback>
-    );
-  };
 
   return (
     <nav className="hidden lg:block">
@@ -50,7 +31,7 @@ export function Nav() {
         <li>
           {session && (
             <div className="flex items-center justify-center gap-2">
-              <Avatar>{renderAvatarImage()}</Avatar>
+              <User />
 
               <DropdownMenu>
                 <DropdownMenuTrigger>
