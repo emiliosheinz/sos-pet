@@ -48,7 +48,7 @@ export default function Home() {
   //
 
   return (
-    <main className="flex w-full flex-col  items-center justify-center gap-2 bg-white pt-16">
+    <main className="flex w-full flex-col  items-center justify-center gap-2 bg-white px-3 pt-16">
       {!!session && <h2>{session.user.name}</h2>}
       {!!session ? (
         <Button onClick={() => signOut()}>Sign out</Button>
