@@ -16,7 +16,7 @@ import {
   FormMessage,
   FormDescription,
 } from "~/components/ui/form";
-import { cepMask, phoneMask } from "~/lib/masks";
+import { cepMask, phoneMask, socialMediaMask } from "~/lib/masks";
 import { shelterSchema } from "~/schemas/shelter";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
@@ -263,7 +263,7 @@ function Shelter() {
                 <FormItem>
                   <FormLabel>Número</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="Número" {...field} />
+                    <Input placeholder="Número" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -325,7 +325,13 @@ function Shelter() {
               <FormItem>
                 <FormLabel>Instagram (opcional)</FormLabel>
                 <FormControl>
-                  <Input placeholder="@seu_usuario" {...field} />
+                  <Input
+                    placeholder="@seu_usuario"
+                    {...field}
+                    onChange={(e) => {
+                      field.onChange(socialMediaMask(e.target.value));
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -338,7 +344,13 @@ function Shelter() {
               <FormItem>
                 <FormLabel>Facebook (opcional)</FormLabel>
                 <FormControl>
-                  <Input placeholder="seu_usuario" {...field} />
+                  <Input
+                    placeholder="@seu_usuario"
+                    {...field}
+                    onChange={(e) => {
+                      field.onChange(socialMediaMask(e.target.value));
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -351,7 +363,13 @@ function Shelter() {
               <FormItem>
                 <FormLabel>Twitter (opcional)</FormLabel>
                 <FormControl>
-                  <Input placeholder="@seu_usuario" {...field} />
+                  <Input
+                    placeholder="@seu_usuario"
+                    {...field}
+                    onChange={(e) => {
+                      field.onChange(socialMediaMask(e.target.value));
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -393,8 +411,8 @@ export default function ShelterPage() {
 
   if (isLoading) {
     return (
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
-        <Loader2 className="h-8 w-8 animate-spin" />
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <Loader2 className="size-8 animate-spin" />
       </div>
     );
   }

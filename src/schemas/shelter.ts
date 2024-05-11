@@ -41,9 +41,27 @@ export const shelterSchema = z.object({
     neighborhood: z.string({ message: "Campo obrigatório" }),
   }),
   social: z.object({
-    instagram: z.string().optional(),
-    facebook: z.string().optional(),
-    twitter: z.string().optional(),
-    website: z.string().optional(),
+    instagram: z
+      .string()
+      .optional()
+      .refine((value) => {
+        if (!value) return true;
+        return value.startsWith("@");
+      }, "O nome de o usuário do Instagram deve começar com @"),
+    facebook: z
+      .string()
+      .optional()
+      .refine((value) => {
+        if (!value) return true;
+        return value.startsWith("@");
+      }, "O nome de o usuário do Facebook deve começar com @"),
+    twitter: z
+      .string()
+      .optional()
+      .refine((value) => {
+        if (!value) return true;
+        return value.startsWith("@");
+      }, "O nome de o usuário do Twitter deve começar com @"),
+    website: z.string().url().optional(),
   }),
 });
