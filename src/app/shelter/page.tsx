@@ -263,7 +263,7 @@ function Shelter() {
                 <FormItem>
                   <FormLabel>Número</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="Número" {...field} />
+                    <Input placeholder="Número" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
