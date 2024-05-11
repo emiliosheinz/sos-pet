@@ -1,12 +1,4 @@
 import {
-  Drawer,
-  DrawerContent,
-  DrawerFooter,
-  DrawerTrigger,
-} from "~/components/ui/drawer";
-import { CiFilter } from "react-icons/ci";
-import { FaChevronDown } from "react-icons/fa";
-import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
@@ -16,7 +8,15 @@ import {
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { BsFilterLeft } from "react-icons/bs";
+import {
+  Sheet,
+  SheetContent,
+  SheetFooter,
+  SheetHeader,
+  SheetTrigger,
+} from "../ui/sheet";
+import { ChevronDown } from "lucide-react";
 
 type DropdownMenuItem = {
   label: string;
@@ -32,32 +32,32 @@ type FiltersProps = {
   menus: DropdownMenuConfig[];
 };
 
-// TODO: Replace `object` with form values type
 type FormData = object;
 
 export function Filters({ menus }: FiltersProps) {
-  const { register, handleSubmit, setValue, getValues } = useForm();
-
-  const schema = z.object({});
+  const { handleSubmit, setValue } = useForm();
 
   const onSubmit = (data: FormData) => {
     console.log(data);
   };
 
   return (
-    <Drawer>
-      <DrawerTrigger>
-        <CiFilter size={30} />
-      </DrawerTrigger>
-      <DrawerContent className="space-y-5 px-6 lg:px-80">
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline">
+          <BsFilterLeft size={30} />
+        </Button>
+      </SheetTrigger>
+      <SheetContent className="flex flex-col p-3">
+        <SheetHeader className="text-lg font-medium">Filtros</SheetHeader>
         {menus.map((menu, index) => (
           <DropdownMenu key={index}>
             <DropdownMenuTrigger asChild>
-              <Button className="flex justify-between" variant="outline">
-                {menu.label} <FaChevronDown />
+              <Button className="flex w-full justify-between" variant="outline">
+                {menu.label} <ChevronDown size={20} />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
+            <DropdownMenuContent className="min-w-60">
               <DropdownMenuLabel>{menu.label}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               {menu.items.map((item, itemIndex) => (
@@ -74,8 +74,7 @@ export function Filters({ menus }: FiltersProps) {
             </DropdownMenuContent>
           </DropdownMenu>
         ))}
-        <DrawerFooter className="flex flex-row items-center justify-center">
-          <Button onClick={handleSubmit(onSubmit)}>Aplicar filtro</Button>
+        <SheetFooter className="flex flex-row justify-end gap-2 p-0">
           <Button
             variant="outline"
             onClick={() => {
@@ -88,8 +87,9 @@ export function Filters({ menus }: FiltersProps) {
           >
             Limpar
           </Button>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+          <Button onClick={handleSubmit(onSubmit)}>Aplicar filtro</Button>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
   );
 }
