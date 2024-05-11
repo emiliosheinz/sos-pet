@@ -326,7 +326,7 @@ function Shelter() {
               <FormItem>
                 <FormLabel>Instagram (opcional)</FormLabel>
                 <FormControl>
-                  <Input placeholder="Instagram" {...field} />
+                  <Input placeholder="@seu_usuario" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -339,7 +339,7 @@ function Shelter() {
               <FormItem>
                 <FormLabel>Facebook (opcional)</FormLabel>
                 <FormControl>
-                  <Input placeholder="Facebook" {...field} />
+                  <Input placeholder="seu_usuario" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -352,7 +352,7 @@ function Shelter() {
               <FormItem>
                 <FormLabel>Twitter (opcional)</FormLabel>
                 <FormControl>
-                  <Input placeholder="Twitter" {...field} />
+                  <Input placeholder="@seu_usuario" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -365,7 +365,7 @@ function Shelter() {
               <FormItem>
                 <FormLabel>Website (opcional)</FormLabel>
                 <FormControl>
-                  <Input placeholder="Website" {...field} />
+                  <Input placeholder="https://exemplo.com.br" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
