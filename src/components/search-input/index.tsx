@@ -14,7 +14,7 @@ export function SearchInput({ handleSearch }: SearchInputProps) {
       />
       <Input
         className="w-full rounded-md border border-gray-200 bg-white px-10 py-2 text-sm shadow-sm"
-        placeholder="Buscar abrigo..."
+        placeholder="Buscar abrigo, cidade, endereço..."
         type="search"
         onChange={handleSearch}
       />

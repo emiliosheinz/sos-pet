@@ -102,11 +102,11 @@ dark:ring-offset-neutral-950 dark:hover:bg-neutral-50/90 dark:focus-visible:ring
         </a>
 
         {availableVacancies > 0 ? (
-          <p className="text-right text-xl font-semibold text-green-600	">
-            Vagas: {availableVacancies}
+          <p className="text-md text-right font-semibold text-green-600">
+            Vagas disponíveis: {availableVacancies}
           </p>
         ) : (
-          <p className="text-right text-xl font-semibold text-red-600	">
+          <p className="text-md text-right font-semibold text-red-600">
             Vagas esgotadas
           </p>
         )}
