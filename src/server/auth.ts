@@ -42,7 +42,7 @@ export const authOptions: NextAuthOptions = {
     logo: "/logo-horizontal.png",
   },
   pages: {
-    signIn: "/auth/signin",
+    signIn: "/signin",
   },
   callbacks: {
     session: ({ session, user }) => ({
