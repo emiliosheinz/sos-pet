@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function About() {
   return (
-    <main className="mb-8">
+    <main className="mb-8 bg-white">
       <div className="relative mb-8 h-72 w-full">
         <Image
           className="object-cover"
