@@ -8,8 +8,7 @@ export function Header() {
     <header className="bg-white py-4 text-black">
       <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 lg:justify-between">
         <Sidebar />
-
-        <div className="flex items-center gap-14">
+        <div className="flex w-full flex-1 items-center gap-14">
           <div className="text-xl font-bold">
             <a href="/">
               <Image
@@ -20,7 +19,6 @@ export function Header() {
               />
             </a>
           </div>
-
           <ul className="hidden space-x-8 lg:flex">
             <li>
               <Link href="/">Home</Link>
@@ -30,7 +28,6 @@ export function Header() {
             </li>
           </ul>
         </div>
-
         <Nav />
       </div>
     </header>

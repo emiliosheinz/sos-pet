@@ -21,15 +21,16 @@ export function Nav() {
   const router = useRouter();
 
   return (
-    <nav className="hidden lg:block">
+    <nav>
       <ul className="flex space-x-4">
         <li>
           <Button onClick={() => router.push("/shelter")} className="mr-2">
             Criar abrigo
           </Button>
         </li>
-        {session && (
-          <li>
+
+        <li className="hidden lg:block">
+          {session ? (
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center justify-center gap-2">
                 <User />
@@ -49,13 +50,10 @@ export function Nav() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          </li>
-        )}
-        {!session && (
-          <li>
+          ) : (
             <User />
-          </li>
-        )}
+          )}
+        </li>
       </ul>
     </nav>
   );
