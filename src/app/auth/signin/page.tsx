@@ -1,16 +1,14 @@
-import { Sign } from "crypto";
 import { getProviders } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { getServerAuthSession } from "~/server/auth";
 import { SigninProviderButton } from "./_components/SigninProviderButton";
 import Image from "next/image";
-import { Card } from "~/components/ui/card";
 
-export default async function SigninPage(props: {
-  children: React.ReactNode;
+type SigninPageProps = {
   searchParams: Record<string, string>;
-}) {
-  const { searchParams } = props;
+};
+
+export default async function SigninPage({ searchParams }: SigninPageProps) {
   const session = await getServerAuthSession();
 
   if (session) {
