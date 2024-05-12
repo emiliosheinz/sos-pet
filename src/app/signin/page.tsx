@@ -34,7 +34,11 @@ export default async function SigninPage({ searchParams }: SigninPageProps) {
         </p>
         <div className="w-full max-w-md p-5">
           {Object.values(providers).map((provider) => (
-            <SigninProviderButton key={provider.id} provider={provider} />
+            <SigninProviderButton
+              key={provider.id}
+              provider={provider}
+              callbackUrl={searchParams.callbackUrl ?? "/"}
+            />
           ))}
         </div>
       </Suspense>
