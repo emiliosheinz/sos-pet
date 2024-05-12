@@ -60,30 +60,34 @@ export function Card({ shelter }: Props) {
         </Link>
       </CardHeader>
       <CardContent className="space-y-4">
-        <CardSection title="Doações necessárias">
-          <BadgeList>
-            {shelter.donations.map((need) => (
-              <Badge
-                key={need}
-                className="rounded-sm bg-[rgba(240,240,240,1)] font-normal text-slate-500"
-              >
-                {need}
-              </Badge>
-            ))}
-          </BadgeList>
-        </CardSection>
-        <CardSection title="Voluntários necessários">
-          <BadgeList>
-            {shelter.volunteers.map((volunteer) => (
-              <Badge
-                key={volunteer}
-                className="rounded-sm bg-[rgba(240,240,240,1)] font-normal text-slate-500"
-              >
-                {volunteer}
-              </Badge>
-            ))}
-          </BadgeList>
-        </CardSection>
+        {shelter?.donations.length > 0 && (
+          <CardSection title="Doações necessárias">
+            <BadgeList>
+              {shelter.donations.map((need) => (
+                <Badge
+                  key={need}
+                  className="rounded-sm bg-[rgba(240,240,240,1)] font-normal text-slate-500"
+                >
+                  {need}
+                </Badge>
+              ))}
+            </BadgeList>
+          </CardSection>
+        )}
+        {shelter?.volunteers.length > 0 && (
+          <CardSection title="Voluntários necessários">
+            <BadgeList>
+              {shelter.volunteers.map((volunteer) => (
+                <Badge
+                  key={volunteer}
+                  className="rounded-sm bg-[rgba(240,240,240,1)] font-normal text-slate-500"
+                >
+                  {volunteer}
+                </Badge>
+              ))}
+            </BadgeList>
+          </CardSection>
+        )}
       </CardContent>
       <CardFooter className="flex items-center justify-between gap-4">
         <a
