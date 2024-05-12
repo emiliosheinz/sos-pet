@@ -10,7 +10,7 @@ import { Toaster } from "~/components/ui/sonner";
 import { Footer } from "~/components/footer";
 import { Header } from "~/components/header";
 import { Lead } from "~/components/lead";
-import { type Metadata } from "next";
+import { type Metadata, type Viewport } from "next";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -52,6 +52,14 @@ export const metadata: Metadata = {
     images: "/dog-in-the-mud.png",
     card: "summary_large_image",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  minimumScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default async function RootLayout({
