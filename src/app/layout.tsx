@@ -10,17 +10,48 @@ import { Toaster } from "~/components/ui/sonner";
 import { Footer } from "~/components/footer";
 import { Header } from "~/components/header";
 import { Lead } from "~/components/lead";
+import { type Metadata } from "next";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
 });
 
-export const metadata = {
-  title: "SOS Pet",
-  description:
-    "Ache abrigos para animais afetados pelos alagamentos no RS próximos a você!",
+const metadataUrl = "https://www.sos-pet.org";
+const metadataTitle = "SOS Pet";
+const metadataDescription =
+  "Ache abrigos para animais afetados pelos alagamentos do Rio Grande do Sul próximos a você.";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(metadataUrl),
   icons: [{ rel: "icon", url: "/favicon.ico" }],
+  description: metadataDescription,
+  title: {
+    default: metadataTitle,
+    template: `%s | ${metadataTitle}`,
+  },
+  openGraph: {
+    title: metadataTitle,
+    type: "website",
+    siteName: metadataTitle,
+    locale: "pt-BR",
+    description: metadataDescription,
+    images: "/dog-in-the-mud.png",
+    url: metadataUrl,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+  twitter: {
+    title: metadataTitle,
+    images: "/dog-in-the-mud.png",
+    card: "summary_large_image",
+  },
 };
 
 export default async function RootLayout({
