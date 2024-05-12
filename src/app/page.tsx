@@ -7,6 +7,8 @@ import Fuse from "fuse.js";
 import { useMemo } from "react";
 import { Skeleton } from "~/components/ui/skeleton";
 import { useDebouncedState } from "~/hooks/use-debouced-state";
+import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
+import { FiInfo } from "react-icons/fi";
 
 const menus = [
   {
@@ -50,6 +52,16 @@ export default function Home() {
 
   return (
     <main className="flex w-full flex-col items-center justify-center gap-2 bg-white px-3 pt-8">
+      <Alert className="mb-6 w-full max-w-7xl">
+        <FiInfo />
+        <AlertTitle>Atenção</AlertTitle>
+        <AlertDescription>
+          Algumas informações, como vagas disponíveis, podem estar
+          desatualizadas. Em caso de dúvida, entre em contato diretamente com o
+          abrigo.
+        </AlertDescription>
+      </Alert>
+
       <div className="mb-6 flex w-full max-w-7xl items-center justify-between space-x-4">
         <SearchInput handleSearch={handleSearch} />
         {/* <Filters menus={menus} /> */}
