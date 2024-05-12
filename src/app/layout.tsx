@@ -20,7 +20,7 @@ const inter = Inter({
 const metadataUrl = "https://www.sos-pet.org";
 const metadataTitle = "SOS Pet";
 const metadataDescription =
-  "Ache abrigos para animais afetados pelos alagamentos do Rio Grande do Sul próximos a você.";
+  "Ache abrigos próximos a você para animais afetados pelos alagamentos do Rio Grande do Sul.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(metadataUrl),
