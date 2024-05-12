@@ -1,13 +1,13 @@
 "use client";
 
-import { signIn, type ClientSafeProvider } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 
-export function SigninProviderButton({
-  provider,
-}: {
-  provider: ClientSafeProvider;
-}) {
+type SigninProviderButtonProps = {
+  provider: { id: string; name: string };
+};
+
+export function SigninProviderButton({ provider }: SigninProviderButtonProps) {
   return (
     <button
       type="button"
