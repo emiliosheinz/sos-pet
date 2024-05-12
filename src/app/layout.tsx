@@ -10,6 +10,7 @@ import { Toaster } from "~/components/ui/sonner";
 import { Footer } from "~/components/footer";
 import { Header } from "~/components/header";
 import { Lead } from "~/components/lead";
+import { type Viewport } from "next";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,6 +22,14 @@ export const metadata = {
   description:
     "Ache abrigos para animais afetados pelos alagamentos no RS próximos a você!",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  minimumScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default async function RootLayout({
