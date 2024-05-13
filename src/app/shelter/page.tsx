@@ -22,18 +22,12 @@ import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 import { TagInput } from "~/components/tag-input";
 import { defaultValues } from "./constants";
-import {
-  ShelterContextProvider,
-  useShelterContext,
-} from "~/contexts/ShelterContext";
 
 function Shelter() {
-  const { shelter } = useShelterContext();
   const form = useForm<z.infer<typeof shelterSchema>>({
     resolver: zodResolver(shelterSchema),
     defaultValues: {
       ...defaultValues,
-      ...shelter,
     },
   });
   const router = useRouter();
@@ -47,28 +41,10 @@ function Shelter() {
       console.error(error);
     },
   });
-  const updateCurrentUserShelter =
-    api.shelter.updateCurrentUserShelter.useMutation({
-      onSuccess: () => {
-        toast.success("Abrigo atualizado com sucesso!");
-        window.scrollTo(0, 0);
-      },
-      onError: (error) => {
-        toast.error("Ops! Houve um erro ao atualizar o abrigo.");
-        console.error(error);
-      },
-    });
-  const isLoading =
-    createShelter.isPending || updateCurrentUserShelter.isPending;
-  const isEditing = !!shelter;
-  const hasModifiedInputs = Object.keys(form.formState.dirtyFields).length > 0;
+  const isLoading = createShelter.isPending;
 
   async function onSubmit(values: z.infer<typeof shelterSchema>) {
-    if (isEditing) {
-      updateCurrentUserShelter.mutate(values);
-    } else {
-      createShelter.mutate(values);
-    }
+    createShelter.mutate(values);
   }
 
   function populateAddressWithViaCepData(data: {
@@ -389,11 +365,7 @@ function Shelter() {
             )}
           />
 
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={isLoading || (isEditing && !hasModifiedInputs)}
-          >
+          <Button type="submit" className="w-full" disabled={isLoading}>
             {isLoading ? <Loader2 className="animate-spin" /> : "Salvar"}
           </Button>
         </form>
@@ -403,19 +375,5 @@ function Shelter() {
 }
 
 export default function ShelterPage() {
-  const { data, isLoading } = api.shelter.findCurrentUserShelter.useQuery();
-
-  if (isLoading) {
-    return (
-      <div className="flex w-full justify-center pt-28">
-        <Loader2 className="size-8 animate-spin" />
-      </div>
-    );
-  }
-
-  return (
-    <ShelterContextProvider shelter={data ?? null}>
-      <Shelter />
-    </ShelterContextProvider>
-  );
+  return <Shelter />;
 }
