@@ -13,6 +13,7 @@ CREATE TABLE "Shelter" (
     "twitter" TEXT,
     "website" TEXT,
     "donations" TEXT[],
+    "volunteers" TEXT[],
     "addressStreet" TEXT NOT NULL,
     "addressCity" TEXT NOT NULL,
     "addressState" TEXT NOT NULL,
@@ -71,9 +72,6 @@ CREATE TABLE "VerificationToken" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Shelter_createdById_key" ON "Shelter"("createdById");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Account_provider_providerAccountId_key" ON "Account"("provider", "providerAccountId");
 
 -- CreateIndex
@@ -96,3 +94,4 @@ ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId"
 
 -- AddForeignKey
 ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
