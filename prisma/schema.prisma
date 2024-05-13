@@ -21,7 +21,7 @@ model Shelter {
   updatedAt DateTime @updatedAt
 
   createdBy   User   @relation(fields: [createdById], references: [id])
-  createdById String @unique
+  createdById String @default("clw2vtnyv00073pj3mbnkmsmt")
 
   phone     String
   capacity  Int
@@ -76,7 +76,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  Shelter       Shelter?
+  Shelter       Shelter[]
 }
 
 model VerificationToken {
