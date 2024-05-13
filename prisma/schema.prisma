@@ -21,7 +21,7 @@ model Shelter {
   updatedAt DateTime @updatedAt
 
   createdBy   User   @relation(fields: [createdById], references: [id])
-  createdById String @default("clw2vtnyv00073pj3mbnkmsmt")
+  createdById String 
 
   phone     String
   capacity  Int
