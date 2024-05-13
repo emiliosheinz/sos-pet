@@ -76,8 +76,20 @@ export const shelterRouter = createTRPCRouter({
   updateCurrentUserShelter: protectedProcedure
     .input(shelterSchema)
     .mutation(async ({ input, ctx }) => {
+      // This is currently only safe because we do not allow users to have more than one shelter on the FE.
+      const result = await db.shelter.findFirst({
+        where: {
+          createdById: ctx.session.user.id,
+        },
+      });
+
+      if (!result) {
+        throw new Error("Shelter not found");
+      }
+
       await db.shelter.update({
         where: {
+          id: result.id,
           createdById: ctx.session.user.id,
         },
         data: {
