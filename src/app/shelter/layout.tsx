@@ -1,7 +1,13 @@
 import { Loader2 } from "lucide-react";
+import { redirect } from "next/navigation";
 import { Suspense, type PropsWithChildren } from "react";
+import { getServerAuthSession } from "~/server/auth";
 
 export default async function ShelterLayout({ children }: PropsWithChildren) {
+  const session = await getServerAuthSession();
+  if (!session) {
+    redirect("/signin?callbackUrl=/shelter");
+  }
   return (
     <Suspense
       fallback={
