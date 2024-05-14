@@ -23,22 +23,14 @@ import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 import { TagInput } from "~/components/tag-input";
 import { defaultValues } from "./constants";
-import {
-  ShelterContextProvider,
-  useShelterContext,
-} from "~/contexts/ShelterContext";
 import { Card as CardBase, CardContent } from "~/components/ui/card";
 import { googleMaps } from "~/lib/google-maps";
 
 function Shelter() {
-  const [isGettingCoordinates, setIsGettingCoordinates] =
-    useState<boolean>(false);
-  const { shelter } = useShelterContext();
   const form = useForm<z.infer<typeof shelterSchema>>({
     resolver: zodResolver(shelterSchema),
     defaultValues: {
       ...defaultValues,
-      ...shelter,
     },
   });
   const router = useRouter();
@@ -52,53 +44,10 @@ function Shelter() {
       console.error(error);
     },
   });
-  const updateCurrentUserShelter =
-    api.shelter.updateCurrentUserShelter.useMutation({
-      onSuccess: () => {
-        toast.success("Abrigo atualizado com sucesso!");
-        window.scrollTo(0, 0);
-      },
-      onError: (error) => {
-        toast.error("Ops! Houve um erro ao atualizar o abrigo.");
-        console.error(error);
-      },
-    });
-  const isLoading =
-    createShelter.isPending ||
-    updateCurrentUserShelter.isPending ||
-    isGettingCoordinates;
-  const isEditing = !!shelter;
-  const hasModifiedInputs = Object.keys(form.formState.dirtyFields).length > 0;
+  const isLoading = createShelter.isPending;
 
   async function onSubmit(values: z.infer<typeof shelterSchema>) {
-    try {
-      setIsGettingCoordinates(true);
-      const { street, number, city, state } = values.address;
-      const coordinates = await googleMaps.coordinates({
-        street,
-        number,
-        city,
-        state,
-      });
-
-      const shelter = {
-        ...values,
-        address: {
-          ...values.address,
-          latitude: coordinates?.lat,
-          longitude: coordinates?.lng,
-        },
-      };
-
-      const mutation = isEditing ? updateCurrentUserShelter : createShelter;
-      mutation.mutate(shelter);
-    } catch (error) {
-      toast.error(
-        "Ops! Houve um erro ao buscar as coordenadas do endereço e o abrigo não foi criado. Tente novamente!.",
-      );
-    } finally {
-      setIsGettingCoordinates(false);
-    }
+    createShelter.mutate(values);
   }
 
   function populateAddressWithViaCepData(data: {
@@ -428,11 +377,7 @@ function Shelter() {
               </CardContent>
             </CardBase>
 
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={isLoading || (isEditing && !hasModifiedInputs)}
-            >
+            <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? <Loader2 className="animate-spin" /> : "Salvar"}
             </Button>
           </form>
@@ -453,9 +398,5 @@ export default function ShelterPage() {
     );
   }
 
-  return (
-    <ShelterContextProvider shelter={data ?? null}>
-      <Shelter />
-    </ShelterContextProvider>
-  );
+  return <Shelter />;
 }
