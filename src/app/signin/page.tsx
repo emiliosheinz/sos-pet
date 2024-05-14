@@ -17,7 +17,10 @@ export default async function SigninPage({ searchParams }: SigninPageProps) {
     redirect(searchParams.callbackUrl ?? "/");
   }
 
-  const providers = [{ id: "google", name: "Google" }];
+  const providers = [
+    { id: "google", name: "Google" },
+    { id: "email", name: "Email" },
+  ];
 
   return (
     <div className="flex flex-col items-center justify-center gap-5 pt-28">
