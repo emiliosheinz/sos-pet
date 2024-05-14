@@ -22,14 +22,14 @@ export const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
     };
 
     return (
-      <div className="space-y-2">
+      <div>
         <div className="flex flex-wrap gap-2">
           {value.map((tag) => (
             <Button
               key={tag}
               type="button"
               variant="secondary"
-              className="flex h-min items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium"
+              className="mb-2 flex h-min items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium"
               onClick={() => onChange(value.filter((t) => t !== tag))}
             >
               <span>{tag}</span>
