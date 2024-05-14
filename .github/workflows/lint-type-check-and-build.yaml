@@ -1,5 +1,4 @@
 name: 🚀 Lint, Type Check, and Build
-description: Lint, type check, and build the project to make sure everything is in order.
 
 on:
   pull_request:
