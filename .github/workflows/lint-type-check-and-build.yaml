@@ -1,0 +1,35 @@
+name: 🚀 Lint, Type Check, and Build
+description: Lint, type check, and build the project to make sure everything is in order.
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  lint-type-check-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20"
+
+      - name: Setup .env file
+        run: echo "${{ secrets.DOT_ENV_FILE_CONTENT }}" > .env
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npm run type-check
+
+      - name: Build
+        run: npm run build
