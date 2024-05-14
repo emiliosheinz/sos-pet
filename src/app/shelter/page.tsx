@@ -223,8 +223,8 @@ function Shelter() {
               <CardContent>
                 <h2 className="my-4 text-xl">Endereço</h2>
                 <div className="flex flex-col gap-3">
-                  <div className="flex gap-5">
-                    <div className="w-32 flex-none">
+                  <div className="flex flex-col gap-5 lg:flex-row">
+                    <div className="flex-none lg:w-32">
                       <FormField
                         control={form.control}
                         name="address.cep"
@@ -256,7 +256,7 @@ function Shelter() {
                         )}
                       />
                     </div>
-                    <div className="flex-1">
+                    <div className="lg:flex-1">
                       <FormField
                         control={form.control}
                         name="address.street"
@@ -272,7 +272,7 @@ function Shelter() {
                       />
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 gap-5">
+                  <div className="grid gap-5 lg:grid-cols-2">
                     <FormField
                       control={form.control}
                       name="address.neighborhood"
@@ -314,7 +314,7 @@ function Shelter() {
                       </FormItem>
                     )}
                   />
-                  <div className="grid grid-cols-2 gap-5">
+                  <div className="grid gap-5 lg:grid-cols-2">
                     <FormField
                       control={form.control}
                       name="address.city"
