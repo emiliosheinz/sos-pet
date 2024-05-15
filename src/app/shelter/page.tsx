@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
@@ -24,7 +23,6 @@ import { useRouter } from "next/navigation";
 import { TagInput } from "~/components/tag-input";
 import { defaultValues } from "./constants";
 import { Card as CardBase, CardContent } from "~/components/ui/card";
-import { googleMaps } from "~/lib/google-maps";
 
 function Shelter() {
   const form = useForm<z.infer<typeof shelterSchema>>({

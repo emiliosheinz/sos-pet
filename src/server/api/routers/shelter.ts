@@ -1,5 +1,5 @@
-import { type z } from "zod";
-import { apiShelterSchema } from "~/schemas/shelter";
+import { type z, z as zod } from "zod";
+import { shelterSchema, apiShelterSchema } from "~/schemas/shelter";
 
 import {
   createTRPCRouter,
@@ -12,6 +12,21 @@ export const shelterRouter = createTRPCRouter({
   findAll: publicProcedure.query(async () => {
     return db.shelter.findMany();
   }),
+  findById: publicProcedure
+    .input(
+      zod.object({
+        id: zod.number(),
+      }),
+    )
+    .query(async (opts) => {
+      const { id } = opts.input;
+
+      return db.shelter.findUnique({
+        where: {
+          id,
+        },
+      });
+    }),
   findCurrentUserShelter: protectedProcedure.query(
     async ({ ctx }): Promise<z.infer<typeof apiShelterSchema> | null> => {
       const result = await db.shelter.findFirst({
