@@ -39,6 +39,8 @@ export const shelterSchema = z.object({
     city: z.string({ message: "Campo obrigatório" }),
     complement: z.string().optional(),
     neighborhood: z.string({ message: "Campo obrigatório" }),
+    latitude: z.number().optional(),
+    longitude: z.number().optional(),
   }),
   social: z.object({
     instagram: z

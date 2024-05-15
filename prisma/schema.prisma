@@ -39,6 +39,8 @@ model Shelter {
   addressNumber  String
   addressNeighborhood String
   addressComplement String?
+  latitude  Float?
+  longitude Float?
 }
 
 // Necessary for Next auth

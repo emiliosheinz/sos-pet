@@ -41,6 +41,8 @@ export const shelterRouter = createTRPCRouter({
           city: result.addressCity,
           complement: result.addressComplement ?? undefined,
           neighborhood: result.addressNeighborhood,
+          latitude: result.latitude ?? undefined,
+          longitude: result.longitude ?? undefined,
         },
       };
     },
@@ -66,6 +68,8 @@ export const shelterRouter = createTRPCRouter({
           addressCity: input.address.city,
           addressComplement: input.address.complement,
           addressNeighborhood: input.address.neighborhood,
+          latitude: input.address.latitude,
+          longitude: input.address.longitude,
         },
       });
     }),
@@ -104,6 +108,8 @@ export const shelterRouter = createTRPCRouter({
           addressCity: input.address.city,
           addressComplement: input.address.complement,
           addressNeighborhood: input.address.neighborhood,
+          latitude: input.address.latitude,
+          longitude: input.address.longitude,
         },
       });
     }),

@@ -27,6 +27,8 @@ import {
   useShelterContext,
 } from "~/contexts/ShelterContext";
 import { Card as CardBase, CardContent } from "~/components/ui/card";
+import axios from "redaxios";
+import { env } from "~/env";
 
 function Shelter() {
   const { shelter } = useShelterContext();
@@ -65,10 +67,24 @@ function Shelter() {
   const hasModifiedInputs = Object.keys(form.formState.dirtyFields).length > 0;
 
   async function onSubmit(values: z.infer<typeof shelterSchema>) {
+    const geocode = await axios.get(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${values.address.street} ${values.address.number}, ${values.address.city} - ${values.address.state}&key=${env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`,
+    );
+    const coordinates = geocode.data?.results[0].geometry.location;
+    const shelter = {
+      ...values,
+      address: {
+        ...values.address,
+        latitude: coordinates?.lat,
+        longitude: coordinates?.lng,
+      },
+    };
+
+    console.log(shelter);
     if (isEditing) {
-      updateCurrentUserShelter.mutate(values);
+      updateCurrentUserShelter.mutate(shelter);
     } else {
-      createShelter.mutate(values);
+      createShelter.mutate(shelter);
     }
   }
 
