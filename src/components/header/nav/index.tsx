@@ -35,7 +35,7 @@ export function Nav() {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem asChild className="cursor-pointer">
-                  <Link href="/shelter">Meu abrigo</Link>
+                  <Link href="/user/shelters">Meus abrigos</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
