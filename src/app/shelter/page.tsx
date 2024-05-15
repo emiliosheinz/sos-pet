@@ -223,63 +223,70 @@ function Shelter() {
               <CardContent>
                 <h2 className="my-4 text-xl">Endereço</h2>
                 <div className="flex flex-col gap-3">
-                  <FormField
-                    control={form.control}
-                    name="address.cep"
-                    render={({ field, fieldState }) => (
-                      <FormItem>
-                        <FormLabel>CEP</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="XXXXX-XXX"
-                            {...field}
-                            onChange={(e) => {
-                              field.onChange(cepMask(e.target.value));
-                            }}
-                            onBlur={() => {
-                              if (fieldState.invalid) return;
-                              fetch(
-                                `https://viacep.com.br/ws/${field.value}/json/`,
-                              )
-                                .then((response) => response.json())
-                                .then(populateAddressWithViaCepData)
-                                .catch((error) => {
-                                  console.log(error);
-                                });
-                            }}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="address.street"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Rua</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Nome da rua" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="address.neighborhood"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Bairro</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Bairro" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <div className="grid grid-cols-2 gap-5">
+                  <div className="flex flex-col gap-5 lg:flex-row">
+                    <div className="flex-none lg:w-32">
+                      <FormField
+                        control={form.control}
+                        name="address.cep"
+                        render={({ field, fieldState }) => (
+                          <FormItem>
+                            <FormLabel>CEP</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="xxxxx-xxx"
+                                {...field}
+                                onChange={(e) => {
+                                  field.onChange(cepMask(e.target.value));
+                                }}
+                                onBlur={() => {
+                                  if (fieldState.invalid) return;
+                                  fetch(
+                                    `https://viacep.com.br/ws/${field.value}/json/`,
+                                  )
+                                    .then((response) => response.json())
+                                    .then(populateAddressWithViaCepData)
+                                    .catch((error) => {
+                                      console.log(error);
+                                    });
+                                }}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div className="lg:flex-1">
+                      <FormField
+                        control={form.control}
+                        name="address.street"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Logradouro</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Nome da rua" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  </div>
+                  <div className="grid gap-5 lg:grid-cols-2">
+                    <FormField
+                      control={form.control}
+                      name="address.neighborhood"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Bairro</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Bairro" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
                     <FormField
                       control={form.control}
                       name="address.number"
@@ -288,6 +295,34 @@ function Shelter() {
                           <FormLabel>Número</FormLabel>
                           <FormControl>
                             <Input placeholder="Número" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <FormField
+                    control={form.control}
+                    name="address.complement"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Complemento (opcional)</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Complemento" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <div className="grid gap-5 lg:grid-cols-2">
+                    <FormField
+                      control={form.control}
+                      name="address.city"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Cidade</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Cidade" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -315,32 +350,6 @@ function Shelter() {
                       )}
                     />
                   </div>
-                  <FormField
-                    control={form.control}
-                    name="address.city"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Cidade</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Cidade" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="address.complement"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Complemento (opcional)</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Complemento" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
                 </div>
               </CardContent>
             </CardBase>
