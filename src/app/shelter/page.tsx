@@ -80,7 +80,6 @@ function Shelter() {
       },
     };
 
-    console.log(shelter);
     if (isEditing) {
       updateCurrentUserShelter.mutate(shelter);
     } else {
