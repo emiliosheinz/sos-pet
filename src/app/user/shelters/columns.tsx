@@ -12,10 +12,58 @@ export const columns: ColumnDef<ShelterTable>[] = [
   {
     accessorKey: "name",
     header: "Name",
+    cell: ({ row }) => {
+      const shelter = row.original;
+
+      return (
+        <div>
+          <p className="font-bold text-black">{shelter.name}</p>
+        </div>
+      );
+    },
   },
   {
-    accessorKey: "formattedAddress",
+    accessorKey: "address",
     header: "Endereço",
+    cell: ({ row }) => {
+      const shelter = row.original;
+
+      return (
+        <a className="text-sm text-gray-500">
+          <p className="font-bold text-black">
+            {shelter.address.street}, {shelter.address.number},{" "}
+            {shelter.address.neighborhood}
+          </p>
+          <p>
+            {shelter.address.city} / {shelter.address.state}
+          </p>
+        </a>
+      );
+    },
+  },
+  {
+    accessorKey: "Vagas",
+    header: "Capacidade",
+    cell: ({ row }) => {
+      const shelter = row.original;
+
+      return (
+        <div>
+          <p className="text-gray-500">
+            Capacidade total:{" "}
+            <span className="font-bold text-black">{shelter.capacity}</span>
+          </p>
+          <p className="text-gray-500">
+            Ocupação:{" "}
+            <span className="font-bold text-black">{shelter.occupancy}</span>
+          </p>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "phone",
+    header: "Telefone",
   },
   {
     id: "actions",

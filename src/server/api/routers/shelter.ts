@@ -21,23 +21,59 @@ export const shelterRouter = createTRPCRouter({
     .query(async (opts) => {
       const { id } = opts.input;
 
-      return db.shelter.findUnique({
+      const result = await db.shelter.findUnique({
         where: {
           id,
         },
       });
+
+      if (!result) {
+        throw new Error("Shelter not found");
+      }
+
+      return {
+        id: result.id,
+        name: result.name,
+        phone: result.phone,
+        capacity: result.capacity.toString(),
+        occupancy: result.occupancy.toString(),
+        donations: result.donations,
+        volunteers: result.volunteers,
+        social: {
+          instagram: result.instagram ?? undefined,
+          facebook: result.facebook ?? undefined,
+        },
+        address: {
+          cep: result.addressZip,
+          street: result.addressStreet,
+          number: result.addressNumber,
+          state: result.addressState,
+          city: result.addressCity,
+          complement: result.addressComplement ?? undefined,
+          neighborhood: result.addressNeighborhood,
+        },
+      };
     }),
-  findCurrentUserShelter: protectedProcedure.query(
-    async ({ ctx }): Promise<z.infer<typeof apiShelterSchema> | null> => {
+  findUserShelterById: protectedProcedure
+    .input(
+      zod.object({
+        id: zod.number(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
       const result = await db.shelter.findFirst({
         where: {
           createdById: ctx.session.user.id,
+          id: input.id,
         },
       });
+
       if (!result) {
-        return null;
+        throw new Error("Shelter not found");
       }
+
       return {
+        id: result.id,
         name: result.name,
         phone: result.phone,
         capacity: result.capacity.toString(),
@@ -60,8 +96,7 @@ export const shelterRouter = createTRPCRouter({
           longitude: result.longitude ?? undefined,
         },
       };
-    },
-  ),
+    }),
   create: protectedProcedure
     .input(apiShelterSchema)
     .mutation(async ({ ctx, input }) => {
@@ -91,10 +126,10 @@ export const shelterRouter = createTRPCRouter({
   updateCurrentUserShelter: protectedProcedure
     .input(apiShelterSchema)
     .mutation(async ({ input, ctx }) => {
-      // This is currently only safe because we do not allow users to have more than one shelter on the FE.
       const result = await db.shelter.findFirst({
         where: {
           createdById: ctx.session.user.id,
+          id: input.id,
         },
       });
 
