@@ -53,6 +53,11 @@ export function Sidebar() {
                   Sobre
                 </Link>
               </li>
+              <li>
+                <Link onClick={handleCloseSidebar} href="/map">
+                  Mapa
+                </Link>
+              </li>
               {session && (
                 <>
                   <li>

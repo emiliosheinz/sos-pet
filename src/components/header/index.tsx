@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Nav } from "./nav";
 import { Sidebar } from "./sidebar";
 import Link from "next/link";
+import { FaMapMarkerAlt } from "react-icons/fa";
 
 export function Header() {
   return (
@@ -25,6 +26,15 @@ export function Header() {
             </li>
             <li>
               <Link href="/about">Sobre</Link>
+            </li>
+            <li>
+              <Link className="flex items-center gap-1" href="/map">
+                Mapa{" "}
+                <FaMapMarkerAlt
+                  color="#dc2626"
+                  className="mb-1 animate-bounce"
+                />
+              </Link>
             </li>
           </ul>
         </div>
