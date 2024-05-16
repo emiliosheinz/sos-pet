@@ -30,6 +30,17 @@ import { Card as CardBase, CardContent } from "~/components/ui/card";
 import axios from "redaxios";
 import { env } from "~/env";
 
+type GoogleMapsResponse = {
+  results: {
+    geometry: {
+      location: {
+        lat: number;
+        lng: number;
+      };
+    };
+  }[];
+};
+
 function Shelter() {
   const { shelter } = useShelterContext();
   const form = useForm<z.infer<typeof shelterSchema>>({
@@ -67,23 +78,33 @@ function Shelter() {
   const hasModifiedInputs = Object.keys(form.formState.dirtyFields).length > 0;
 
   async function onSubmit(values: z.infer<typeof shelterSchema>) {
-    const geocode = await axios.get(
-      `https://maps.googleapis.com/maps/api/geocode/json?address=${values.address.street} ${values.address.number}, ${values.address.city} - ${values.address.state}&key=${env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`,
-    );
-    const coordinates = geocode.data?.results[0].geometry.location;
-    const shelter = {
-      ...values,
-      address: {
-        ...values.address,
-        latitude: coordinates?.lat,
-        longitude: coordinates?.lng,
-      },
-    };
+    try {
+      const { street, number, city, state } = values.address;
+      const response = await axios.get<GoogleMapsResponse>(
+        `https://maps.googleapis.com/maps/api/geocode/json`,
+        {
+          params: {
+            address: `${street} ${number}, ${city} - ${state}`,
+            key: env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+          },
+        },
+      );
 
-    if (isEditing) {
-      updateCurrentUserShelter.mutate(shelter);
-    } else {
-      createShelter.mutate(shelter);
+      const coordinates = response.data?.results?.[0]?.geometry.location;
+
+      const shelter = {
+        ...values,
+        address: {
+          ...values.address,
+          latitude: coordinates?.lat,
+          longitude: coordinates?.lng,
+        },
+      };
+
+      const mutation = isEditing ? updateCurrentUserShelter : createShelter;
+      mutation.mutate(shelter);
+    } catch (error) {
+      console.error("Error fetching coordinates or submitting shelter:", error);
     }
   }
 

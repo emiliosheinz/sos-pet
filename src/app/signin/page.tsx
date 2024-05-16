@@ -1,4 +1,3 @@
-import { getProviders } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { getServerAuthSession } from "~/server/auth";
 import { SigninProviderButton } from "./_components/SigninProviderButton";
