@@ -27,19 +27,7 @@ import {
   useShelterContext,
 } from "~/contexts/ShelterContext";
 import { Card as CardBase, CardContent } from "~/components/ui/card";
-import axios from "redaxios";
-import { env } from "~/env";
-
-type GoogleMapsResponse = {
-  results: {
-    geometry: {
-      location: {
-        lat: number;
-        lng: number;
-      };
-    };
-  }[];
-};
+import { googleMaps } from "~/lib/google-maps";
 
 function Shelter() {
   const { shelter } = useShelterContext();
@@ -80,17 +68,12 @@ function Shelter() {
   async function onSubmit(values: z.infer<typeof shelterSchema>) {
     try {
       const { street, number, city, state } = values.address;
-      const response = await axios.get<GoogleMapsResponse>(
-        `https://maps.googleapis.com/maps/api/geocode/json`,
-        {
-          params: {
-            address: `${street} ${number}, ${city} - ${state}`,
-            key: env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
-          },
-        },
-      );
-
-      const coordinates = response.data?.results?.[0]?.geometry.location;
+      const coordinates = await googleMaps.coordinates({
+        street,
+        number,
+        city,
+        state,
+      });
 
       const shelter = {
         ...values,

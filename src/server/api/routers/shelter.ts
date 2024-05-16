@@ -1,5 +1,5 @@
 import { type z } from "zod";
-import { shelterSchema } from "~/schemas/shelter";
+import { apiSchema } from "~/schemas/api";
 
 import {
   createTRPCRouter,
@@ -13,7 +13,7 @@ export const shelterRouter = createTRPCRouter({
     return db.shelter.findMany();
   }),
   findCurrentUserShelter: protectedProcedure.query(
-    async ({ ctx }): Promise<z.infer<typeof shelterSchema> | null> => {
+    async ({ ctx }): Promise<z.infer<typeof apiSchema> | null> => {
       const result = await db.shelter.findFirst({
         where: {
           createdById: ctx.session.user.id,
@@ -48,7 +48,7 @@ export const shelterRouter = createTRPCRouter({
     },
   ),
   create: protectedProcedure
-    .input(shelterSchema)
+    .input(apiSchema)
     .mutation(async ({ ctx, input }) => {
       await db.shelter.create({
         data: {
@@ -74,7 +74,7 @@ export const shelterRouter = createTRPCRouter({
       });
     }),
   updateCurrentUserShelter: protectedProcedure
-    .input(shelterSchema)
+    .input(apiSchema)
     .mutation(async ({ input, ctx }) => {
       // This is currently only safe because we do not allow users to have more than one shelter on the FE.
       const result = await db.shelter.findFirst({
