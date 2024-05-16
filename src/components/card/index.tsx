@@ -22,35 +22,15 @@ export function Card({ shelter }: Props) {
 
   return (
     <CardBase key={shelter.id} className="w-full shadow-md">
-      <CardHeader>
-        <div className="flex justify-between">
-          <h4 className="text-lg font-medium">{shelter.name}</h4>
-          <div className="flex items-center space-x-3">
-            {shelter.facebook && (
-              <SocialLink
-                href={`https://facebook.com/${unmaskSocialMedia(shelter.facebook)}`}
-                icon={<FaFacebook size={18} />}
-                label="Facebook"
-              />
-            )}
-
-            {shelter.instagram && (
-              <SocialLink
-                href={`https://instagram.com/${unmaskSocialMedia(shelter.instagram)}`}
-                icon={<FaInstagram size={18} />}
-                label="Instagram"
-              />
-            )}
-
-            {shelter.twitter && (
-              <SocialLink
-                href={`https://twitter.com/${unmaskSocialMedia(shelter.twitter)}`}
-                icon={<RiTwitterXLine size={18} />}
-                label="Twitter"
-              />
-            )}
-          </div>
-        </div>
+      <CardHeader className="flex flex-col gap-1">
+        <h4 className="text-lg font-medium">{shelter.name}</h4>
+        {availableVacancies > 0 ? (
+          <p className="text-md font-semibold text-green-600">
+            Vagas disponíveis: {availableVacancies}
+          </p>
+        ) : (
+          <p className="text-md font-semibold text-red-600">Vagas esgotadas</p>
+        )}
         <Link
           href={`https://www.google.com/maps/search/${fullAddress}`}
           target="_blank"
@@ -101,15 +81,31 @@ dark:ring-offset-neutral-950 dark:hover:bg-neutral-50/90 dark:focus-visible:ring
           Entre em contato <FaWhatsapp />
         </a>
 
-        {availableVacancies > 0 ? (
-          <p className="text-md text-right font-semibold text-green-600">
-            Vagas disponíveis: {availableVacancies}
-          </p>
-        ) : (
-          <p className="text-md text-right font-semibold text-red-600">
-            Vagas esgotadas
-          </p>
-        )}
+        <div className="flex items-center space-x-3">
+          {shelter.facebook && (
+            <SocialLink
+              href={`https://facebook.com/${unmaskSocialMedia(shelter.facebook)}`}
+              icon={<FaFacebook size={20} />}
+              label="Facebook"
+            />
+          )}
+
+          {shelter.instagram && (
+            <SocialLink
+              href={`https://instagram.com/${unmaskSocialMedia(shelter.instagram)}`}
+              icon={<FaInstagram size={20} />}
+              label="Instagram"
+            />
+          )}
+
+          {shelter.twitter && (
+            <SocialLink
+              href={`https://twitter.com/${unmaskSocialMedia(shelter.twitter)}`}
+              icon={<RiTwitterXLine size={20} />}
+              label="Twitter"
+            />
+          )}
+        </div>
       </CardFooter>
     </CardBase>
   );
