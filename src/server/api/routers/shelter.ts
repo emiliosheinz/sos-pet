@@ -163,4 +163,28 @@ export const shelterRouter = createTRPCRouter({
         },
       });
     }),
+  delete: protectedProcedure
+    .input(
+      zod.object({
+        id: zod.number(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const result = await db.shelter.findFirst({
+        where: {
+          createdById: ctx.session.user.id,
+          id: input.id,
+        },
+      });
+
+      if (!result) {
+        throw new Error("Shelter not found");
+      }
+
+      await db.shelter.delete({
+        where: {
+          id: result.id,
+        },
+      });
+    }),
 });

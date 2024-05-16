@@ -23,6 +23,7 @@ import { useRouter } from "next/navigation";
 import { TagInput } from "~/components/tag-input";
 import { defaultValues } from "./constants";
 import { Card as CardBase, CardContent } from "~/components/ui/card";
+import { DialogDelete } from "./dialog-delete";
 
 interface FormEditRegisterProps {
   shelter?: z.infer<typeof shelterSchema> | null;
@@ -397,13 +398,18 @@ export function FormEditRegister({ shelter }: FormEditRegisterProps = {}) {
               </CardContent>
             </CardBase>
 
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={isLoading || (isEditing && !hasModifiedInputs)}
-            >
-              {isLoading ? <Loader2 className="animate-spin" /> : "Salvar"}
-            </Button>
+            <div className="flex gap-5">
+              <Button
+                type="submit"
+                className="w-full flex-1"
+                disabled={isLoading || (isEditing && !hasModifiedInputs)}
+              >
+                {isLoading ? <Loader2 className="animate-spin" /> : "Salvar"}
+              </Button>
+              {isEditing && shelter.id && (
+                <DialogDelete shelterId={shelter.id} />
+              )}
+            </div>
           </form>
         </Form>
       </div>
