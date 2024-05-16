@@ -8,9 +8,6 @@ import { Skeleton } from "~/components/ui/skeleton";
 import { useDebouncedState } from "~/hooks/use-debouced-state";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { FiInfo } from "react-icons/fi";
-import "leaflet/dist/leaflet.css";
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
-import "leaflet-defaulticon-compatibility";
 
 export default function Home() {
   const { data, isLoading } = api.shelter.findAll.useQuery();
