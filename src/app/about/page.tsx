@@ -61,6 +61,8 @@ export default function About() {
             transformar um momento de crise em uma oportunidade para fazer a
             diferença na vida de um animal. Juntos, podemos salvar vidas e
             construir um futuro mais seguro para nossos amigos de quatro patas.
+            Além disso, esse projeto tem seu código fonte aberto e disponível para colaboração: 
+            <a href="https://github.com/emiliosheinz/sos-pet" target="blank"> https://github.com/emiliosheinz/sos-pet</a>
           </p>
         </div>
       </div>

@@ -12,6 +12,6 @@ Com o SOS Pet, as pessoas que resgatam animais de enchentes podem rapidamente en
 1. Instale as dependências
 1. Crie um arquivo `.env` baseando se no `.env.example`
 1. Assegure se de preencher todas as variáveis ambiente.
-1. Suba o baco de dados: `docker compose up -d`
+1. Suba o baco de dados: `docker-compose up -d`
 1. Rode as migrations: `npx prisma migrate dev`
 1. Rode o projeto com o script `dev` disponível no `package.json`
