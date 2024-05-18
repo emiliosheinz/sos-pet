@@ -1,7 +1,7 @@
 name: 🚀 Lint, Type Check, and Build
 
 on:
-  pull_request_target:
+  pull_request:
     branches:
       - main
       - dev
@@ -13,8 +13,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -23,7 +21,7 @@ jobs:
           cache: "yarn"
 
       - name: Setup .env file
-        run: echo "${{ secrets.DOT_ENV_FILE_CONTENT }}" > .env
+        run: cat .env.example > .env
 
       - name: Install dependencies
         run: yarn
