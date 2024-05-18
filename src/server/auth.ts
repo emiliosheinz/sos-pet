@@ -42,9 +42,9 @@ export const authOptions: NextAuthOptions = {
     colorScheme: "light",
     logo: "/logo-horizontal.png",
   },
-  // pages: {
-  //   signIn: "/signin",
-  // },
+  pages: {
+    signIn: "/signin",
+  },
   callbacks: {
     session: ({ session, user }) => ({
       ...session,

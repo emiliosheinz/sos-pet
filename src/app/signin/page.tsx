@@ -1,26 +1,22 @@
 import { getProviders } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { getServerAuthSession } from "~/server/auth";
-import { SigninProviderButton } from "./_components/SigninProviderButton";
+import { SignInProviderButton } from "./_components/SignInProviderButtonn";
 import Image from "next/image";
 import { Suspense } from "react";
 import { Loader2 } from "lucide-react";
 
-type SigninPageProps = {
+type SignInPageProps = {
   searchParams: Record<string, string>;
 };
 
-export default async function SigninPage({ searchParams }: SigninPageProps) {
+export default async function SignInPage({ searchParams }: SignInPageProps) {
   const session = await getServerAuthSession();
+  const providers = await getProviders();
 
   if (session) {
     redirect(searchParams.callbackUrl ?? "/");
   }
-
-  const providers = [
-    { id: "google", name: "Google" },
-    { id: "email", name: "Email" },
-  ];
 
   return (
     <div className="flex flex-col items-center justify-center gap-5 pt-28">
@@ -37,7 +33,7 @@ export default async function SigninPage({ searchParams }: SigninPageProps) {
         </p>
         <div className="w-full max-w-md p-5">
           {Object.values(providers).map((provider) => (
-            <SigninProviderButton
+            <SignInProviderButton
               key={provider.id}
               provider={provider}
               callbackUrl={searchParams.callbackUrl ?? "/"}

@@ -3,15 +3,15 @@
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 
-type SigninProviderButtonProps = {
+type SignInProviderButtonProps = {
   provider: { id: string; name: string };
   callbackUrl: string;
 };
 
-export function SigninProviderButton({
+export function SignInProviderButton({
   provider,
   callbackUrl,
-}: SigninProviderButtonProps) {
+}: SignInProviderButtonProps) {
   return (
     <button
       type="button"
