@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { FaInstagram } from "react-icons/fa";
+import { FaInstagram, FaGithub } from "react-icons/fa";
 
 export function Footer() {
   return (
@@ -15,6 +15,13 @@ export function Footer() {
           />
         </div>
         <div className="flex flex-col items-center gap-1 text-center align-middle md:flex-row md:gap-8">
+        <Link
+            target="_blank"
+            href="https://github.com/emiliosheinz/sos-pet"
+            className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700"
+          >
+            <FaGithub size={16} /> sos-pet
+          </Link>
           <Link
             target="_blank"
             href="https://www.instagram.com/oficial_sospet/"
@@ -40,6 +47,7 @@ export function Footer() {
           >
             Políticas de privacidade
           </Link>
+          
         </div>
       </div>
     </footer>

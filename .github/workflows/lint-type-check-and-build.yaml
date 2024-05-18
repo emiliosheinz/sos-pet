@@ -1,0 +1,39 @@
+name: 🚀 Lint, Type Check, and Build
+
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  lint-type-check-and-build:
+    runs-on: ubuntu-latest
+    name: Lint, Type Check, and Build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "yarn"
+
+      - name: Setup .env file
+        # All the environment variables in .env.example are invalid,
+        # therefore the application will not be functional. But, it is enough
+        # for linting, type checking, and building.
+        run: cat .env.example > .env
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Type check
+        run: yarn type-check
+
+      - name: Build
+        run: yarn build

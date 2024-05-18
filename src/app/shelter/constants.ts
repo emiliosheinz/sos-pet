@@ -20,7 +20,5 @@ export const defaultValues: DefaultValues<z.infer<typeof shelterSchema>> = {
   social: {
     instagram: "",
     facebook: "",
-    twitter: "",
-    website: "",
   },
 };

@@ -55,13 +55,5 @@ export const shelterSchema = z.object({
         if (!value) return true;
         return value.startsWith("@");
       }, "O nome de o usuário do Facebook deve começar com @"),
-    twitter: z
-      .string()
-      .optional()
-      .refine((value) => {
-        if (!value) return true;
-        return value.startsWith("@");
-      }, "O nome de o usuário do Twitter deve começar com @"),
-    website: z.string().optional(),
   }),
 });
