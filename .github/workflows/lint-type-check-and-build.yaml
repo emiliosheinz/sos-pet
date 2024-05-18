@@ -21,6 +21,9 @@ jobs:
           cache: "yarn"
 
       - name: Setup .env file
+        # All the environment variables in .env.example are invalid,
+        # therefore the application will not be functional. But, it is enough
+        # for linting, type checking, and building.
         run: cat .env.example > .env
 
       - name: Install dependencies
