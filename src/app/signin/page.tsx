@@ -1,7 +1,7 @@
 import { getProviders } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { getServerAuthSession } from "~/server/auth";
-import { SignInProviderButton } from "./_components/SignInProviderButtonn";
+import { SignInProviderButton } from "./_components/SignInProviderButton";
 import Image from "next/image";
 import { Suspense } from "react";
 import { Loader2 } from "lucide-react";
