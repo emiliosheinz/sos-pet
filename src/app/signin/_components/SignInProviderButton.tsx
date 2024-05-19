@@ -1,10 +1,10 @@
 "use client";
 
-import { signIn } from "next-auth/react";
+import { type ClientSafeProvider, signIn } from "next-auth/react";
 import Image from "next/image";
 
 type SignInProviderButtonProps = {
-  provider: { id: string; name: string };
+  provider: ClientSafeProvider;
   callbackUrl: string;
 };
 
@@ -15,7 +15,7 @@ export function SignInProviderButton({
   return (
     <button
       type="button"
-      className="flex w-full items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white p-3 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
+      className="inline-flex h-10 w-full items-center justify-center whitespace-nowrap rounded-md border border-neutral-200 bg-white px-4 py-2 text-sm font-medium text-neutral-900 ring-offset-white transition-colors hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
       onClick={() => signIn(provider.id, { callbackUrl })}
     >
       <Image
