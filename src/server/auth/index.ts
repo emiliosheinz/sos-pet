@@ -1,15 +1,14 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import {
+  type Theme,
   getServerSession,
   type DefaultSession,
   type NextAuthOptions,
 } from "next-auth";
 import { type Adapter } from "next-auth/adapters";
-import GoogleProvider from "next-auth/providers/google";
-import EmailProvider from "next-auth/providers/email";
-
-import { env } from "~/env";
 import { db } from "~/server/db";
+import { CustomGoogleProvider } from "./GoogleProvider";
+import { CustomEmailProvider } from "./EmailProvider";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -21,15 +20,8 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
-      // ...other properties
-      // role: UserRole;
     } & DefaultSession["user"];
   }
-
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
 }
 
 /**
@@ -41,6 +33,7 @@ export const authOptions: NextAuthOptions = {
   theme: {
     colorScheme: "light",
     logo: "/logo-horizontal.png",
+    brandColor: "#333333",
   },
   pages: {
     signIn: "/signin",
@@ -57,25 +50,11 @@ export const authOptions: NextAuthOptions = {
   },
   adapter: PrismaAdapter(db) as Adapter,
   providers: [
-    GoogleProvider({
-      clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET,
-    }),
-    EmailProvider({
-      server: {
-        host: env.EMAIL_HOST,
-        port: env.EMAIL_PORT,
-        auth: {
-          user: env.EMAIL_USER,
-          pass: env.EMAIL_PASSWORD,
-        },
-        secure: true,
-      },
-      from: env.EMAIL_FROM,
-    }),
+    CustomGoogleProvider(),
+    CustomEmailProvider(),
     /**
      * ...add more providers here.
-     *
+i     *
      * Most other providers require a bit more work than the Discord provider. For example, the
      * GitHub provider requires you to add the `refresh_token_expires_in` field to the Account
      * model. Refer to the NextAuth.js docs for the provider you want to use. Example:
