@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -46,8 +47,9 @@ export function EmailProviderForm() {
           <hr />
         </div>
         <FormField
-          control={form.control}
           name="email"
+          control={form.control}
+          disabled={isLoading}
           render={({ field }) => (
             <FormItem>
               <FormControl>
@@ -59,7 +61,11 @@ export function EmailProviderForm() {
         />
 
         <Button type="submit" className="w-full" disabled={isLoading}>
-          {isLoading ? "Carregando..." : "Entrar com email"}
+          {isLoading ? (
+            <Loader2 className="animate-spin" />
+          ) : (
+            "Entrar com email"
+          )}
         </Button>
       </form>
     </Form>

@@ -14,39 +14,36 @@ import {
 import Link from "next/link";
 import { User } from "../user";
 
-import { CiCircleChevDown } from "react-icons/ci";
-
 export function Nav() {
   const { data: session } = useSession();
-  const router = useRouter();
 
   return (
     <nav>
-      <ul className="flex space-x-4">
+      <ul className="flex">
         <li>
-          <Button onClick={() => router.push("/shelter")} className="mr-2">
-            Criar abrigo
+          <Button asChild className="mr-2 hidden sm:flex">
+            <Link href="/shelter">Cadastrar abrigo</Link>
           </Button>
         </li>
 
         <li className="hidden lg:block">
           {session ? (
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center justify-center gap-2">
-                <User />
-                <CiCircleChevDown size={20} />
+              <DropdownMenuTrigger asChild>
+                <Button variant="link" className="ml-2 rounded-full p-0">
+                  <User />
+                </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem>
-                  <Link className="w-full" href="/shelter">
-                    Meu abrigo
-                  </Link>
+                <DropdownMenuItem asChild className="cursor-pointer">
+                  <Link href="/shelter">Meu abrigo</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Link className="w-full" href="/" onClick={() => signOut()}>
-                    Sair
-                  </Link>
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={() => signOut()}
+                >
+                  Sair
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
