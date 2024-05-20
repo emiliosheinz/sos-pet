@@ -6,9 +6,17 @@ import { api } from "~/trpc/react";
 import { FormEditRegister } from "~/components/shelter/form-edit-register";
 
 export default function ShelterPage({ params }: { params: { id: number } }) {
-  const { data, isLoading } = api.shelter.findUserShelterById.useQuery({
+  const { data, isLoading, error } = api.shelter.findUserShelterById.useQuery({
     id: Number(params.id),
   });
+
+  if (error?.data?.httpStatus === 404) {
+    return (
+      <div className="flex w-full justify-center pt-28">
+        <h1 className="text-2xl font-semibold">404</h1>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
@@ -21,7 +29,7 @@ export default function ShelterPage({ params }: { params: { id: number } }) {
   if (!data) {
     return (
       <div className="flex w-full justify-center pt-28">
-        <h1 className="text-2xl font-semibold">Abrigo não encontrado</h1>
+        <h1 className="text-2xl font-semibold">Abrigo não encontrado!</h1>
       </div>
     );
   }

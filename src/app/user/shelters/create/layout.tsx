@@ -6,8 +6,9 @@ import { getServerAuthSession } from "~/server/auth";
 export default async function ShelterLayout({ children }: PropsWithChildren) {
   const session = await getServerAuthSession();
   if (!session) {
-    redirect("/signin?callbackUrl=/shelter");
+    redirect("/signin?callbackUrl=/user/shelters/create");
   }
+
   return (
     <Suspense
       fallback={
