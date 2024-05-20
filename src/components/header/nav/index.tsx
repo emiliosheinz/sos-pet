@@ -21,7 +21,7 @@ export function Nav() {
       <ul className="flex">
         <li>
           <Button asChild className="mr-2 hidden sm:flex">
-            <Link href="/shelter">Cadastrar abrigo</Link>
+            <Link href="/user/shelters/create">Cadastrar abrigo</Link>
           </Button>
         </li>
 

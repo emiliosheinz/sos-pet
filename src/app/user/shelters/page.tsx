@@ -15,7 +15,7 @@ function Shelters({ items }: { items?: ShelterTable[] | null }) {
           <p>Você não possui abrigos cadastrados.</p>
           <p>
             Se desejar cadastrar um novo abrigo,{" "}
-            <Link className="underline" href="/shelter">
+            <Link className="underline" href="/user/shelters/create">
               clique aqui.
             </Link>
           </p>

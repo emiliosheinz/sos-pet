@@ -12,15 +12,6 @@ export const columns: ColumnDef<ShelterTable>[] = [
   {
     accessorKey: "name",
     header: "Name",
-    cell: ({ row }) => {
-      const shelter = row.original;
-
-      return (
-        <div>
-          <p className="font-bold text-black">{shelter.name}</p>
-        </div>
-      );
-    },
   },
   {
     accessorKey: "address",
@@ -73,7 +64,7 @@ export const columns: ColumnDef<ShelterTable>[] = [
 
       return (
         <div>
-          <Link href={`/shelter/${shelter.id}/edit`}>
+          <Link href={`/user/shelters/${shelter.id}/edit`}>
             <span className="sr-only">Editar</span>
             <FiEdit size={20} className="cursor-pointer" />
           </Link>
