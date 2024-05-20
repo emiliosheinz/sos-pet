@@ -1,5 +1,6 @@
 import { type z, z as zod } from "zod";
 import { shelterSchema, apiShelterSchema } from "~/schemas/shelter";
+import { TRPCError } from "@trpc/server";
 
 import {
   createTRPCRouter,
@@ -14,8 +15,8 @@ export const shelterRouter = createTRPCRouter({
   }),
   findById: publicProcedure
     .input(
-      zod.object({
-        id: zod.number(),
+      z.object({
+        id: z.number(),
       }),
     )
     .query(async (opts) => {
@@ -28,7 +29,10 @@ export const shelterRouter = createTRPCRouter({
       });
 
       if (!result) {
-        throw new Error("Shelter not found");
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "The server cannot find the requested resource.",
+        });
       }
 
       return {
@@ -56,8 +60,8 @@ export const shelterRouter = createTRPCRouter({
     }),
   findUserShelterById: protectedProcedure
     .input(
-      zod.object({
-        id: zod.number(),
+      z.object({
+        id: z.number(),
       }),
     )
     .query(async ({ ctx, input }) => {
@@ -69,7 +73,10 @@ export const shelterRouter = createTRPCRouter({
       });
 
       if (!result) {
-        throw new Error("Shelter not found");
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "The server cannot find the requested resource.",
+        });
       }
 
       return {
@@ -165,8 +172,8 @@ export const shelterRouter = createTRPCRouter({
     }),
   delete: protectedProcedure
     .input(
-      zod.object({
-        id: zod.number(),
+      z.object({
+        id: z.number(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
