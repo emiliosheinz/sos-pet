@@ -34,7 +34,7 @@
     "@vercel/analytics": "^1.2.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "conventional-changelog-conventionalcommits": "^8.0.0",
+    "conventional-changelog-conventionalcommits": "^7.0.2",
     "fuse.js": "^7.0.0",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.378.0",
