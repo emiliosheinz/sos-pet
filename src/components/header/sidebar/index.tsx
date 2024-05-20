@@ -29,40 +29,56 @@ export function Sidebar() {
   return (
     <div className="flex items-center lg:hidden">
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger className="p-1" aria-label="Menu">
-          <CiMenuBurger size={24} />
+        <SheetTrigger asChild aria-label="Menu">
+          <Button variant="link" className="p-2">
+            <CiMenuBurger size={22} />
+          </Button>
         </SheetTrigger>
         <SheetContent side={"left"}>
           <div className="flex flex-col items-center justify-center pt-4">
-            <div className="mb-8">
-              <User />
+            <div className="mb-4">
+              <User onClick={handleCloseSidebar} />
             </div>
             <ul className="flex w-full flex-col items-center justify-center space-y-4 text-black">
               <li>
-                <Link href="/shelter">
-                  <Button>Criar abrigo</Button>
-                </Link>
+                <Button asChild>
+                  <Link href="/shelter">Cadastrar abrigo</Link>
+                </Button>
+              </li>
+              <li className="pt-1">
+                <Button asChild variant="link">
+                  <Link onClick={handleCloseSidebar} href="/">
+                    Home
+                  </Link>
+                </Button>
               </li>
               <li>
-                <Link onClick={handleCloseSidebar} href="/">
-                  Home
-                </Link>
+                <Button asChild variant="link">
+                  <Link onClick={handleCloseSidebar} href="/about">
+                    Sobre
+                  </Link>
+                </Button>
               </li>
-              <li>
-                <Link onClick={handleCloseSidebar} href="/about">
-                  Sobre
-                </Link>
-              </li>
-              {session && (
+              {!!session && (
                 <>
+                  <Separator className="mb-3" />
                   <li>
-                    <Separator className="mb-3" />
-                    <Link href="/shelter">Meu abrigo</Link>
+                    <Button asChild variant="link">
+                      <Link onClick={handleCloseSidebar} href="/shelter">
+                        Meu abrigo
+                      </Link>
+                    </Button>
                   </li>
                   <li>
-                    <Link href="/" onClick={() => signOut()}>
+                    <Button
+                      variant="link"
+                      onClick={async () => {
+                        await signOut();
+                        handleCloseSidebar();
+                      }}
+                    >
                       Sair
-                    </Link>
+                    </Button>
                   </li>
                 </>
               )}

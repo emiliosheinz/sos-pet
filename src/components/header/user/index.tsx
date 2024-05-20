@@ -3,65 +3,43 @@ import Image from "next/image";
 
 import { useSession, signIn } from "next-auth/react";
 
-import { Avatar, AvatarImage, AvatarFallback } from "~/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { Button } from "~/components/ui/button";
+import { GoSignIn } from "react-icons/go";
 import Link from "next/link";
 
-const RenderLoginButton = ({
-  isLogged,
-  children,
-}: {
-  isLogged: boolean;
-  children: React.ReactNode;
-}) => {
-  if (!isLogged) {
+type UserProps = {
+  onClick?: () => void;
+};
+
+export function User({ onClick }: UserProps) {
+  const { data: session } = useSession();
+
+  if (!session) {
     return (
-      <Link href="/" onClick={() => signIn("google")}>
-        {children}
-      </Link>
+      <Button asChild variant="outline" onClick={onClick}>
+        <Link href="/signin">
+          <GoSignIn size={18} className="mr-2" />
+          Entrar
+        </Link>
+      </Button>
     );
   }
 
-  return children;
-};
-
-export function User() {
-  const { data: session } = useSession();
-
-  const renderAvatarImage = () => {
-    if (session?.user.image) {
-      return <AvatarImage src={session.user.image} />;
-    }
-
-    return (
-      <AvatarFallback>
-        <Image
-          src={"/dog.svg"}
-          alt="Ícone de um cachorro"
-          width={25}
-          height={25}
-        />
-      </AvatarFallback>
-    );
-  };
-
-  const renderUserInfo = () => {
-    if (session?.user.name) {
-      return `Olá, ${session.user.name}`;
-    }
-
-    return (
-      <p>
-        Olá, <span className="underline">faça seu login</span>
-      </p>
-    );
-  };
-
   return (
-    <RenderLoginButton isLogged={!!session}>
-      <div className="flex items-center gap-2 text-black">
-        <Avatar>{renderAvatarImage()}</Avatar>
-        <div className="flex items-center">{renderUserInfo()} </div>
-      </div>
-    </RenderLoginButton>
+    <Avatar>
+      {session.user.image ? (
+        <AvatarImage src={session.user.image} />
+      ) : (
+        <AvatarFallback>
+          <Image
+            src="/dog.svg"
+            alt="Ícone de um cachorro"
+            width={25}
+            height={25}
+          />
+        </AvatarFallback>
+      )}
+    </Avatar>
   );
 }
