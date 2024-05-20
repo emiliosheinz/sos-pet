@@ -6,7 +6,7 @@ export default function SignInVerifyPage() {
       <div className="flex flex-col items-center justify-center gap-5 pt-28">
         <FaRegCheckCircle className="text-6xl text-green-500" />
         <h1 className="text-center text-2xl font-bold">
-          Email enviado com sucesso
+          E-mail enviado com sucesso
         </h1>
         <p className="max-w-md text-center">
           Enviamos um e-mail com um link para você verificar sua conta. Por

@@ -12,13 +12,12 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 
 const formSchema = z.object({
-  email: z.string().email("Por favor, insira um email válido"),
+  email: z.string().email("Por favor, insira um e-mail válido"),
 });
 
 export function EmailProviderForm() {
@@ -64,7 +63,7 @@ export function EmailProviderForm() {
           {isLoading ? (
             <Loader2 className="animate-spin" />
           ) : (
-            "Entrar com email"
+            "Entrar com e-mail"
           )}
         </Button>
       </form>
