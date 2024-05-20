@@ -9,7 +9,6 @@ import { SignInProviderButton } from "./_components/SignInProviderButton";
 import Image from "next/image";
 import { Suspense } from "react";
 import { Loader2 } from "lucide-react";
-import { type BuiltInProviderType } from "next-auth/providers/index";
 import { EmailProviderForm } from "./_components/EmailProviderForm";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { MdErrorOutline } from "react-icons/md";
@@ -19,10 +18,7 @@ type SignInPageProps = {
 };
 
 const splitProviders = (
-  providers: Record<
-    LiteralUnion<BuiltInProviderType, string>,
-    ClientSafeProvider
-  > | null,
+  providers: Awaited<ReturnType<typeof getProviders>>,
 ): [ClientSafeProvider | null, ClientSafeProvider[]] | [null, null] => {
   if (!providers) return [null, null];
   const email = providers.email;
