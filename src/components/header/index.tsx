@@ -29,11 +29,11 @@ export function Header() {
             </li>
             <li>
               <Link className="flex items-center gap-1" href="/map">
-                Mapa{" "}
-                <FaMapMarkerAlt
-                  color="#dc2626"
-                  className="mb-1 animate-bounce"
-                />
+                Mapa
+                <span className="relative mb-3 flex h-3 w-3">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75"></span>
+                  <span className="relative inline-flex h-3 w-3 rounded-full bg-red-600"></span>
+                </span>
               </Link>
             </li>
           </ul>

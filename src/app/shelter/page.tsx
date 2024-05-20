@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
@@ -30,6 +31,8 @@ import { Card as CardBase, CardContent } from "~/components/ui/card";
 import { googleMaps } from "~/lib/google-maps";
 
 function Shelter() {
+  const [isGettingCoordinates, setIsGettingCoordinates] =
+    useState<boolean>(false);
   const { shelter } = useShelterContext();
   const form = useForm<z.infer<typeof shelterSchema>>({
     resolver: zodResolver(shelterSchema),
@@ -61,12 +64,15 @@ function Shelter() {
       },
     });
   const isLoading =
-    createShelter.isPending || updateCurrentUserShelter.isPending;
+    createShelter.isPending ||
+    updateCurrentUserShelter.isPending ||
+    isGettingCoordinates;
   const isEditing = !!shelter;
   const hasModifiedInputs = Object.keys(form.formState.dirtyFields).length > 0;
 
   async function onSubmit(values: z.infer<typeof shelterSchema>) {
     try {
+      setIsGettingCoordinates(true);
       const { street, number, city, state } = values.address;
       const coordinates = await googleMaps.coordinates({
         street,
@@ -87,7 +93,11 @@ function Shelter() {
       const mutation = isEditing ? updateCurrentUserShelter : createShelter;
       mutation.mutate(shelter);
     } catch (error) {
-      console.error("Error fetching coordinates or submitting shelter:", error);
+      toast.error(
+        "Ops! Houve um erro ao buscar as coordenadas do endereço e o abrigo não foi criado. Tente novamente!.",
+      );
+    } finally {
+      setIsGettingCoordinates(false);
     }
   }
 

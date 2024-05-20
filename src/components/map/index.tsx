@@ -5,6 +5,7 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import "leaflet-defaulticon-compatibility";
 import { type LatLngTuple } from "leaflet";
 import { type Shelter } from "@prisma/client";
+import { Card } from "../card";
 
 function UserLocationMap({ userLocation }: { userLocation: LatLngTuple }) {
   const map = useMap();
@@ -44,17 +45,11 @@ export default function Map({
             key={shelter.id}
             position={[shelter.latitude, shelter.longitude]}
           >
-            <Popup>
-              <div className="flex flex-col space-y-2">
-                <h2 className="text-lg font-bold">{shelter.name}</h2>
-                <p>{shelter.phone}</p>
-                <p>{shelter.addressStreet}</p>
-                <p>
-                  {shelter.addressCity} - {shelter.addressState}
-                </p>
-                <p>{shelter.addressNeighborhood}</p>
-                <p>{shelter.addressZip}</p>
-              </div>
+            <Popup minWidth={390}>
+              <Card
+                shelter={shelter}
+                className="border-none p-2 text-black shadow-none"
+              />
             </Popup>
           </Marker>
         );

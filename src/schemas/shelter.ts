@@ -57,3 +57,12 @@ export const shelterSchema = z.object({
       }, "O nome de o usuário do Facebook deve começar com @"),
   }),
 });
+
+export const apiShelterSchema = z.object({
+  ...shelterSchema.shape,
+  address: z.object({
+    ...shelterSchema.shape.address.shape,
+    latitude: z.number().optional(),
+    longitude: z.number().optional(),
+  }),
+});
