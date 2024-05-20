@@ -2,23 +2,12 @@
 import { Card } from "~/components/card/";
 import { SearchInput } from "~/components/search-input";
 import { api } from "~/trpc/react";
-import { Filters } from "~/components/filters";
 import Fuse from "fuse.js";
 import { useMemo } from "react";
 import { Skeleton } from "~/components/ui/skeleton";
 import { useDebouncedState } from "~/hooks/use-debouced-state";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { FiInfo } from "react-icons/fi";
-
-const menus = [
-  {
-    label: "Disponibilidade",
-    items: [
-      { label: "Com vagas", checked: true },
-      { label: "Sem vagas", checked: false },
-    ],
-  },
-];
 
 export default function Home() {
   const { data, isLoading } = api.shelter.findAll.useQuery();

@@ -1,6 +1,5 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import {
-  type Theme,
   getServerSession,
   type DefaultSession,
   type NextAuthOptions,
