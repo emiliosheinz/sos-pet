@@ -9,6 +9,7 @@ on:
 jobs:
   lint-type-check-and-build:
     runs-on: ubuntu-latest
+    name: Lint, Type Check, and Build
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -20,7 +21,10 @@ jobs:
           cache: "yarn"
 
       - name: Setup .env file
-        run: echo "${{ secrets.DOT_ENV_FILE_CONTENT }}" > .env
+        # All the environment variables in .env.example are invalid,
+        # therefore the application will not be functional. But, it is enough
+        # for linting, type checking, and building.
+        run: cat .env.example > .env
 
       - name: Install dependencies
         run: yarn
