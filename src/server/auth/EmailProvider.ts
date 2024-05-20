@@ -37,13 +37,12 @@ export function CustomEmailProvider() {
 }
 
 function html({ url }: { url: string }) {
-  const brandColor = "#333333";
   const color = {
     background: "#FFFFFF",
     text: "#333333",
     mainBackground: "#FFFFFF",
-    buttonBackground: brandColor,
-    buttonBorder: brandColor,
+    buttonBackground: "#333333",
+    buttonBorder: "#333333",
     buttonText: "#FFFFFF",
   };
 
