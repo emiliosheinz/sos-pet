@@ -11,7 +11,7 @@ import { Suspense } from "react";
 import { Loader2 } from "lucide-react";
 import { EmailProviderForm } from "./_components/EmailProviderForm";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
-import { MdErrorOutline } from "react-icons/md";
+import { FiAlertTriangle } from "react-icons/fi";
 
 type SignInPageProps = {
   searchParams: Record<string, string>;
@@ -55,7 +55,7 @@ export default async function SignInPage({ searchParams }: SignInPageProps) {
       </p>
       {hasError && (
         <Alert variant="destructive">
-          <MdErrorOutline className="h-4 w-4" />
+          <FiAlertTriangle className="h-4 w-4" />
           <AlertTitle>Erro ao tentar realizar o login.</AlertTitle>
           <AlertDescription>
             Por favor, tente novamente com outra opção disponível.
