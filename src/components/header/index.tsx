@@ -2,7 +2,6 @@ import Image from "next/image";
 import { Nav } from "./nav";
 import { Sidebar } from "./sidebar";
 import Link from "next/link";
-import { FaMapMarkerAlt } from "react-icons/fa";
 
 export function Header() {
   return (
