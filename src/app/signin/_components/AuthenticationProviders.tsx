@@ -14,6 +14,15 @@ type AuthenticationProvidersProps = {
   callbackUrl?: string;
 };
 
+/**
+ * Prevents multiple calls to getProviders during one session
+ */
+let cachedProviders: Awaited<ReturnType<typeof getProviders>> = null;
+async function getCachedProviders() {
+  if (!!cachedProviders) return cachedProviders;
+  return (cachedProviders = await getProviders());
+}
+
 export function AuthenticationProviders({
   callbackUrl,
 }: AuthenticationProvidersProps) {
@@ -24,7 +33,7 @@ export function AuthenticationProviders({
 
   useEffect(() => {
     setGetProvidersState("loading");
-    getProviders()
+    getCachedProviders()
       .then((providers) => {
         setProviders(providers);
         setGetProvidersState("success");
