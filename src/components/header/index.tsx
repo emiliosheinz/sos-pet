@@ -3,6 +3,7 @@ import { Nav } from "./nav";
 import { Sidebar } from "./sidebar";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { FaMapMarkerAlt } from "react-icons/fa";
 
 export function Header() {
   const renderMainSection = () => (
@@ -32,10 +33,7 @@ export function Header() {
           <Button asChild variant="link">
             <Link className="flex items-center gap-1" href="/map">
               Mapa
-              <span className="relative mb-3 flex h-3 w-3">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75"></span>
-                <span className="relative inline-flex h-3 w-3 rounded-full bg-red-600"></span>
-              </span>
+              <FaMapMarkerAlt className="size-3.5 animate-bounce text-red-600" />
             </Link>
           </Button>
         </li>
