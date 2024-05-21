@@ -13,15 +13,15 @@ import { unmaskPhone, unmaskSocialMedia } from "~/lib/masks";
 
 type Props = {
   shelter: Shelter;
-};
+} & React.ComponentProps<typeof CardBase>;
 
-export function Card({ shelter }: Props) {
+export function Card({ shelter, ...otherProps }: Props) {
   const fullAddress = `${shelter.addressStreet} ${shelter.addressNumber} ${shelter.addressNeighborhood}, ${shelter.addressCity}, ${shelter.addressState}`;
 
   const availableVacancies = shelter.capacity - shelter.occupancy;
 
   return (
-    <CardBase key={shelter.id} className="w-full shadow-md">
+    <CardBase key={shelter.id} className="w-full shadow-md" {...otherProps}>
       <CardHeader className="flex flex-col gap-1">
         <h4 className="text-lg font-medium">{shelter.name}</h4>
         {availableVacancies > 0 ? (
@@ -69,7 +69,7 @@ export function Card({ shelter }: Props) {
           </CardSection>
         )}
       </CardContent>
-      <CardFooter className="flex items-center justify-between gap-4">
+      <CardFooter className="flex items-center justify-between gap-4 text-neutral-50">
         <a
           className="inline-flex h-10 items-center justify-between gap-2 whitespace-nowrap rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-neutral-50 ring-offset-white transition-colors hover:bg-neutral-900/90 focus-visible:outline-none focus-visible:ring-2
           focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-neutral-50 dark:text-neutral-900

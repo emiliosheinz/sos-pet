@@ -59,6 +59,13 @@ export function Sidebar() {
                   </Link>
                 </Button>
               </li>
+              <li>
+                <Button asChild variant="link">
+                  <Link onClick={handleCloseSidebar} href="/map">
+                    Mapa
+                  </Link>
+                </Button>
+              </li>
               {!!session && (
                 <>
                   <Separator className="mb-3" />

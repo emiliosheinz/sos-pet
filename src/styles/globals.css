@@ -5,3 +5,23 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* Reset leaflet style */
+.leaflet-container a {
+  color: inherit !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+}
+
+.leaflet-control {
+  z-index: 0 !important;
+}
+.leaflet-pane {
+  z-index: 0 !important;
+}
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 0 !important;
+}
