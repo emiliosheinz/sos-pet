@@ -1,5 +1,5 @@
 import { type z } from "zod";
-import { shelterSchema } from "~/schemas/shelter";
+import { apiShelterSchema } from "~/schemas/shelter";
 
 import {
   createTRPCRouter,
@@ -13,7 +13,7 @@ export const shelterRouter = createTRPCRouter({
     return db.shelter.findMany();
   }),
   findCurrentUserShelter: protectedProcedure.query(
-    async ({ ctx }): Promise<z.infer<typeof shelterSchema> | null> => {
+    async ({ ctx }): Promise<z.infer<typeof apiShelterSchema> | null> => {
       const result = await db.shelter.findFirst({
         where: {
           createdById: ctx.session.user.id,
@@ -41,12 +41,14 @@ export const shelterRouter = createTRPCRouter({
           city: result.addressCity,
           complement: result.addressComplement ?? undefined,
           neighborhood: result.addressNeighborhood,
+          latitude: result.latitude ?? undefined,
+          longitude: result.longitude ?? undefined,
         },
       };
     },
   ),
   create: protectedProcedure
-    .input(shelterSchema)
+    .input(apiShelterSchema)
     .mutation(async ({ ctx, input }) => {
       await db.shelter.create({
         data: {
@@ -66,11 +68,13 @@ export const shelterRouter = createTRPCRouter({
           addressCity: input.address.city,
           addressComplement: input.address.complement,
           addressNeighborhood: input.address.neighborhood,
+          latitude: input.address.latitude,
+          longitude: input.address.longitude,
         },
       });
     }),
   updateCurrentUserShelter: protectedProcedure
-    .input(shelterSchema)
+    .input(apiShelterSchema)
     .mutation(async ({ input, ctx }) => {
       // This is currently only safe because we do not allow users to have more than one shelter on the FE.
       const result = await db.shelter.findFirst({
@@ -104,6 +108,8 @@ export const shelterRouter = createTRPCRouter({
           addressCity: input.address.city,
           addressComplement: input.address.complement,
           addressNeighborhood: input.address.neighborhood,
+          latitude: input.address.latitude,
+          longitude: input.address.longitude,
         },
       });
     }),

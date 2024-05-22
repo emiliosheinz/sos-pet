@@ -53,7 +53,6 @@ export default function Home() {
 
       <div className="mb-6 flex w-full max-w-7xl items-center justify-between space-x-4">
         <SearchInput handleSearch={handleSearch} />
-        {/* <Filters menus={menus} /> */}
       </div>
       {!isLoading && !filteredShelters?.length && (
         <div className="text-center text-gray-600">
