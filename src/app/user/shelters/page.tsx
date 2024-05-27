@@ -1,11 +1,11 @@
 "use client";
 
 import { api } from "~/trpc/react";
-import { Loader2 } from "lucide-react";
 
 import { type ShelterTable, columns } from "./columns";
 import { DataTable } from "./data-table";
 import Link from "next/link";
+import { Skeleton } from "~/components/ui/skeleton";
 
 function Shelters({ items }: { items?: ShelterTable[] | null }) {
   const renderContent = () => {
@@ -39,8 +39,11 @@ export default function SheltersPage() {
 
   if (isLoading) {
     return (
-      <div className="flex w-full justify-center pt-28">
-        <Loader2 className="size-8 animate-spin" />
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-3 px-4 py-4 lg:justify-between">
+        <Skeleton className="mb-3 h-[33px] w-[180px] rounded-xl" />
+        <Skeleton className="h-[80px] w-full rounded-xl" />
+        <Skeleton className="h-[80px] w-full rounded-xl" />
+        <Skeleton className="h-[80px] w-full rounded-xl" />
       </div>
     );
   }

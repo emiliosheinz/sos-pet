@@ -1,36 +1,29 @@
 "use client";
-
-import { Loader2 } from "lucide-react";
+import { notFound } from "next/navigation";
 
 import { api } from "~/trpc/react";
 import { FormEditRegister } from "~/components/shelter/form-edit-register";
+import { Skeleton } from "~/components/ui/skeleton";
 
 export default function ShelterPage({ params }: { params: { id: number } }) {
   const { data, isLoading, error } = api.shelter.findUserShelterById.useQuery({
     id: Number(params.id),
   });
 
-  if (error?.data?.httpStatus === 404) {
-    return (
-      <div className="flex w-full justify-center pt-28">
-        <h1 className="text-2xl font-semibold">404</h1>
-      </div>
-    );
+  if (error?.data?.httpStatus === 404 || (!data && !isLoading)) {
+    notFound();
   }
 
   if (isLoading) {
     return (
-      <div className="flex w-full justify-center pt-28">
-        <Loader2 className="size-8 animate-spin" />
-      </div>
-    );
-  }
-
-  if (!data) {
-    return (
-      <div className="flex w-full justify-center pt-28">
-        <h1 className="text-2xl font-semibold">Abrigo não encontrado!</h1>
-      </div>
+      <main className="mx-auto max-w-7xl bg-white px-4">
+        <div className="m-auto flex w-full max-w-2xl flex-col flex-wrap gap-3 pt-6">
+          <Skeleton className="h-[33px] w-[180px] rounded-xl" />
+          <Skeleton className="h-[300px] w-full rounded-xl" />
+          <Skeleton className="h-[300px] w-full rounded-xl" />
+          <Skeleton className="h-[300px] w-full rounded-xl" />
+        </div>
+      </main>
     );
   }
 
