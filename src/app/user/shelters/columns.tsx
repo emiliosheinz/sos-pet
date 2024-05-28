@@ -53,10 +53,6 @@ export const columns: ColumnDef<ShelterTable>[] = [
     },
   },
   {
-    accessorKey: "phone",
-    header: "Telefone",
-  },
-  {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
