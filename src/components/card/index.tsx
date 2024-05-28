@@ -10,6 +10,7 @@ import { type Shelter } from "@prisma/client";
 import { FaWhatsapp, FaFacebook, FaInstagram } from "react-icons/fa";
 import { RiTwitterXLine } from "react-icons/ri";
 import { unmaskPhone, unmaskSocialMedia } from "~/lib/masks";
+import { Button } from "../ui/button";
 
 type Props = {
   shelter: Shelter;
@@ -121,12 +122,12 @@ function SocialLink({
   label: string;
 }) {
   return (
-    <Link href={href}>
-      <div className="flex items-center space-x-1">
+    <Button asChild variant="link" className="h-min p-1">
+      <Link href={href}>
         {icon}
         <span className="sr-only">{label}</span>
-      </div>
-    </Link>
+      </Link>
+    </Button>
   );
 }
 
