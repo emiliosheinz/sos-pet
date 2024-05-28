@@ -24,12 +24,17 @@ import { TagInput } from "~/components/tag-input";
 import { defaultValues } from "./constants";
 import { Card as CardBase, CardContent } from "~/components/ui/card";
 import { DialogDelete } from "./dialog-delete";
+import { googleMaps } from "~/lib/google-maps";
+import { useState } from "react";
 
 interface FormEditRegisterProps {
   shelter?: z.infer<typeof shelterSchema> | null;
 }
 
 export function FormEditRegister({ shelter }: FormEditRegisterProps = {}) {
+  const [isGettingCoordinates, setIsGettingCoordinates] =
+    useState<boolean>(false);
+
   const form = useForm<z.infer<typeof shelterSchema>>({
     resolver: zodResolver(shelterSchema),
     defaultValues: {
@@ -48,7 +53,7 @@ export function FormEditRegister({ shelter }: FormEditRegisterProps = {}) {
       console.error(error);
     },
   });
-  const updateCurrentUserShelter = api.shelter.update.useMutation({
+  const updateShelter = api.shelter.update.useMutation({
     onSuccess: () => {
       toast.success("Abrigo atualizado com sucesso!");
       window.scrollTo(0, 0);
@@ -59,15 +64,38 @@ export function FormEditRegister({ shelter }: FormEditRegisterProps = {}) {
     },
   });
   const isLoading =
-    createShelter.isPending || updateCurrentUserShelter.isPending;
+    createShelter.isPending || updateShelter.isPending || isGettingCoordinates;
   const isEditing = !!shelter;
   const hasModifiedInputs = Object.keys(form.formState.dirtyFields).length > 0;
 
   async function onSubmit(values: z.infer<typeof shelterSchema>) {
-    if (isEditing) {
-      updateCurrentUserShelter.mutate(values);
-    } else {
-      createShelter.mutate(values);
+    try {
+      setIsGettingCoordinates(true);
+      const { street, number, city, state } = values.address;
+      const coordinates = await googleMaps.coordinates({
+        street,
+        number,
+        city,
+        state,
+      });
+
+      const shelter = {
+        ...values,
+        address: {
+          ...values.address,
+          latitude: coordinates?.lat,
+          longitude: coordinates?.lng,
+        },
+      };
+
+      const mutation = isEditing ? updateShelter : createShelter;
+      mutation.mutate(shelter);
+    } catch (error) {
+      toast.error(
+        "Ops! Houve um erro ao buscar as coordenadas do endereço e o abrigo não foi criado. Tente novamente!.",
+      );
+    } finally {
+      setIsGettingCoordinates(false);
     }
   }
 
