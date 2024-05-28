@@ -1,5 +1,5 @@
-import { type z, z as zod } from "zod";
-import { shelterSchema, apiShelterSchema } from "~/schemas/shelter";
+import { z } from "zod";
+import { apiShelterSchema } from "~/schemas/shelter";
 import { TRPCError } from "@trpc/server";
 
 import {
@@ -9,61 +9,55 @@ import {
 } from "~/server/api/trpc";
 import { db } from "~/server/db";
 
+const InputIdParams = z.object({
+  id: z.number(),
+});
+
 export const shelterRouter = createTRPCRouter({
   findAll: publicProcedure.query(async () => {
     return db.shelter.findMany();
   }),
-  findById: publicProcedure
-    .input(
-      z.object({
-        id: z.number(),
-      }),
-    )
-    .query(async (opts) => {
-      const { id } = opts.input;
+  findById: publicProcedure.input(InputIdParams).query(async (opts) => {
+    const { id } = opts.input;
 
-      const result = await db.shelter.findUnique({
-        where: {
-          id,
-        },
+    const result = await db.shelter.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!result) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "The server cannot find the requested resource.",
       });
+    }
 
-      if (!result) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "The server cannot find the requested resource.",
-        });
-      }
-
-      return {
-        id: result.id,
-        name: result.name,
-        phone: result.phone,
-        capacity: result.capacity.toString(),
-        occupancy: result.occupancy.toString(),
-        donations: result.donations,
-        volunteers: result.volunteers,
-        social: {
-          instagram: result.instagram ?? undefined,
-          facebook: result.facebook ?? undefined,
-        },
-        address: {
-          cep: result.addressZip,
-          street: result.addressStreet,
-          number: result.addressNumber,
-          state: result.addressState,
-          city: result.addressCity,
-          complement: result.addressComplement ?? undefined,
-          neighborhood: result.addressNeighborhood,
-        },
-      };
-    }),
+    return {
+      id: result.id,
+      name: result.name,
+      phone: result.phone,
+      capacity: result.capacity.toString(),
+      occupancy: result.occupancy.toString(),
+      donations: result.donations,
+      volunteers: result.volunteers,
+      social: {
+        instagram: result.instagram ?? undefined,
+        facebook: result.facebook ?? undefined,
+      },
+      address: {
+        cep: result.addressZip,
+        street: result.addressStreet,
+        number: result.addressNumber,
+        state: result.addressState,
+        city: result.addressCity,
+        complement: result.addressComplement ?? undefined,
+        neighborhood: result.addressNeighborhood,
+      },
+    };
+  }),
   findUserShelterById: protectedProcedure
-    .input(
-      z.object({
-        id: z.number(),
-      }),
-    )
+    .input(InputIdParams)
     .query(async ({ ctx, input }) => {
       const result = await db.shelter.findFirst({
         where: {
@@ -130,7 +124,7 @@ export const shelterRouter = createTRPCRouter({
         },
       });
     }),
-  updateCurrentUserShelter: protectedProcedure
+  update: protectedProcedure
     .input(apiShelterSchema)
     .mutation(async ({ input, ctx }) => {
       const result = await db.shelter.findFirst({
@@ -171,11 +165,7 @@ export const shelterRouter = createTRPCRouter({
       });
     }),
   delete: protectedProcedure
-    .input(
-      z.object({
-        id: z.number(),
-      }),
-    )
+    .input(InputIdParams)
     .mutation(async ({ ctx, input }) => {
       const result = await db.shelter.findFirst({
         where: {
