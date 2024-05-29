@@ -2,8 +2,11 @@
 
 import { api } from "~/trpc/react";
 
-import { type ShelterTable, columns } from "./columns";
-import { DataTable } from "./data-table";
+import {
+  type ShelterTable,
+  columns,
+  DataTable,
+} from "./_components/data-table";
 import Link from "next/link";
 import { Skeleton } from "~/components/ui/skeleton";
 
