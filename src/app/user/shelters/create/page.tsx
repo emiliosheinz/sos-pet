@@ -2,6 +2,6 @@
 
 import { FormEditRegister } from "~/components/shelter/form-edit-register";
 
-export default function ShelterPage() {
+export default function CreateShelterPage() {
   return <FormEditRegister />;
 }

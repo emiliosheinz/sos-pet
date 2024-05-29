@@ -6,7 +6,11 @@ import { FormEditRegister } from "~/components/shelter/form-edit-register";
 import { Skeleton } from "~/components/ui/skeleton";
 import { toast } from "sonner";
 
-export default function ShelterPage({ params }: { params: { id: number } }) {
+export default function EditShelterPage({
+  params,
+}: {
+  params: { id: number };
+}) {
   const { data, isLoading, error } = api.shelter.findUserShelterById.useQuery({
     id: Number(params.id),
   });
