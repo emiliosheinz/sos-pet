@@ -11,7 +11,7 @@ import { Skeleton } from "~/components/ui/skeleton";
 
 function Shelters({ items }: { items?: ShelterTable[] | null }) {
   const renderContent = () => {
-    if (!items || items.length === 0) {
+    if (!items?.length) {
       return (
         <div className="flex flex-col items-center justify-center">
           <p>Você não possui abrigos cadastrados.</p>
