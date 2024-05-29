@@ -16,18 +16,16 @@ import {
   TableRow,
 } from "~/components/ui/table";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+import { columns } from "./columns";
+
+interface DataTableProps<TData> {
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) {
+export function SheltersListTable<TValue>({ data }: DataTableProps<TValue>) {
   const table = useReactTable({
     data,
-    columns,
+    columns: columns as ColumnDef<TValue>[],
     getCoreRowModel: getCoreRowModel(),
   });
 

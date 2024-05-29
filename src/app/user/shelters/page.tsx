@@ -4,9 +4,8 @@ import { api } from "~/trpc/react";
 
 import {
   type ShelterTable,
-  columns,
-  DataTable,
-} from "./_components/data-table";
+  SheltersListTable,
+} from "./_components/shelters-list-table";
 import Link from "next/link";
 import { Skeleton } from "~/components/ui/skeleton";
 
@@ -26,7 +25,7 @@ function Shelters({ items }: { items?: ShelterTable[] | null }) {
       );
     }
 
-    return <DataTable columns={columns} data={items} />;
+    return <SheltersListTable data={items} />;
   };
 
   return (

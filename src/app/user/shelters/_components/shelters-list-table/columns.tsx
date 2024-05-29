@@ -33,7 +33,7 @@ export const columns: ColumnDef<ShelterTable>[] = [
     },
   },
   {
-    accessorKey: "Vagas",
+    accessorKey: "vagas",
     header: "Capacidade",
     cell: ({ row }) => {
       const shelter = row.original;
