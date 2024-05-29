@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEditRegister } from "~/components/shelter/form-edit-register";
+import { FormEditRegister } from "~/app/user/shelters/_components";
 
 export default function CreateShelterPage() {
   return <FormEditRegister />;

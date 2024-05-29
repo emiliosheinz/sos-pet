@@ -2,7 +2,7 @@
 import { notFound } from "next/navigation";
 
 import { api } from "~/trpc/react";
-import { FormEditRegister } from "~/components/shelter/form-edit-register";
+import { FormEditRegister } from "~/app/user/shelters/_components";
 import { Skeleton } from "~/components/ui/skeleton";
 import { toast } from "sonner";
 
