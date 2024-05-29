@@ -9,7 +9,7 @@ import {
 import Link from "next/link";
 import { Skeleton } from "~/components/ui/skeleton";
 
-function Shelters({ items }: { items?: ShelterTable[] | null }) {
+function Shelters({ items }: { items?: ShelterTable[] }) {
   const renderContent = () => {
     if (!items?.length) {
       return (

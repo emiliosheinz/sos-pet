@@ -9,8 +9,8 @@ export const userSheltersRouter = createTRPCRouter({
       },
     });
 
-    if (!result) {
-      return null;
+    if (!result.length) {
+      return;
     }
 
     return result.map((shelter) => ({
