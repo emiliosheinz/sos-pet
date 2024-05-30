@@ -17,12 +17,10 @@ export const shelterRouter = createTRPCRouter({
   findAll: publicProcedure.query(async () => {
     return db.shelter.findMany();
   }),
-  findById: publicProcedure.input(InputIdParams).query(async (opts) => {
-    const { id } = opts.input;
-
+  findById: publicProcedure.input(InputIdParams).query(async ({ input }) => {
     const result = await db.shelter.findUnique({
       where: {
-        id,
+        id: input.id,
       },
     });
 
