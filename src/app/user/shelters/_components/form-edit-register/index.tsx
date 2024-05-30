@@ -43,7 +43,7 @@ export function FormEditRegister({ shelter }: FormEditRegisterProps = {}) {
     },
   });
   const router = useRouter();
-  const createShelter = api.shelter.create.useMutation({
+  const createShelter = api.userShelters.create.useMutation({
     onSuccess: () => {
       router.replace("/");
       toast.success("Abrigo criado com sucesso!");
@@ -53,7 +53,7 @@ export function FormEditRegister({ shelter }: FormEditRegisterProps = {}) {
       console.error(error);
     },
   });
-  const updateShelter = api.shelter.update.useMutation({
+  const updateShelter = api.userShelters.update.useMutation({
     onSuccess: () => {
       toast.success("Abrigo atualizado com sucesso!");
       window.scrollTo(0, 0);

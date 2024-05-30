@@ -59,11 +59,21 @@ export const shelterSchema = z.object({
   }),
 });
 
-export const apiShelterSchema = z.object({
-  ...shelterSchema.shape,
+const addressSchema = z.object({
   address: z.object({
     ...shelterSchema.shape.address.shape,
     latitude: z.number().optional(),
     longitude: z.number().optional(),
   }),
+});
+
+export const createShelterSchema = z.object({
+  ...shelterSchema.shape,
+  ...addressSchema.shape,
+});
+
+export const apiShelterSchema = z.object({
+  ...shelterSchema.shape,
+  ...addressSchema.shape,
+  id: z.number(),
 });
