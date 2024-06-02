@@ -16,12 +16,13 @@ datasource db {
 
 model Shelter {
   id        Int      @id @default(autoincrement())
+  uuid      String?  @default(cuid())
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   createdBy   User   @relation(fields: [createdById], references: [id])
-  createdById String 
+  createdById String
 
   phone     String
   capacity  Int
