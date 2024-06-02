@@ -17,7 +17,7 @@ import {
   FormDescription,
 } from "~/components/ui/form";
 import { cepMask, phoneMask, socialMediaMask } from "~/lib/masks";
-import { shelterSchema } from "~/schemas/shelter";
+import { shelterSchema, type apiShelterSchema } from "~/schemas/shelter";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 import { TagInput } from "~/components/tag-input";
@@ -28,7 +28,7 @@ import { googleMaps } from "~/lib/google-maps";
 import { useState } from "react";
 
 interface FormEditRegisterProps {
-  shelter?: z.infer<typeof shelterSchema> | null;
+  shelter?: z.infer<typeof apiShelterSchema> | null;
 }
 
 export function FormEditRegister({ shelter }: FormEditRegisterProps = {}) {
@@ -79,7 +79,7 @@ export function FormEditRegister({ shelter }: FormEditRegisterProps = {}) {
         state,
       });
 
-      const shelter = {
+      const formShelter = {
         ...values,
         address: {
           ...values.address,
@@ -88,8 +88,13 @@ export function FormEditRegister({ shelter }: FormEditRegisterProps = {}) {
         },
       };
 
-      const mutation = isEditing ? updateShelter : createShelter;
-      mutation.mutate(shelter);
+      if (isEditing) {
+        updateShelter.mutate({ ...formShelter, id: shelter.id });
+
+        return;
+      }
+
+      createShelter.mutate(formShelter);
     } catch (error) {
       toast.error(
         "Ops! Houve um erro ao buscar as coordenadas do endereço e o abrigo não foi criado. Tente novamente!.",
@@ -434,9 +439,7 @@ export function FormEditRegister({ shelter }: FormEditRegisterProps = {}) {
               >
                 {isLoading ? <Loader2 className="animate-spin" /> : "Salvar"}
               </Button>
-              {isEditing && shelter.id && (
-                <DialogDelete shelterId={shelter.id} />
-              )}
+              {isEditing && <DialogDelete shelterId={shelter.id} />}
             </div>
           </form>
         </Form>

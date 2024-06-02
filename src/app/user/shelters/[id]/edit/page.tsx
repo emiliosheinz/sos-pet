@@ -11,9 +11,10 @@ export default function EditShelterPage({
 }: {
   params: { id: number };
 }) {
-  const { data, isLoading, error } = api.shelter.findUserShelterById.useQuery({
-    id: Number(params.id),
-  });
+  const { data, isLoading, error } =
+    api.userShelters.findUserShelterById.useQuery({
+      id: Number(params.id),
+    });
 
   if (error?.data?.httpStatus === 404 && !isLoading) {
     notFound();

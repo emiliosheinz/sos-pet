@@ -22,10 +22,10 @@ export function DialogDelete({ shelterId }: { shelterId: number }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
-  const deleteShelter = api.shelter.delete.useMutation({
+  const deleteShelter = api.userShelters.delete.useMutation({
     onSuccess: () => {
       toast.success("Abrigo excluído com sucesso!");
-      router.replace("/");
+      router.replace("/user/shelters");
       setOpen(false);
     },
     onError: (error) => {

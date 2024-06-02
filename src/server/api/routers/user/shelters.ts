@@ -3,7 +3,7 @@ import { TRPCError } from "@trpc/server";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { db } from "~/server/db";
-import { apiShelterSchema } from "~/schemas/shelter";
+import { apiShelterSchema, createShelterSchema } from "~/schemas/shelter";
 
 const InputIdParams = z.object({
   id: z.number(),
@@ -87,7 +87,7 @@ export const userSheltersRouter = createTRPCRouter({
       };
     }),
   create: protectedProcedure
-    .input(apiShelterSchema)
+    .input(createShelterSchema)
     .mutation(async ({ ctx, input }) => {
       await db.shelter.create({
         data: {

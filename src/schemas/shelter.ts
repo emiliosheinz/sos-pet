@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 export const shelterSchema = z.object({
-  id: z.number().optional(),
   name: z
     .string({
       message: "Campo obrigatório",
