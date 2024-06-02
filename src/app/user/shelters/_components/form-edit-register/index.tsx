@@ -45,7 +45,7 @@ export function FormEditRegister({ shelter }: FormEditRegisterProps = {}) {
   const router = useRouter();
   const createShelter = api.userShelters.create.useMutation({
     onSuccess: () => {
-      router.replace("/");
+      router.replace("/user/shelters");
       toast.success("Abrigo criado com sucesso!");
     },
     onError: (error) => {
