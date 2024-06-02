@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { type z } from "zod";
-import { type shelterSchema } from "~/schemas/shelter";
+import { type apiShelterSchema } from "~/schemas/shelter";
 import { type ColumnDef } from "@tanstack/react-table";
 import { FiEdit } from "react-icons/fi";
 
-export type ShelterTable = z.infer<typeof shelterSchema>;
+export type ShelterTable = z.infer<typeof apiShelterSchema>;
 
 export const columns: ColumnDef<ShelterTable>[] = [
   {
