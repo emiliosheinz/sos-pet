@@ -11,11 +11,11 @@ import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 export default function EditShelterPage({
   params,
 }: {
-  params: { id: number };
+  params: { uuid: string };
 }) {
   const { data, isLoading, error } =
-    api.userShelters.findUserShelterById.useQuery({
-      id: Number(params.id),
+    api.userShelters.findUserShelterByUuid.useQuery({
+      uuid: params.uuid,
     });
 
   if (error) {

@@ -18,7 +18,7 @@ import { useState } from "react";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 
-export function DialogDelete({ shelterId }: { shelterId: number }) {
+export function DialogDelete({ shelterUuid }: { shelterUuid: string }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
@@ -62,7 +62,7 @@ export function DialogDelete({ shelterId }: { shelterId: number }) {
           <Button
             type="button"
             onClick={() => {
-              deleteShelter.mutate({ id: shelterId });
+              deleteShelter.mutate({ uuid: shelterUuid });
             }}
           >
             Excluir

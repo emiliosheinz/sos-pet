@@ -60,7 +60,7 @@ export const columns: ColumnDef<ShelterTable>[] = [
 
       return (
         <div>
-          <Link href={`/user/shelters/${shelter.id}/edit`}>
+          <Link href={`/user/shelters/${shelter.uuid}/edit`}>
             <span className="sr-only">Editar</span>
             <FiEdit size={20} className="cursor-pointer" />
           </Link>

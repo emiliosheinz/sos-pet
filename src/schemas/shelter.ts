@@ -75,4 +75,5 @@ export const apiShelterSchema = z.object({
   ...shelterSchema.shape,
   ...addressSchema.shape,
   id: z.number(),
+  uuid: z.string(),
 });

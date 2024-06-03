@@ -89,7 +89,11 @@ export function FormEditRegister({ shelter }: FormEditRegisterProps = {}) {
       };
 
       if (isEditing) {
-        updateShelter.mutate({ ...formShelter, id: shelter.id });
+        updateShelter.mutate({
+          ...formShelter,
+          id: shelter.id,
+          uuid: shelter.uuid,
+        });
 
         return;
       }
@@ -439,7 +443,7 @@ export function FormEditRegister({ shelter }: FormEditRegisterProps = {}) {
               >
                 {isLoading ? <Loader2 className="animate-spin" /> : "Salvar"}
               </Button>
-              {isEditing && <DialogDelete shelterId={shelter.id} />}
+              {isEditing && <DialogDelete shelterUuid={shelter.uuid} />}
             </div>
           </form>
         </Form>

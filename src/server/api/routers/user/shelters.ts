@@ -5,8 +5,8 @@ import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { db } from "~/server/db";
 import { apiShelterSchema, createShelterSchema } from "~/schemas/shelter";
 
-const InputIdParams = z.object({
-  id: z.number(),
+const InputUuiDParams = z.object({
+  uuid: z.string(),
 });
 
 export const userSheltersRouter = createTRPCRouter({
@@ -23,6 +23,7 @@ export const userSheltersRouter = createTRPCRouter({
 
     return result.map((shelter) => ({
       id: shelter.id,
+      uuid: shelter.uuid,
       name: shelter.name,
       phone: shelter.phone,
       capacity: shelter.capacity.toString(),
@@ -44,13 +45,13 @@ export const userSheltersRouter = createTRPCRouter({
       },
     }));
   }),
-  findUserShelterById: protectedProcedure
-    .input(InputIdParams)
+  findUserShelterByUuid: protectedProcedure
+    .input(InputUuiDParams)
     .query(async ({ ctx, input }) => {
       const result = await db.shelter.findFirst({
         where: {
           createdById: ctx.session.user.id,
-          id: input.id,
+          uuid: input.uuid,
         },
       });
 
@@ -63,6 +64,7 @@ export const userSheltersRouter = createTRPCRouter({
 
       return {
         id: result.id,
+        uuid: result.uuid,
         name: result.name,
         phone: result.phone,
         capacity: result.capacity.toString(),
@@ -118,7 +120,7 @@ export const userSheltersRouter = createTRPCRouter({
       const result = await db.shelter.findFirst({
         where: {
           createdById: ctx.session.user.id,
-          id: input.id,
+          uuid: input.uuid,
         },
       });
 
@@ -128,8 +130,8 @@ export const userSheltersRouter = createTRPCRouter({
 
       await db.shelter.update({
         where: {
-          id: result.id,
           createdById: ctx.session.user.id,
+          id: result.id,
         },
         data: {
           name: input.name,
@@ -153,12 +155,12 @@ export const userSheltersRouter = createTRPCRouter({
       });
     }),
   delete: protectedProcedure
-    .input(InputIdParams)
+    .input(InputUuiDParams)
     .mutation(async ({ ctx, input }) => {
       const result = await db.shelter.findFirst({
         where: {
           createdById: ctx.session.user.id,
-          id: input.id,
+          uuid: input.uuid,
         },
       });
 
