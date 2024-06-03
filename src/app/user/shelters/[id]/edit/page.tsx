@@ -1,10 +1,12 @@
 "use client";
-import { notFound } from "next/navigation";
 
 import { api } from "~/trpc/react";
 import { FormEditRegister } from "~/app/user/shelters/_components";
 import { Skeleton } from "~/components/ui/skeleton";
-import { toast } from "sonner";
+import { notFound } from "next/navigation";
+import { FiAlertTriangle } from "react-icons/fi";
+
+import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 
 export default function EditShelterPage({
   params,
@@ -16,13 +18,24 @@ export default function EditShelterPage({
       id: Number(params.id),
     });
 
-  if (error?.data?.httpStatus === 404 && !isLoading) {
-    notFound();
-  }
+  if (error) {
+    if (error?.data?.code === "NOT_FOUND") {
+      return notFound();
+    }
 
-  if (!data && !isLoading) {
-    toast.error(
-      "Erro ao carregar os dados abrigo. Tente novamente mais tarde.",
+    return (
+      <main className="mx-auto max-w-7xl bg-white px-4">
+        <div className="m-auto flex w-full max-w-2xl flex-col flex-wrap gap-3 pt-6">
+          <Alert variant="destructive">
+            <FiAlertTriangle />
+            <AlertTitle>Erro</AlertTitle>
+            <AlertDescription>
+              Ocorreu um erro ao carregar os dados do abrigo. Por favor, tente
+              novamente mais tarde.
+            </AlertDescription>
+          </Alert>
+        </div>
+      </main>
     );
   }
 
