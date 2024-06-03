@@ -5,24 +5,24 @@ const prisma = new PrismaClient();
 
 async function updateUsersWithUUID() {
   try {
-    const users = await prisma.shelter.findMany({
+    const shelters = await prisma.shelter.findMany({
       where: {
         uuid: null,
       },
     });
 
-    const updatePromises = users.map((user) => {
+    const updatePromises = shelters.map((shelter) => {
       return prisma.shelter.update({
-        where: { id: user.id },
+        where: { id: shelter.id },
         data: { uuid: cuid() },
       });
     });
 
     await Promise.all(updatePromises);
 
-    console.log(`Updated ${users.length} users with UUIDs.`);
+    console.log(`Updated ${shelters.length} shelters with UUIDs.`);
   } catch (error) {
-    console.error("Error updating users with UUIDs:", error);
+    console.error("Error updating shelters with UUIDs:", error);
   } finally {
     await prisma.$disconnect();
   }
