@@ -16,7 +16,7 @@ datasource db {
 
 model Shelter {
   id        Int      @id @default(autoincrement())
-  uuid      String?  @default(cuid())
+  uuid      String   @unique @default(cuid())
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
