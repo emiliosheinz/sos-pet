@@ -1,4 +1,5 @@
 import { shelterRouter } from "~/server/api/routers/shelter";
+import { userSheltersRouter } from "~/server/api/routers/user/shelters";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 
 /**
@@ -8,6 +9,7 @@ import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   shelter: shelterRouter,
+  userShelters: userSheltersRouter,
 });
 
 // export type definition of API

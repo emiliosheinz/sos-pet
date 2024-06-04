@@ -71,8 +71,8 @@ export function Sidebar() {
                   <Separator className="mb-3" />
                   <li>
                     <Button asChild variant="link">
-                      <Link onClick={handleCloseSidebar} href="/shelter">
-                        Meu abrigo
+                      <Link onClick={handleCloseSidebar} href="/user/shelters">
+                        Meus abrigos
                       </Link>
                     </Button>
                   </li>
