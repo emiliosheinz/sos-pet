@@ -1,3 +1,8 @@
+// @ts-nocheck
+
+// This script will populate the `uuid` field for all shelters that do not have one.
+// This script should be run once to populate the `uuid` field for all shelters.
+
 import { PrismaClient } from "@prisma/client";
 import cuid from "cuid";
 

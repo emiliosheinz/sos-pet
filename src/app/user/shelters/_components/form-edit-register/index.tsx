@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
@@ -18,22 +17,24 @@ import {
   FormDescription,
 } from "~/components/ui/form";
 import { cepMask, phoneMask, socialMediaMask } from "~/lib/masks";
-import { shelterSchema } from "~/schemas/shelter";
+import { shelterSchema, type apiShelterSchema } from "~/schemas/shelter";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 import { TagInput } from "~/components/tag-input";
 import { defaultValues } from "./constants";
-import {
-  ShelterContextProvider,
-  useShelterContext,
-} from "~/contexts/ShelterContext";
 import { Card as CardBase, CardContent } from "~/components/ui/card";
+import { DialogDelete } from "./dialog-delete";
 import { googleMaps } from "~/lib/google-maps";
+import { useState } from "react";
 
-function Shelter() {
+interface FormEditRegisterProps {
+  shelter?: z.infer<typeof apiShelterSchema> | null;
+}
+
+export function FormEditRegister({ shelter }: FormEditRegisterProps = {}) {
   const [isGettingCoordinates, setIsGettingCoordinates] =
     useState<boolean>(false);
-  const { shelter } = useShelterContext();
+
   const form = useForm<z.infer<typeof shelterSchema>>({
     resolver: zodResolver(shelterSchema),
     defaultValues: {
@@ -42,9 +43,9 @@ function Shelter() {
     },
   });
   const router = useRouter();
-  const createShelter = api.shelter.create.useMutation({
+  const createShelter = api.userShelters.create.useMutation({
     onSuccess: () => {
-      router.replace("/");
+      router.replace("/user/shelters");
       toast.success("Abrigo criado com sucesso!");
     },
     onError: (error) => {
@@ -52,21 +53,18 @@ function Shelter() {
       console.error(error);
     },
   });
-  const updateCurrentUserShelter =
-    api.shelter.updateCurrentUserShelter.useMutation({
-      onSuccess: () => {
-        toast.success("Abrigo atualizado com sucesso!");
-        window.scrollTo(0, 0);
-      },
-      onError: (error) => {
-        toast.error("Ops! Houve um erro ao atualizar o abrigo.");
-        console.error(error);
-      },
-    });
+  const updateShelter = api.userShelters.update.useMutation({
+    onSuccess: () => {
+      toast.success("Abrigo atualizado com sucesso!");
+      window.scrollTo(0, 0);
+    },
+    onError: (error) => {
+      toast.error("Ops! Houve um erro ao atualizar o abrigo.");
+      console.error(error);
+    },
+  });
   const isLoading =
-    createShelter.isPending ||
-    updateCurrentUserShelter.isPending ||
-    isGettingCoordinates;
+    createShelter.isPending || updateShelter.isPending || isGettingCoordinates;
   const isEditing = !!shelter;
   const hasModifiedInputs = Object.keys(form.formState.dirtyFields).length > 0;
 
@@ -81,7 +79,7 @@ function Shelter() {
         state,
       });
 
-      const shelter = {
+      const formShelter = {
         ...values,
         address: {
           ...values.address,
@@ -90,8 +88,17 @@ function Shelter() {
         },
       };
 
-      const mutation = isEditing ? updateCurrentUserShelter : createShelter;
-      mutation.mutate(shelter);
+      if (isEditing) {
+        updateShelter.mutate({
+          ...formShelter,
+          id: shelter.id,
+          uuid: shelter.uuid,
+        });
+
+        return;
+      }
+
+      createShelter.mutate(formShelter);
     } catch (error) {
       toast.error(
         "Ops! Houve um erro ao buscar as coordenadas do endereço e o abrigo não foi criado. Tente novamente!.",
@@ -428,34 +435,19 @@ function Shelter() {
               </CardContent>
             </CardBase>
 
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={isLoading || (isEditing && !hasModifiedInputs)}
-            >
-              {isLoading ? <Loader2 className="animate-spin" /> : "Salvar"}
-            </Button>
+            <div className="flex gap-5">
+              <Button
+                type="submit"
+                className="w-full flex-1"
+                disabled={isLoading || (isEditing && !hasModifiedInputs)}
+              >
+                {isLoading ? <Loader2 className="animate-spin" /> : "Salvar"}
+              </Button>
+              {isEditing && <DialogDelete shelterUuid={shelter.uuid} />}
+            </div>
           </form>
         </Form>
       </div>
     </main>
-  );
-}
-
-export default function ShelterPage() {
-  const { data, isLoading } = api.shelter.findCurrentUserShelter.useQuery();
-
-  if (isLoading) {
-    return (
-      <div className="flex w-full justify-center pt-28">
-        <Loader2 className="size-8 animate-spin" />
-      </div>
-    );
-  }
-
-  return (
-    <ShelterContextProvider shelter={data ?? null}>
-      <Shelter />
-    </ShelterContextProvider>
   );
 }
