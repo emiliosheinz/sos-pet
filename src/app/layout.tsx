@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 import { TRPCReactProvider } from "~/trpc/react";
 import { Analytics } from "@vercel/analytics/react";
 
-import Providers from "./providers";
+import Providers from "./_components/providers";
 import { getServerAuthSession } from "~/server/auth";
 import { Toaster } from "~/components/ui/sonner";
 import { Footer } from "~/components/footer";
@@ -70,7 +70,7 @@ export default async function RootLayout({
   const session = await getServerAuthSession();
 
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <body className={`font-sans ${inter.variable}`}>
         <Providers session={session}>
           <TRPCReactProvider>
