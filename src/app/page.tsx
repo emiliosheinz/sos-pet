@@ -1,5 +1,4 @@
 "use client";
-import { ShelterCard } from "~/components/shelter-card";
 import { SearchInput } from "~/components/search-input";
 import { api } from "~/trpc/react";
 import Fuse from "fuse.js";
@@ -8,6 +7,11 @@ import { Skeleton } from "~/components/ui/skeleton";
 import { useDebouncedState } from "~/hooks/use-debouced-state";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { FiInfo } from "react-icons/fi";
+import dynamic from "next/dynamic";
+
+const ShelterCard = dynamic(() =>
+  import("~/components/shelter-card").then((module) => module.ShelterCard),
+);
 
 const Grid = ({ children }: PropsWithChildren) => (
   <div className="grid w-full max-w-7xl grid-cols-1 gap-5 md:grid-cols-2">
