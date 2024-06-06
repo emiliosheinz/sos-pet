@@ -13,7 +13,7 @@ function UserLocationMap({ userLocation }: { userLocation: LatLngTuple }) {
 
   useEffect(() => {
     if (userLocation) {
-      map.setView(userLocation, 13);
+      map.setView(userLocation, 8);
     }
   }, [userLocation, map]);
 
@@ -36,7 +36,7 @@ export default function Map({
         borderRadius: "6px",
       }}
       center={userLocation}
-      zoom={13}
+      zoom={8}
     >
       <UserLocationMap userLocation={userLocation} />
       <TileLayer
