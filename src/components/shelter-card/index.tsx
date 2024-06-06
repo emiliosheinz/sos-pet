@@ -16,7 +16,7 @@ type Props = {
   shelter: Shelter;
 } & React.ComponentProps<typeof CardBase>;
 
-export function Card({ shelter, ...otherProps }: Props) {
+export function ShelterCard({ shelter, ...otherProps }: Props) {
   const fullAddress = `${shelter.addressStreet} ${shelter.addressNumber} ${shelter.addressNeighborhood}, ${shelter.addressCity}, ${shelter.addressState}`;
 
   const availableVacancies = shelter.capacity - shelter.occupancy;
