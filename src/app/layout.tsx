@@ -3,6 +3,7 @@ import "~/styles/globals.css";
 import { Inter } from "next/font/google";
 import { TRPCReactProvider } from "~/trpc/react";
 import { Analytics } from "@vercel/analytics/react";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import Providers from "./_components/providers";
 import { getServerAuthSession } from "~/server/auth";
@@ -78,6 +79,7 @@ export default async function RootLayout({
             <div className="min-h-[60vh]">{children}</div>
             <Lead />
             <Footer />
+            <ReactQueryDevtools />
           </TRPCReactProvider>
         </Providers>
         <Toaster />
