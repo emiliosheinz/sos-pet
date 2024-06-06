@@ -75,7 +75,6 @@ export default function About() {
             Além disso, esse projeto tem o código fonte aberto e disponível para
             colaboração:
             <a href="https://github.com/emiliosheinz/sos-pet" target="blank">
-              {" "}
               https://github.com/emiliosheinz/sos-pet
             </a>
           </p>
