@@ -1,8 +1,9 @@
+import "leaflet/dist/leaflet.css";
+import "leaflet-defaulticon-compatibility";
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+
 import { useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
-import "leaflet-defaulticon-compatibility";
 import { type LatLngTuple } from "leaflet";
 import { type Shelter } from "@prisma/client";
 import { ShelterCard } from "../shelter-card";
@@ -28,7 +29,12 @@ export default function Map({
 }) {
   return (
     <MapContainer
-      style={{ height: "800px", width: "100%", maxWidth: "1280px" }}
+      style={{
+        height: "75vh",
+        width: "100%",
+        maxWidth: "1280px",
+        borderRadius: "16px",
+      }}
       center={userLocation}
       zoom={13}
     >
