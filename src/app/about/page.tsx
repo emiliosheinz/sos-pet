@@ -1,4 +1,15 @@
+import { type Metadata } from "next";
 import Image from "next/image";
+
+export const metadata: Metadata = {
+  title: "Sobre",
+  description:
+    "O SOS Pet é um sistema dedicado a conectar animais resgatados de enchentes com abrigos temporários disponíveis. Acreditamos que, em momentos de crise, cada vida é importante, e é nossa missão ajudar a garantir que animais em situação de risco encontrem um local seguro e acolhedor enquanto aguardam seu retorno ao lar ou um novo começo.",
+  keywords: "Sobre, SOS Pet, animais, abrigos",
+};
+
+export const dynamic = "force-static";
+export const revalidate = 60 * 60 * 24; // Revalidate almost once a day
 
 export default function About() {
   return (
@@ -61,8 +72,12 @@ export default function About() {
             transformar um momento de crise em uma oportunidade para fazer a
             diferença na vida de um animal. Juntos, podemos salvar vidas e
             construir um futuro mais seguro para nossos amigos de quatro patas.
-            Além disso, esse projeto tem o código fonte aberto e disponível para colaboração: 
-            <a href="https://github.com/emiliosheinz/sos-pet" target="blank"> https://github.com/emiliosheinz/sos-pet</a>
+            Além disso, esse projeto tem o código fonte aberto e disponível para
+            colaboração:
+            <a href="https://github.com/emiliosheinz/sos-pet" target="blank">
+              {" "}
+              https://github.com/emiliosheinz/sos-pet
+            </a>
           </p>
         </div>
       </div>
