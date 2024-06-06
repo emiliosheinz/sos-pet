@@ -9,8 +9,10 @@ import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { FiInfo } from "react-icons/fi";
 import dynamic from "next/dynamic";
 
-const ShelterCard = dynamic(() =>
-  import("~/components/shelter-card").then((module) => module.ShelterCard),
+const ShelterCard = dynamic(
+  () =>
+    import("~/components/shelter-card").then((module) => module.ShelterCard),
+  { loading: () => <Skeleton className="h-[306px] w-full rounded-xl" /> },
 );
 
 const Grid = ({ children }: PropsWithChildren) => (
