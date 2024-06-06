@@ -33,7 +33,7 @@ export default function Map({
         height: "75vh",
         width: "100%",
         maxWidth: "1280px",
-        borderRadius: "16px",
+        borderRadius: "6px",
       }}
       center={userLocation}
       zoom={13}

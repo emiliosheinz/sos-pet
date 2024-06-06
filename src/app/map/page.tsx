@@ -9,7 +9,7 @@ import { api } from "~/trpc/react";
 const DEFAULT_LOCATION: LatLngTuple = [-30.0346, -51.2177]; // Porto Alegre
 
 const MapComponent = dynamic(() => import("~/components/map/"), {
-  loading: () => <Skeleton className="h-[75vh] w-full max-w-7xl rounded-2xl" />,
+  loading: () => <Skeleton className="h-[75vh] w-full max-w-7xl rounded-md" />,
   ssr: false,
 });
 
