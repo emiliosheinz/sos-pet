@@ -1,4 +1,14 @@
+import { type Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Termos de Uso",
+  description: "Termos de Uso do SOS Pet",
+  keywords: "Termos de Uso, SOS Pet, animais, abrigos",
+};
+
+export const dynamic = "force-static";
+export const revalidate = 60 * 60 * 24; // Revalidate almost once a day
 
 export default function TermsOfUse() {
   return (
