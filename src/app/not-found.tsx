@@ -1,3 +1,6 @@
+export const dynamic = "force-static";
+export const revalidate = 60 * 60 * 24; // Revalidate almost once a day
+
 export default function NotFound() {
   return (
     <main className="container mb-8 max-w-5xl pt-16">
