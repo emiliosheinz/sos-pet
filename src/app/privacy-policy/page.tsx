@@ -1,4 +1,15 @@
-export default function TermsOfUse() {
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Políticas de Privacidade",
+  description: "Políticas de privacidade do SOS Pet",
+  keywords: "políticas de privacidade, SOS Pet, animais, abrigos",
+};
+
+export const dynamic = "force-static";
+export const revalidate = 60 * 60 * 24; // Revalidate almost once a day
+
+export default function PrivacyPolicy() {
   return (
     <main className="container mb-8 max-w-5xl pt-16">
       <h1 className="mb-10 text-3xl font-bold">Políticas de privacidade</h1>
@@ -6,7 +17,6 @@ export default function TermsOfUse() {
       <span className="mb-6 block font-light text-zinc-700">
         Data de Atualização: 11 de maio de 2024
       </span>
-
       <div className="space-y-3 text-base font-light leading-7">
         <p>
           Esta Política de Privacidade explica como coletamos, usamos,

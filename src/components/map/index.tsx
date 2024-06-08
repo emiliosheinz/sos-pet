@@ -1,18 +1,19 @@
+import "leaflet/dist/leaflet.css";
+import "leaflet-defaulticon-compatibility";
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+
 import { useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
-import "leaflet-defaulticon-compatibility";
 import { type LatLngTuple } from "leaflet";
 import { type Shelter } from "@prisma/client";
-import { Card } from "../card";
+import { ShelterCard } from "../shelter-card";
 
 function UserLocationMap({ userLocation }: { userLocation: LatLngTuple }) {
   const map = useMap();
 
   useEffect(() => {
     if (userLocation) {
-      map.setView(userLocation, 13);
+      map.setView(userLocation, 8);
     }
   }, [userLocation, map]);
 
@@ -28,9 +29,14 @@ export default function Map({
 }) {
   return (
     <MapContainer
-      style={{ height: "800px", width: "100%", maxWidth: "1280px" }}
+      style={{
+        height: "75vh",
+        width: "100%",
+        maxWidth: "1280px",
+        borderRadius: "6px",
+      }}
       center={userLocation}
-      zoom={13}
+      zoom={8}
     >
       <UserLocationMap userLocation={userLocation} />
       <TileLayer
@@ -46,7 +52,7 @@ export default function Map({
             position={[shelter.latitude, shelter.longitude]}
           >
             <Popup minWidth={390}>
-              <Card
+              <ShelterCard
                 shelter={shelter}
                 className="border-none p-2 text-black shadow-none"
               />
