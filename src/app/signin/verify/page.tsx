@@ -1,5 +1,8 @@
 import { FaRegCheckCircle } from "react-icons/fa";
 
+export const dynamic = "force-static";
+export const revalidate = 60 * 60 * 24;
+
 export default function SignInVerifyPage() {
   return (
     <>
