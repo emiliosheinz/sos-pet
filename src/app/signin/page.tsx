@@ -1,18 +1,19 @@
+"use client";
 import { redirect } from "next/navigation";
-import { getServerAuthSession } from "~/server/auth";
 import Image from "next/image";
 import { Suspense } from "react";
 import { Loader2 } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { FiAlertTriangle } from "react-icons/fi";
 import { AuthenticationProviders } from "./_components/AuthenticationProviders";
+import { useSession } from "next-auth/react";
 
 type SignInPageProps = {
   searchParams: Record<string, string>;
 };
 
-export default async function SignInPage({ searchParams }: SignInPageProps) {
-  const session = await getServerAuthSession();
+export default function SignInPage({ searchParams }: SignInPageProps) {
+  const { data: session } = useSession();
 
   if (session) {
     redirect(searchParams.callbackUrl ?? "/");
@@ -41,7 +42,7 @@ export default async function SignInPage({ searchParams }: SignInPageProps) {
           </AlertDescription>
         </Alert>
       )}
-      <AuthenticationProviders />
+      <AuthenticationProviders callbackUrl={searchParams.callbackUrl} />
     </Suspense>
   );
 }

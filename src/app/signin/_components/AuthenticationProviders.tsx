@@ -4,9 +4,10 @@ import { getProviders } from "next-auth/react";
 import { useEffect, useMemo, useState } from "react";
 import { SignInProviderButton } from "./SignInProviderButton";
 import { EmailProviderForm } from "./EmailProviderForm";
-import { Loader2 } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { FiAlertTriangle } from "react-icons/fi";
+import { Skeleton } from "~/components/ui/skeleton";
+import { OrSeparator } from "./OrSeparator";
 
 type GetProvidersState = "idle" | "loading" | "success" | "error";
 
@@ -53,7 +54,14 @@ export function AuthenticationProviders({
   }, [providers]);
 
   if (["loading", "idle"].includes(getProvidersState)) {
-    return <Loader2 className="mt-10 size-8 animate-spin" />;
+    return (
+      <div className="mt-5 flex w-full flex-col gap-5">
+        <Skeleton className="h-10 w-full" />
+        <OrSeparator />
+        <Skeleton className="h-10 w-full" />
+        <Skeleton className="h-10 w-full" />
+      </div>
+    );
   }
 
   if (getProvidersState === "error") {
