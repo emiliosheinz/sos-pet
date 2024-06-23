@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
+import { OrSeparator } from "./OrSeparator";
 
 const formSchema = z.object({
   email: z.string().email("Por favor, insira um e-mail válido"),
@@ -39,12 +40,7 @@ export function EmailProviderForm() {
         className="mt-5 flex flex-col gap-5"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <div className="relative my-5">
-          <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform bg-white pb-1 text-lg tracking-widest text-neutral-500">
-            ou
-          </span>
-          <hr />
-        </div>
+        <OrSeparator />
         <FormField
           name="email"
           control={form.control}

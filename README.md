@@ -1,17 +1,17 @@
 # SOS Pet
 
+SOS Pet is a system dedicated to connecting animals rescued from floods with available temporary shelters. We believe that in times of crisis, every life is important, and it is our mission to help ensure that animals at risk find a safe and welcoming place while awaiting their return home or a new beginning.
+
 ![Banner with a white dog in the mud](./docs/images/banner.png)
 
-O SOS Pet é um sistema dedicado a conectar animais resgatados de enchentes com abrigos temporários disponíveis. Acreditamos que, em momentos de crise, cada vida é importante, e é nossa missão ajudar a garantir que animais em situação de risco encontrem um local seguro e acolhedor enquanto aguardam seu retorno ao lar ou um novo começo.
+With SOS Pet, people who rescue animals from floods can quickly find nearby shelters with available spaces, obtaining crucial information such as capacity, contact details, and location. Our system allows shelters to register and update their information, providing a reliable database for rescuers.
 
-Com o SOS Pet, as pessoas que resgatam animais de enchentes podem rapidamente encontrar abrigos próximos com vagas disponíveis, obtendo informações cruciais, como capacidade, contato e localização. Nosso sistema permite que abrigos se cadastrem e atualizem suas informações, proporcionando uma base de dados confiável para os resgatadores.
+## Local Development
 
-## Rodando o projeto localmente
-
-1. Clone o repositório
-1. Instale as dependências
-1. Crie um arquivo `.env` baseando se no `.env.example`
-1. Assegure se de preencher todas as variáveis ambiente.
-1. Suba o baco de dados: `docker-compose up -d`
-1. Rode as migrations: `npx prisma migrate dev`
-1. Rode o projeto com o script `dev` disponível no `package.json`
+1. Clone the repository
+1. Install the dependencies
+1. Create a `.env` file based on `.env.example`
+1. Ensure all environment variables are filled in
+1. Start the database with `docker-compose up -d`
+1. Run the migrations with `npx prisma migrate dev`
+1. Run the project using the dev script available in `package.json`
