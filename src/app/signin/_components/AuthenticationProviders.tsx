@@ -1,13 +1,11 @@
 "use client";
 
 import { getProviders } from "next-auth/react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { SignInProviderButton } from "./SignInProviderButton";
-import { EmailProviderForm } from "./EmailProviderForm";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { FiAlertTriangle } from "react-icons/fi";
 import { Skeleton } from "~/components/ui/skeleton";
-import { OrSeparator } from "./OrSeparator";
 
 type GetProvidersState = "idle" | "loading" | "success" | "error";
 
@@ -44,21 +42,9 @@ export function AuthenticationProviders({
       });
   }, []);
 
-  const [emailProvider, otherProviders] = useMemo(() => {
-    if (!providers) return [null, null];
-    const email = providers.email;
-    const other = Object.values(providers).filter(
-      (provider) => provider.id !== "email",
-    );
-    return [email, other];
-  }, [providers]);
-
   if (["loading", "idle"].includes(getProvidersState)) {
     return (
       <div className="mt-5 flex w-full flex-col gap-5">
-        <Skeleton className="h-10 w-full" />
-        <OrSeparator />
-        <Skeleton className="h-10 w-full" />
         <Skeleton className="h-10 w-full" />
       </div>
     );
@@ -79,14 +65,13 @@ export function AuthenticationProviders({
 
   return (
     <div className="mt-5 w-full">
-      {otherProviders?.map((provider) => (
+      {Object.values(providers ?? {}).map((provider) => (
         <SignInProviderButton
           key={provider.id}
           provider={provider}
           callbackUrl={callbackUrl ?? "/"}
         />
       ))}
-      {!!emailProvider && <EmailProviderForm />}
     </div>
   );
 }
