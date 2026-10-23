@@ -7,7 +7,6 @@ import {
 import { type Adapter } from "next-auth/adapters";
 import { db } from "~/server/db";
 import { CustomGoogleProvider } from "./GoogleProvider";
-import { CustomEmailProvider } from "./EmailProvider";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -36,7 +35,6 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: "/signin",
-    verifyRequest: "/signin/verify",
   },
   callbacks: {
     session: ({ session, user }) => ({
@@ -50,7 +48,6 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db) as Adapter,
   providers: [
     CustomGoogleProvider(),
-    CustomEmailProvider(),
     /**
      * ...add more providers here.
      *
